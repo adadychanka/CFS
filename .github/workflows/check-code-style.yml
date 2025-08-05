@@ -19,13 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install Node.js
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-
       # Install pnpm
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -33,9 +26,12 @@ jobs:
           version: 9.0.0
           run_install: true
 
-      # Install dependencies
-      - name: Install dependencies
-        run: pnpm install
+      # Install Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
       # Check linting errors
       - name: Check linting errors
