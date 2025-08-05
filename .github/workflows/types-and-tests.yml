@@ -26,16 +26,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
 
-      # Install pnpm
+      # Install pnpm and dependencies
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.0.0
           run_install: true
-
-      # Install dependencies
-      - name: Install dependencies
-        run: pnpm install
 
       # Check types and unit tests
       - name: Check types and unit tests
