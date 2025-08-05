@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - staging
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   auto-pull-request:
-    name: Auto pull request to master
+    name: Auto pull request to main
     runs-on: ubuntu-latest
     steps:
       - name: Generate branch name
@@ -25,7 +30,7 @@ jobs:
         id: generate-pr-body
         with:
           script: |
-            return `Pull request to release latest staging to master pushed by @${
+            return `Pull request to release latest staging to main pushed by @${
               context.payload.head_commit.author.username
             }. Commit Message: ${context.payload.head_commit.id}`;
           result-encoding: string
@@ -39,4 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULL_REQUEST_BRANCH: "main"
           PULL_REQUEST_FROM_BRANCH: "staging"
+          PULL_REQUEST_TITLE: ${{ env.PULL_REQUEST_TITLE }}
+          PULL_REQUEST_BODY: ${{ env.PULL_REQUEST_BODY }}
           PULL_REQUEST_UPDATE: true
