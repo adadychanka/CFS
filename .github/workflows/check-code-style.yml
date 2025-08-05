@@ -1,4 +1,4 @@
-name: Build and test application
+name: Check code style and linting
 
 on:
   push:
@@ -37,6 +37,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # Check linting errors
+      - name: Check linting errors
+        run: pnpm run lint
+
       # Check code style
       - name: Check code style
-        run: pnpm run lint
+        run: pnpm run format:check
