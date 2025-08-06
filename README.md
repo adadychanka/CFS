@@ -123,6 +123,11 @@ yarn exec turbo link
 pnpm exec turbo link
 ```
 
+### References
+
+- [shadcn/ui Monorepo Guide](https://ui.shadcn.com/docs/monorepo)
+- [shadcn/ui CLI Reference](https://ui.shadcn.com/docs/cli)
+
 ## Useful Links
 
 Learn more about the power of Turborepo:
