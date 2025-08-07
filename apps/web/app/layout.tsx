@@ -33,14 +33,12 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <div className="w-full">
-          <Providers>
-            <SidebarProvider>
-              <AppSidebar items={USER_PAGE_LINKS} />
-              {children}
-            </SidebarProvider>
-          </Providers>
-        </div>
+        <Providers>
+          <SidebarProvider>
+            <AppSidebar items={USER_PAGE_LINKS} />
+            {children}
+          </SidebarProvider>
+        </Providers>
       </body>
     </html>
   );
