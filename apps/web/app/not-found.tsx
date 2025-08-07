@@ -5,7 +5,7 @@ import { Button } from "@repo/ui/components/button";
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full text-center px-4">
       <Ghost className="w-20 h-20 text-muted-foreground mb-6" />
       <h1 className="text-4xl font-bold mb-2">404 - Page not found</h1>
       <p className="text-muted-foreground mb-6">
