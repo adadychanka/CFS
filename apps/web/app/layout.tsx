@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
-import Header from "@repo/ui/components/header";
+import AppSidebar from "@repo/ui/components/app-sidebar";
+import React from "react";
+
+import { SidebarProvider } from "@repo/ui/components/sidebar";
+import { USER_PAGE_LINKS } from "@repo/ui/constants/contants";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -29,10 +33,14 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>
-          <Header />
-          <main>{children}</main>
-        </Providers>
+        <div className="w-full">
+          <Providers>
+            <SidebarProvider>
+              <AppSidebar items={USER_PAGE_LINKS} />
+              {children}
+            </SidebarProvider>
+          </Providers>
+        </div>
       </body>
     </html>
   );
