@@ -7,37 +7,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@repo/ui/components/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+type SidebarItem = {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+};
 
-const AppSidebar = () => {
+type Props = {
+  items: SidebarItem[];
+};
+
+const AppSidebar = ({ items }: Props) => {
   return (
     <Sidebar>
       <SidebarContent>
