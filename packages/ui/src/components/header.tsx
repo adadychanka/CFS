@@ -1,29 +1,21 @@
 import React from "react";
-import { SidebarProvider, SidebarTrigger } from "@repo/ui/components/sidebar";
-import AppSidebar from "@repo/ui/components/app-sidebar";
-import { Home as HomeIcon, Plus } from "lucide-react";
+import { SidebarTrigger } from "@repo/ui/components/sidebar";
+import { Separator } from "@repo/ui/components/separator";
 
-const USER_PAGE_LINKS = [
-  {
-    title: "Dashboard",
-    url: "/",
-    icon: HomeIcon,
-  },
-  {
-    title: "New Sentiment",
-    url: "/new-sentiment",
-    icon: Plus,
-  },
-];
+type Props = {
+  title: string;
+};
 
-const Header = () => {
+const Header = ({ title }: Props) => {
   return (
-    <SidebarProvider>
-      <header className="w-full flex h-16 items-center gap-2 border-b px-4">
-        <AppSidebar items={USER_PAGE_LINKS} />
-        <SidebarTrigger />
-      </header>
-    </SidebarProvider>
+    <header className="w-full flex h-16 items-center gap-2 border-b px-4">
+      <SidebarTrigger />
+      <Separator
+        orientation="vertical"
+        className="mr-2 data-[orientation=vertical]:h-4"
+      />
+      <p>{title}</p>
+    </header>
   );
 };
 
