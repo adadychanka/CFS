@@ -40,12 +40,12 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>
-          <SidebarProvider>
-            <AppSidebar items={sidebarLinks} />
-            <main className="w-full">{children}</main>
-          </SidebarProvider>
-        </Providers>
+      <Providers>
+        <SidebarProvider>
+          <AppSidebar items={sidebarLinks} />
+          <main className="w-full">{children}</main>
+        </SidebarProvider>
+      </Providers>
       </body>
     </html>
   );
