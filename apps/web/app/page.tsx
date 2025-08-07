@@ -1,3 +1,9 @@
+import Header from "@repo/ui/components/header";
+
 export default function Home() {
-  return <h2>Dashboard will be here</h2>;
+  return (
+    <>
+      <Header title="Dashboard" />
+    </>
+  );
 }
