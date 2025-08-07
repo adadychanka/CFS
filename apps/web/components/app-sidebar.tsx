@@ -3,12 +3,14 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@repo/ui/components/sidebar";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import Logo from "@/components/logo";
 
 type SidebarItem = {
   title: string;
@@ -23,6 +25,9 @@ type Props = {
 const AppSidebar = ({ items }: Props) => {
   return (
     <Sidebar>
+      <SidebarHeader>
+        <Logo />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
