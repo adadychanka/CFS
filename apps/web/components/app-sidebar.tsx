@@ -22,6 +22,11 @@ type Props = {
   items: SidebarItem[];
 };
 
+/**
+ * Application sidebar
+ * @param items renders links based on items array
+ * @constructor
+ */
 const AppSidebar = ({ items }: Props) => {
   return (
     <Sidebar>
