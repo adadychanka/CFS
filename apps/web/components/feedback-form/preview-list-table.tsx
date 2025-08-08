@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/ui/components/table";
+import { TEST_PREVIEW_FEEDBACKS } from "@repo/ui/constants/contants";
 
 const PreviewListTable = () => {
   return (
@@ -18,10 +19,11 @@ const PreviewListTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.from({ length: 100 }, (_, i) => i + 1).map((item) => (
-          <TableRow key={item}>
-            <TableCell className="font-medium">{item}</TableCell>
-            <TableCell>Description...</TableCell>
+        {TEST_PREVIEW_FEEDBACKS.map((item, index) => (
+          <TableRow key={item.id}>
+            <TableCell className="font-medium">{index + 1}</TableCell>
+            <TableCell>{item.feedback}</TableCell>
+
             <TableCell className="text-center">📕</TableCell>
           </TableRow>
         ))}
