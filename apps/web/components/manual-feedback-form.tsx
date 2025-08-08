@@ -26,7 +26,7 @@ const ManualFeedbackForm = () => {
 
   return (
     <Form {...form}>
-      <form className="space-y-6">
+      <form className="w-2/3 space-y-6">
         <FormField
           control={form.control}
           name="feedback"
