@@ -1,6 +1,6 @@
 import { Home as HomeIcon, Plus, Settings, TriangleAlert } from "lucide-react";
 
-export const USER_ROLE = "admin";
+export const USER_ROLE: "user" | "admin" = "user";
 
 export const USER_PAGE_LINKS = [
   {
