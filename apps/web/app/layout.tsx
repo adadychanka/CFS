@@ -43,7 +43,7 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar items={sidebarLinks} />
-            {children}
+            <main className="w-full">{children}</main>
           </SidebarProvider>
         </Providers>
       </body>
