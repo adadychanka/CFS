@@ -12,11 +12,23 @@ import {
 } from "@repo/ui/components/form";
 import { Textarea } from "@repo/ui/components/textarea";
 import { useForm } from "react-hook-form";
+import { Button } from "@repo/ui/components/button";
+import { Plus } from "lucide-react";
 
 const FormSchema = z.object({
-  feedback: z.string().min(30, {
-    message: "Bio must be at least 30 characters.",
-  }),
+  feedback: z.string().refine(
+    (val) => {
+      const lines = val
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length >= 10);
+      return lines.length > 0;
+    },
+    {
+      message:
+        "Please enter at least one valid feedback (min 10 chars per line).",
+    },
+  ),
 });
 
 const ManualFeedbackForm = () => {
@@ -24,9 +36,18 @@ const ManualFeedbackForm = () => {
     resolver: zodResolver(FormSchema),
   });
 
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    const feedback = data.feedback
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length >= 10);
+
+    console.log(feedback);
+  };
+
   return (
     <Form {...form}>
-      <form className="space-y-6 mb-4">
+      <form className="space-y-4 mb-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="feedback"
@@ -44,6 +65,11 @@ const ManualFeedbackForm = () => {
             </FormItem>
           )}
         />
+        <div className="flex content-end">
+          <Button className="ml-auto">
+            <Plus /> Add feedback
+          </Button>
+        </div>
       </form>
     </Form>
   );
