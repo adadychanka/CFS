@@ -1,5 +1,5 @@
-import React from "react";
-import ManualFeedbackForm from "@/components/manual-feedback-form";
+import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
+
 
 const Page = () => {
   return <ManualFeedbackForm />;
