@@ -6,7 +6,11 @@ import AppSidebar from "@/components/app-sidebar";
 import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
-import { USER_PAGE_LINKS } from "@repo/ui/constants/contants";
+import {
+  ADMIN_PAGE_LINKS,
+  USER_PAGE_LINKS,
+  USER_ROLE,
+} from "@repo/ui/constants/contants";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -28,6 +32,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isAdmin = USER_ROLE === "admin";
+  const sidebarLinks = isAdmin ? ADMIN_PAGE_LINKS : USER_PAGE_LINKS;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -35,7 +42,7 @@ export default function RootLayout({
       >
         <Providers>
           <SidebarProvider>
-            <AppSidebar items={USER_PAGE_LINKS} />
+            <AppSidebar items={sidebarLinks} />
             {children}
           </SidebarProvider>
         </Providers>
