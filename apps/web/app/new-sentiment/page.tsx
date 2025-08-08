@@ -5,6 +5,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@repo/ui/components/tabs";
+import ManualFeedbackForm from "@/components/manual-feedback-form";
 
 const Page = () => {
   return (
@@ -17,7 +18,7 @@ const Page = () => {
             <TabsTrigger value="file">File upload</TabsTrigger>
           </TabsList>
           <TabsContent value="manual">
-            <h2>Manul form will here</h2>
+            <ManualFeedbackForm />
           </TabsContent>
           <TabsContent value="file">
             <h2>File upload will here</h2>
