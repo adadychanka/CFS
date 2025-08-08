@@ -19,7 +19,7 @@ const Page = () => {
       <Header title="New Sentiment" />
       <div className="p-4">
         <Tabs defaultValue="manual">
-          <TabsList>
+          <TabsList className="mb-2">
             <TabsTrigger value="manual">Manual entry</TabsTrigger>
             <TabsTrigger value="file">File upload</TabsTrigger>
           </TabsList>
