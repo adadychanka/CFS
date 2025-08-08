@@ -1,9 +1,11 @@
 import Header from "@repo/ui/components/header";
 
-export default function Home() {
+const Page = () => {
   return (
     <>
-      <Header title="Dashboard" />
+      <Header title="Settings" />
     </>
   );
-}
+};
+
+export default Page;

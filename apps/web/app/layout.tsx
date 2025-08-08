@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
+import AppSidebar from "@/components/app-sidebar";
+import React from "react";
+
+import { SidebarProvider } from "@repo/ui/components/sidebar";
+import {
+  ADMIN_PAGE_LINKS,
+  USER_PAGE_LINKS,
+  USER_ROLE,
+} from "@repo/ui/constants/contants";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -24,12 +32,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isAdmin = USER_ROLE === "admin";
+  const sidebarLinks = isAdmin ? ADMIN_PAGE_LINKS : USER_PAGE_LINKS;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <SidebarProvider>
+            <AppSidebar items={sidebarLinks} />
+            <main className="w-full">{children}</main>
+          </SidebarProvider>
+        </Providers>
       </body>
     </html>
   );
