@@ -24,8 +24,9 @@ function AuthCard({ isSignUp }: Props) {
     linkText = "login in here";
     link = "/log-in";
   }
+
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-md shadow-md">
       <CardHeader>
         <CardTitle className="text-center text-xl">{title}</CardTitle>
       </CardHeader>
