@@ -1,3 +1,9 @@
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@repo/ui/components/tabs";
 import Header from "@/components/header";
 import { type Metadata } from "next";
 
@@ -6,12 +12,6 @@ export const metadata: Metadata = {
   description:
     "Upload and analyze user reviews from text or CSV files to generate sentiment insights.",
 };
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@repo/ui/components/tabs";
 
 const Page = () => {
   return (
