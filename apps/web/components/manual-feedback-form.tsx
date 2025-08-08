@@ -26,7 +26,7 @@ const ManualFeedbackForm = () => {
 
   return (
     <Form {...form}>
-      <form className="w-2/3 space-y-6">
+      <form className="space-y-6">
         <FormField
           control={form.control}
           name="feedbacks"
@@ -36,7 +36,7 @@ const ManualFeedbackForm = () => {
               <FormControl>
                 <Textarea
                   placeholder="Paste your feedbacks here. Each line considered as separate item."
-                  className="resize-none"
+                  className="min-h-[96px] max-h-[300px] overflow-y-auto resize-none"
                   {...field}
                 />
               </FormControl>
