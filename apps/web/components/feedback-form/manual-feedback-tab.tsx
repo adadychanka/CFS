@@ -15,14 +15,14 @@ const ManualFeedbackTab = () => {
     TEST_PREVIEW_FEEDBACKS,
   );
 
-  const handleAddFeedback = (feedbacks: PreviewFeedback[]) => {
-    setFeedback((prev) => [...prev, ...feedbacks]);
+  const handleAddFeedback = (feedback: PreviewFeedback[]) => {
+    setFeedback((prev) => [...prev, ...feedback]);
   };
 
   return (
     <div>
       <ManualFeedbackForm onAddFeedback={handleAddFeedback} />
-      <PreviewList feedbacks={feedback} />
+      <PreviewList feedback={feedback} />
     </div>
   );
 };
