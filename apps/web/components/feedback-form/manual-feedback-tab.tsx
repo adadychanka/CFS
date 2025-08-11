@@ -3,6 +3,7 @@
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
 import PreviewList from "@/components/feedback-form/preview-list";
 import { useState } from "react";
+import ManualFeedbackSubmitButton from "@/components/feedback-form/manual-feedback-submit-button";
 
 export type PreviewFeedback = {
   id: string;
@@ -27,6 +28,7 @@ const ManualFeedbackTab = () => {
         feedback={feedback}
         onRemoveFeedback={handleRemoveFeedback}
       />
+      <ManualFeedbackSubmitButton feedbacks={feedbacks} />
     </div>
   );
 };
