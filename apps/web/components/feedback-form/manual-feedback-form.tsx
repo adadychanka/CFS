@@ -70,7 +70,7 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
             </FormItem>
           )}
         />
-        <div className="flex content-end gap-2">
+        <div className="flex justify-end gap-2">
           <Button type="button" variant="outline" onClick={handleQuickFill}>
             <SquareTerminal />
             Quick fill
