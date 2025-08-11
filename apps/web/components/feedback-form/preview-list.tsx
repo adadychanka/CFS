@@ -8,7 +8,7 @@ type Props = {
 const PreviewList = ({ feedbacks }: Props) => {
   return (
     <div>
-      <p className="pb-2 font-medium">{feedbacks.length} items to preview</p>
+      <p className="pb-4 font-medium">{feedbacks.length} items to preview</p>
       <PreviewListTable feedbacks={feedbacks} />
     </div>
   );

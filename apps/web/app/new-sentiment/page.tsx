@@ -13,7 +13,7 @@ const Page = () => {
       <Header title="New Sentiment" />
       <div className="max-w-[1280px] mx-auto p-4">
         <Tabs defaultValue="manual">
-          <TabsList className="mb-2">
+          <TabsList className="mb-4">
             <TabsTrigger value="manual">Manual entry</TabsTrigger>
             <TabsTrigger value="file">File upload</TabsTrigger>
           </TabsList>
