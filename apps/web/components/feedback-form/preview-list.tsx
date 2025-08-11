@@ -1,7 +1,5 @@
 import PreviewListTable from "@/components/feedback-form/preview-list-table";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { Button } from "@repo/ui/components/button";
-import { Send } from "lucide-react";
 
 type Props = {
   feedbacks: PreviewFeedback[];
@@ -16,11 +14,6 @@ const PreviewList = ({ feedbacks, onRemoveFeedback }: Props) => {
         feedbacks={feedbacks}
         onRemoveFeedback={onRemoveFeedback}
       />
-      <div className="pt-4 flex justify-end">
-        <Button>
-          <Send /> Upload feedbacks
-        </Button>
-      </div>
     </div>
   );
 };
