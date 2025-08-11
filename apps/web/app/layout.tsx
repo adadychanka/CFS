@@ -3,14 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
 import AppSidebar from "@/components/app-sidebar";
-import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
 import {
   ADMIN_PAGE_LINKS,
   USER_PAGE_LINKS,
   USER_ROLE,
-} from "@repo/ui/constants/contants";
+} from "@/constants/contants";
 
 const fontSans = Geist({
   subsets: ["latin"],

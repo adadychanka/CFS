@@ -8,9 +8,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@repo/ui/components/sidebar";
-import { LucideIcon } from "lucide-react";
+import { type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import Logo from "@/components/logo";
+import SidebarLogo from "@/components/logo/sidebar-logo";
 
 type SidebarItem = {
   title: string;
@@ -24,14 +24,14 @@ type Props = {
 
 /**
  * Application sidebar
- * @param items renders links based on items array
+ * @param items
  * @constructor
  */
 const AppSidebar = ({ items }: Props) => {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Logo />
+        <SidebarLogo />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

@@ -1,6 +1,6 @@
 import React from "react";
-import { SidebarTrigger } from "@repo/ui/components/sidebar";
-import { Separator } from "@repo/ui/components/separator";
+import { SidebarTrigger } from "@repo/ui/components/sidebar.js";
+import { Separator } from "@repo/ui/components/separator.js";
 
 type Props = {
   title: string;
