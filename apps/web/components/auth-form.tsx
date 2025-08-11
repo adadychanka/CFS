@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@repo/ui/components/button";
 import { Form, FormField } from "@repo/ui/components/form";
-import { AuthFormItem } from "@repo/ui/custom/auth-form-item";
+import { AuthFormItem } from "@/components/auth-form-item";
 
 const FormSchema = z.object({
   email: z.string().email().min(5, {
