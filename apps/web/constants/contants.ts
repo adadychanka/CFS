@@ -33,6 +33,7 @@ export const ADMIN_PAGE_LINKS = [
   },
 ];
 
+// Add manual feedback page
 export const TEST_PREVIEW_FEEDBACKS = [
   {
     id: "f4be7d2d-8619-44d8-9132-d19cf59e1bfa",
@@ -118,3 +119,7 @@ export const TEST_PREVIEW_FEEDBACKS = [
     feedback: "They keep updating it with useful features. Love the roadmap.",
   },
 ];
+
+export const FEEDBACK_MIN_LENGTH = 10;
+export const FEEDBACK_MAX_LENGTH = 3000;
+export const FEEDBACK_MAX_ITEMS = 100;
