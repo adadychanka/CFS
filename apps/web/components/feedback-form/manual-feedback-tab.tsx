@@ -3,7 +3,6 @@
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
 import PreviewList from "@/components/feedback-form/preview-list";
 import { useState } from "react";
-import { TEST_PREVIEW_FEEDBACKS } from "@repo/ui/constants/constants";
 
 export type PreviewFeedback = {
   id: string;
@@ -11,9 +10,7 @@ export type PreviewFeedback = {
 };
 
 const ManualFeedbackTab = () => {
-  const [feedback, setFeedback] = useState<PreviewFeedback[]>(
-    TEST_PREVIEW_FEEDBACKS,
-  );
+  const [feedback, setFeedback] = useState<PreviewFeedback[]>();
 
   const handleAddFeedback = (feedback: PreviewFeedback[]) => {
     setFeedback((prev) => [...prev, ...feedback]);

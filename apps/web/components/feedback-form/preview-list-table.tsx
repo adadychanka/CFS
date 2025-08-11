@@ -30,7 +30,7 @@ const PreviewListTable = ({ feedback }: Props) => {
               <TableCell>{item.feedback}</TableCell>
               <TableCell className="text-center">📕</TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </div>
