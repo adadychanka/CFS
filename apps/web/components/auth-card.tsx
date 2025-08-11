@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
-import { AuthForm } from "@repo/ui/custom/auth-form";
 import { Button } from "@repo/ui/components/button";
+import { AuthForm } from "./auth-form";
 
 type Props = {
   isSignUp?: boolean;
