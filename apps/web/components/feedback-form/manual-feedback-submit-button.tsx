@@ -16,18 +16,18 @@ const ManualFeedbackSubmitButton = ({ feedbacks }: Props) => {
     setLoading(true);
     setError(null);
     try {
-      await uploadManualFeedbacks(feedbacks);
-      // optionally show success or reset UI
+      const feedbacksOnlyString = feedbacks.map((item) => item.feedback);
+      await uploadManualFeedbacks(feedbacksOnlyString);
     } catch {
-      setError("Failed to upload feedbacks");
+      setError("Failed to upload feedbacks.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="pt-4 flex justify-end">
-      {error && <p className="text-red-600 mb-2">{error}</p>}
+    <div className="pt-4 flex gap-8">
+      <p className="flex-1 text-red-600 mb-2">{error && error}</p>
 
       <Button onClick={handleSubmit} disabled={loading}>
         <Send />
