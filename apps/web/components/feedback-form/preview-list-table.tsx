@@ -17,12 +17,12 @@ type Props = {
 
 const PreviewListTable = ({ feedbacks, onRemoveFeedback }: Props) => {
   return (
-    <div className="overflow-hidden rounded-md border overflow-y-scroll max-h-[800px]">
-      <Table>
+    <div className="overflow-x-auto rounded-md border max-h-[800px]">
+      <Table className="min-w-full table-fixed">
         <TableHeader>
           <TableRow>
             <TableHead className="pl-4 w-[60px]">#</TableHead>
-            <TableHead>Feedback</TableHead>
+            <TableHead className="w-auto">Feedback</TableHead>
             <TableHead className="w-[120px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -31,14 +31,16 @@ const PreviewListTable = ({ feedbacks, onRemoveFeedback }: Props) => {
             feedbacks.map((item, index) => (
               <TableRow key={item.id}>
                 <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
-                <TableCell>{item.feedback}</TableCell>
+                <TableCell className="whitespace-normal break-words">
+                  {item.feedback}
+                </TableCell>
                 <TableCell className="text-center">
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => onRemoveFeedback(item.id)}
                   >
-                    <Trash2 /> Delete
+                    <Trash2 className="w-4 h-4 mr-1" /> Delete
                   </Button>
                 </TableCell>
               </TableRow>

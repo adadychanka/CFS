@@ -11,7 +11,7 @@ const Page = () => {
   return (
     <>
       <Header title="New Sentiment" />
-      <div className="max-w-[1280px] mx-auto p-4">
+      <div className="w-full max-w-[1280px] mx-auto p-4">
         <Tabs defaultValue="manual">
           <TabsList className="mb-4">
             <TabsTrigger value="manual">Manual entry</TabsTrigger>
