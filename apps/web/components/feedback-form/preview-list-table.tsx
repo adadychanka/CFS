@@ -18,7 +18,7 @@ type Props = {
 const PreviewListTable = ({ feedback, onRemoveFeedback }: Props) => {
   return (
     <div className="overflow-x-auto rounded-md border max-h-[800px]">
-      <Table className="min-w-full table-fixed">
+      <Table className="min-w-[600px] table-fixed">
         <TableHeader>
           <TableRow>
             <TableHead className="pl-4 w-[60px]">#</TableHead>
