@@ -10,7 +10,7 @@ import {
   ADMIN_PAGE_LINKS,
   USER_PAGE_LINKS,
   USER_ROLE,
-} from "@/constants/contants";
+} from "@repo/ui/constants/constants";
 
 const fontSans = Geist({
   subsets: ["latin"],

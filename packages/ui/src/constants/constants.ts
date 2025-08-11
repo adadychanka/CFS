@@ -33,6 +33,7 @@ export const ADMIN_PAGE_LINKS = [
   },
 ];
 
+
 // Add manual feedback page
 export const TABLPLE_TEXTAREA_TEXT = [
   "The sentiment analysis feature works really well and provides accurate insights. It helps me understand customer feelings quickly and easily.",
@@ -51,6 +52,7 @@ export const TABLPLE_TEXTAREA_TEXT = [
   "It would be useful to have sentiment predictions on feedback written in multiple languages.",
   "Overall, this app has streamlined our customer service process and helped us improve satisfaction scores significantly.",
 ];
+
 export const FEEDBACK_MIN_LENGTH = 10;
 export const FEEDBACK_MAX_LENGTH = 300;
 export const FEEDBACK_MAX_ITEMS = 100;
