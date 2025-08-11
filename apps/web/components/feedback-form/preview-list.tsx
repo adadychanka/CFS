@@ -2,14 +2,18 @@ import PreviewListTable from "@/components/feedback-form/preview-list-table";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 
 type Props = {
-  feedback: PreviewFeedback[];
+  feedbacks: PreviewFeedback[];
+  onRemoveFeedback: (feedbackId: string) => void;
 };
 
-const PreviewList = ({ feedback }: Props) => {
+const PreviewList = ({ feedback, onRemoveFeedback }: Props) => {
   return (
     <div>
-      <p className="pb-2 font-medium">{feedback.length} items to preview</p>
-      <PreviewListTable feedback={feedback} />
+      <p className="pb-4 font-medium">{feedback.length} items to preview</p>
+      <PreviewListTable
+        feedback={feedback}
+        onRemoveFeedback={onRemoveFeedback}
+      />
     </div>
   );
 };
