@@ -1,4 +1,4 @@
-import Header from "@repo/ui/custom/header";
+import Header from "@/components/header";
 import React from "react";
 import { type Metadata } from "next";
 

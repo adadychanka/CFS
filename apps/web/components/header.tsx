@@ -1,5 +1,5 @@
 import { SidebarTrigger } from "@repo/ui/components/sidebar";
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "@repo/ui/components/separator";
 
 type Props = {
   title: string;
