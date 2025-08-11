@@ -18,12 +18,12 @@ type Props = {
 const PreviewListTable = ({ feedback, onRemoveFeedback }: Props) => {
   return (
     <div className="overflow-x-auto rounded-md border max-h-[800px]">
-      <Table className="min-w-[600px] table-fixed">
+      <Table className="min-w-full table-fixed">
         <TableHeader>
           <TableRow>
-            <TableHead className="pl-4 w-[48px]">#</TableHead>
+            <TableHead className="pl-4 w-[60px]">#</TableHead>
             <TableHead className="w-auto">Feedback</TableHead>
-            <TableHead className="w-[100px] text-center">Actions</TableHead>
+            <TableHead className="w-[120px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
