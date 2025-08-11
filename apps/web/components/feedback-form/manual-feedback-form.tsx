@@ -62,7 +62,7 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
               <FormControl>
                 <Textarea
                   placeholder="Paste your feedbacks here. Each line is considered a separate item."
-                  className="min-h-[96px] max-h-[300px] overflow-y-auto resize-none"
+                  className="min-h-[96px] max-h-[192px] overflow-y-auto resize-none"
                   {...field}
                 />
               </FormControl>
