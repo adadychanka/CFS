@@ -6,11 +6,15 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/ui/components/table";
-import { TEST_PREVIEW_FEEDBACKS } from "@repo/ui/constants/contants";
+import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 
-const PreviewListTable = () => {
+type Props = {
+  feedbacks: PreviewFeedback[];
+};
+
+const PreviewListTable = ({ feedbacks }: Props) => {
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-md border overflow-y-scroll max-h-[800px]">
       <Table>
         <TableHeader>
           <TableRow>
@@ -20,7 +24,7 @@ const PreviewListTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {TEST_PREVIEW_FEEDBACKS.map((item, index) => (
+          {feedbacks.map((item, index) => (
             <TableRow key={item.id}>
               <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
               <TableCell>{item.feedback}</TableCell>
