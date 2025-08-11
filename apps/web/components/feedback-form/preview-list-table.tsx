@@ -7,6 +7,8 @@ import {
   TableRow,
 } from "@repo/ui/components/table";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
+import { Button } from "@repo/ui/components/button";
+import { Trash2 } from "lucide-react";
 
 type Props = {
   feedbacks: PreviewFeedback[];
@@ -20,7 +22,7 @@ const PreviewListTable = ({ feedbacks }: Props) => {
           <TableRow>
             <TableHead className="pl-4 w-[60px]">#</TableHead>
             <TableHead>Feedback</TableHead>
-            <TableHead className="w-[80px]">Actions</TableHead>
+            <TableHead className="w-[120px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -29,7 +31,11 @@ const PreviewListTable = ({ feedbacks }: Props) => {
               <TableRow key={item.id}>
                 <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
                 <TableCell>{item.feedback}</TableCell>
-                <TableCell className="text-center">📕</TableCell>
+                <TableCell className="text-center">
+                  <Button size="sm" variant="ghost">
+                    <Trash2 /> Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))
           ) : (
