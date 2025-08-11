@@ -14,35 +14,33 @@ import { Textarea } from "@repo/ui/components/textarea";
 import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/components/button";
 import { Plus } from "lucide-react";
+import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
+import { manualFeedbackSchema } from "@repo/ui/schemas/manualFeedback.schema";
 
-const FormSchema = z.object({
-  feedback: z.string().refine(
-    (val) => {
-      const lines = val
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line.length >= 10);
-      return lines.length > 0;
-    },
-    {
-      message:
-        "Please enter at least one valid feedback (min 10 chars per line).",
-    },
-  ),
-});
+type Props = {
+  onAddFeedback: (feedbacks: PreviewFeedback[]) => void;
+};
 
-const ManualFeedbackForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
+  const form = useForm<z.infer<typeof manualFeedbackSchema>>({
+    resolver: zodResolver(manualFeedbackSchema),
+    defaultValues: { feedback: "" },
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = (data: z.infer<typeof manualFeedbackSchema>) => {
     const feedback = data.feedback
       .split("\n")
       .map((line) => line.trim())
-      .filter((line) => line.length >= 10);
+      .filter(Boolean)
+      .map((item) => ({
+        id: Math.random().toString(36).slice(2),
+        feedback: item,
+      }));
 
-    console.log(feedback);
+    if (feedback.length) {
+      onAddFeedback(feedback);
+      form.reset({ feedback: "" });
+    }
   };
 
   return (
@@ -66,7 +64,7 @@ const ManualFeedbackForm = () => {
           )}
         />
         <div className="flex content-end">
-          <Button className="ml-auto">
+          <Button className="ml-auto" type="submit">
             <Plus /> Add feedback
           </Button>
         </div>
