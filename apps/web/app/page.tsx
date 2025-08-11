@@ -1,3 +1,4 @@
+import SwitchViewTabs from "@/components/user-sentiments/SwitchViewTabs";
 import Header from "@/components/header";
 import { type Metadata } from "next";
 
@@ -5,7 +6,6 @@ export const metadata: Metadata = {
   title: "Dashboard",
   description: "View and manage your user feedbacks",
 };
-import SentimentsTable from "@/components/user-sentiments/SentimentsTable";
 
 export default function Home() {
   return (
@@ -15,7 +15,8 @@ export default function Home() {
         <section className="w-full h-64 mb-8 flex items-center justify-center bg-neutral-100 rounded-md">
           Charts :)
         </section>
-        <SentimentsTable />
+
+        <SwitchViewTabs />
       </div>
     </>
   );
