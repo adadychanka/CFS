@@ -45,7 +45,7 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
 
   return (
     <Form {...form}>
-      <form className="space-y-4 mb-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-4 mb-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="feedback"
