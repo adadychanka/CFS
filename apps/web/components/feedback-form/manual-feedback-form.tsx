@@ -17,6 +17,7 @@ import { Plus, SquareTerminal } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
 import { TABLPLE_TEXTAREA_TEXT } from "@repo/ui/constants/constants";
+import { memo } from "react";
 
 type Props = {
   onAddFeedback: (feedback: PreviewFeedback[]) => void;
@@ -84,4 +85,4 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
   );
 };
 
-export default ManualFeedbackForm;
+export default memo(ManualFeedbackForm);
