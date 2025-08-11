@@ -12,9 +12,10 @@ import { Trash2 } from "lucide-react";
 
 type Props = {
   feedbacks: PreviewFeedback[];
+  onRemoveFeedback: (feedbackId: string) => void;
 };
 
-const PreviewListTable = ({ feedbacks }: Props) => {
+const PreviewListTable = ({ feedbacks, onRemoveFeedback }: Props) => {
   return (
     <div className="overflow-hidden rounded-md border overflow-y-scroll max-h-[800px]">
       <Table>
@@ -32,7 +33,11 @@ const PreviewListTable = ({ feedbacks }: Props) => {
                 <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
                 <TableCell>{item.feedback}</TableCell>
                 <TableCell className="text-center">
-                  <Button size="sm" variant="ghost">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => onRemoveFeedback(item.id)}
+                  >
                     <Trash2 /> Delete
                   </Button>
                 </TableCell>

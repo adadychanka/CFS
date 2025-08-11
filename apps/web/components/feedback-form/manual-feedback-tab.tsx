@@ -16,10 +16,17 @@ const ManualFeedbackTab = () => {
     setFeedbacks((prev) => [...prev, ...feedbacks]);
   };
 
+  const handleRemoveFeedback = (id: string) => {
+    setFeedbacks((prev) => prev.filter((e) => e.id !== id));
+  };
+
   return (
     <div>
       <ManualFeedbackForm onAddFeedback={handleAddFeedback} />
-      <PreviewList feedbacks={feedbacks} />
+      <PreviewList
+        feedbacks={feedbacks}
+        onRemoveFeedback={handleRemoveFeedback}
+      />
     </div>
   );
 };

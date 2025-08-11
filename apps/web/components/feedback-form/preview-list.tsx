@@ -3,13 +3,17 @@ import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab"
 
 type Props = {
   feedbacks: PreviewFeedback[];
+  onRemoveFeedback: (feedbackId: string) => void;
 };
 
-const PreviewList = ({ feedbacks }: Props) => {
+const PreviewList = ({ feedbacks, onRemoveFeedback }: Props) => {
   return (
     <div>
       <p className="pb-4 font-medium">{feedbacks.length} items to preview</p>
-      <PreviewListTable feedbacks={feedbacks} />
+      <PreviewListTable
+        feedbacks={feedbacks}
+        onRemoveFeedback={onRemoveFeedback}
+      />
     </div>
   );
 };
