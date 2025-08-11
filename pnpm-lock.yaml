@@ -24,7 +24,7 @@ importers:
   apps/web:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^5.2.1
+        specifier: 5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@repo/ui':
         specifier: workspace:*
@@ -45,10 +45,10 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-hook-form:
-        specifier: ^7.62.0
+        specifier: 7.62.0
         version: 7.62.0(react@19.1.0)
       zod:
-        specifier: ^3.24.2
+        specifier: 3.24.2
         version: 3.24.2
     devDependencies:
       '@repo/eslint-config':
@@ -114,10 +114,10 @@ importers:
   packages/ui:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^5.2.1
+        specifier: 5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@radix-ui/react-label':
-        specifier: ^2.1.7
+        specifier: 2.1.7
         version: 2.1.7(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-slot':
         specifier: ^1.2.3
@@ -141,7 +141,7 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-hook-form:
-        specifier: ^7.62.0
+        specifier: 7.62.0
         version: 7.62.0(react@19.1.0)
       tailwind-merge:
         specifier: ^3.0.1
