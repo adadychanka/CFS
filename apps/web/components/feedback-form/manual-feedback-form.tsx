@@ -19,7 +19,7 @@ import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
 import { TABLPLE_TEXTAREA_TEXT } from "@repo/ui/constants/constants";
 
 type Props = {
-  onAddFeedback: (feedbacks: PreviewFeedback[]) => void;
+  onAddFeedback: (feedback: PreviewFeedback[]) => void;
 };
 
 const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
@@ -47,7 +47,7 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
   // NOTE: ONLY FOR DEV TESTING
   const handleQuickFill = () => {
     const combined = TABLPLE_TEXTAREA_TEXT.join("\n");
-    form.setValue("feedbacks", combined);
+    form.setValue("feedback", combined);
   };
 
   return (
@@ -61,8 +61,8 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
               <FormLabel>Feedback</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Paste your feedback here. Each line considered as separate item."
-                  className="min-h-[96px] max-h-[300px] overflow-y-auto resize-none"
+                  placeholder="Paste your feedback here. Each line is considered a separate item."
+                  className="min-h-[96px] max-h-[192px] overflow-y-auto resize-none"
                   {...field}
                 />
               </FormControl>
