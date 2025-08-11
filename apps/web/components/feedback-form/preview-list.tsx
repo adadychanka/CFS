@@ -5,11 +5,11 @@ type Props = {
   feedbacks: PreviewFeedback[];
 };
 
-const PreviewList = ({ feedbacks }: Props) => {
+const PreviewList = ({ feedback }: Props) => {
   return (
     <div>
-      <p className="pb-2 font-medium">{feedbacks.length} items to preview</p>
-      <PreviewListTable feedbacks={feedbacks} />
+      <p className="pb-2 font-medium">{feedback.length} items to preview</p>
+      <PreviewListTable feedback={feedback} />
     </div>
   );
 };

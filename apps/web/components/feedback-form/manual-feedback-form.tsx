@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/components/button";
 import { Plus } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { manualFeedbackSchema } from "@repo/ui/schemas/manualFeedback.schema";
+import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
 
 type Props = {
   onAddFeedback: (feedbacks: PreviewFeedback[]) => void;

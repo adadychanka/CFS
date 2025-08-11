@@ -9,10 +9,10 @@ import {
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 
 type Props = {
-  feedbacks: PreviewFeedback[];
+  feedback: PreviewFeedback[];
 };
 
-const PreviewListTable = ({ feedbacks }: Props) => {
+const PreviewListTable = ({ feedback }: Props) => {
   return (
     <div className="overflow-hidden rounded-md border overflow-y-scroll max-h-[800px]">
       <Table>
@@ -24,7 +24,7 @@ const PreviewListTable = ({ feedbacks }: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {feedbacks.map((item, index) => (
+          {feedback.map((item, index) => (
             <TableRow key={item.id}>
               <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
               <TableCell>{item.feedback}</TableCell>
