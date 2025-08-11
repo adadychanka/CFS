@@ -1,4 +1,4 @@
-import { ControllerRenderProps } from "react-hook-form";
+import { type ControllerRenderProps } from "react-hook-form";
 
 import {
   FormControl,

@@ -8,7 +8,7 @@ import { Button } from "@repo/ui/components/button";
 import { Form, FormField } from "@repo/ui/components/form";
 import { AuthFormItem } from "@/components/auth-form-item";
 
-const FormSchema = z.object({
+const formSchema = z.object({
   email: z.string().email().min(5, {
     message: "Email must be at least 5 characters.",
   }),
@@ -18,16 +18,17 @@ const FormSchema = z.object({
 });
 
 function AuthForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  //eslint-disable-next-line
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    //TODO handle submission
   }
 
   return (
