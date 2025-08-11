@@ -6,9 +6,10 @@ import { useState } from "react";
 
 type Props = {
   feedbacks: PreviewFeedback[];
+  onClearFeedbacks: () => void;
 };
 
-const ManualFeedbackSubmitButton = ({ feedbacks }: Props) => {
+const ManualFeedbackSubmitButton = ({ feedbacks, onClearFeedbacks }: Props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,6 +19,7 @@ const ManualFeedbackSubmitButton = ({ feedbacks }: Props) => {
     try {
       const feedbacksOnlyString = feedbacks.map((item) => item.feedback);
       await uploadManualFeedbacks(feedbacksOnlyString);
+      onClearFeedbacks();
     } catch {
       setError("Failed to upload feedbacks.");
     } finally {
