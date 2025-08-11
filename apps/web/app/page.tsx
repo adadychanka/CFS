@@ -1,5 +1,5 @@
 import Header from "@repo/ui/components/header";
-import SentimentsTable from "@/components/user-sentiments/SentimentsTable";
+import SwitchViewTabs from "@/components/user-sentiments/SwitchViewTabs";
 
 export default function Home() {
   return (
@@ -9,7 +9,8 @@ export default function Home() {
         <section className="w-full h-64 mb-8 flex items-center justify-center bg-neutral-100 rounded-md">
           Charts :)
         </section>
-        <SentimentsTable />
+
+        <SwitchViewTabs />
       </div>
     </>
   );
