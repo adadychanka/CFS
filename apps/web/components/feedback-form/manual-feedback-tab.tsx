@@ -2,7 +2,7 @@
 
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
 import PreviewList from "@/components/feedback-form/preview-list";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ManualFeedbackSubmitButton from "@/components/feedback-form/manual-feedback-submit-button";
 
 export type PreviewFeedback = {
@@ -13,17 +13,17 @@ export type PreviewFeedback = {
 const ManualFeedbackTab = () => {
   const [feedbacks, setFeedbacks] = useState<PreviewFeedback[]>([]);
 
-  const handleAddFeedback = (feedbacks: PreviewFeedback[]) => {
+  const handleAddFeedback = useCallback((feedbacks: PreviewFeedback[]) => {
     setFeedbacks((prev) => [...prev, ...feedbacks]);
-  };
+  }, []);
 
-  const handleRemoveFeedback = (id: string) => {
+  const handleRemoveFeedback = useCallback((id: string) => {
     setFeedbacks((prev) => prev.filter((e) => e.id !== id));
-  };
+  }, []);
 
-  const handleClearFeedbacks = () => {
+  const handleClearFeedbacks = useCallback(() => {
     setFeedbacks([]);
-  };
+  }, []);
 
   return (
     <div>
