@@ -13,9 +13,10 @@ import {
 import { Textarea } from "@repo/ui/components/textarea";
 import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/components/button";
-import { Plus } from "lucide-react";
+import { Plus, SquareTerminal } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
+import { TABLPLE_TEXTAREA_TEXT } from "@repo/ui/constants/constants";
 
 type Props = {
   onAddFeedback: (feedbacks: PreviewFeedback[]) => void;
@@ -43,6 +44,12 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
     }
   };
 
+  // NOTE: ONLY FOR DEV TESTING
+  const handleQuickFill = () => {
+    const combined = TABLPLE_TEXTAREA_TEXT.join("\n");
+    form.setValue("feedbacks", combined);
+  };
+
   return (
     <Form {...form}>
       <form className="space-y-4 mb-8" onSubmit={form.handleSubmit(onSubmit)}>
@@ -63,8 +70,12 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
             </FormItem>
           )}
         />
-        <div className="flex content-end">
-          <Button className="ml-auto" type="submit">
+        <div className="flex content-end gap-2">
+          <Button type="button" variant="outline" onClick={handleQuickFill}>
+            <SquareTerminal />
+            Quick fill
+          </Button>
+          <Button type="submit">
             <Plus /> Add feedback
           </Button>
         </div>
