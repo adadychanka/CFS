@@ -18,7 +18,7 @@
     "next-env.d.ts",
     "next.config.js",
     ".next/types/**/*.ts"
-  ],
+, "app/new-sentiment/file-upload"  ],
   "exclude": [
     "node_modules"
   ]

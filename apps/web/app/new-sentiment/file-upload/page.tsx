@@ -1,5 +1,12 @@
-const Page = () => {
-  return <h2>File upload here</h2>;
-};
+import FileUpload from "@/components/feedback-file-upload/file-upload";
+import React from "react";
+
+function Page() {
+  return (
+    <div>
+      <FileUpload />
+    </div>
+  );
+}
 
 export default Page;
