@@ -1,5 +1,5 @@
 import PreviewListTable from "@/components/feedback-form/preview-list-table";
-import { TEST_PREVIEW_FEEDBACKS } from "@repo/ui/constants/contants";
+import { TEST_PREVIEW_FEEDBACKS } from "@/constants/contants";
 
 const PreviewList = () => {
   return (

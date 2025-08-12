@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/ui/components/table";
-import { TEST_PREVIEW_FEEDBACKS } from "@repo/ui/constants/contants";
+import { TEST_PREVIEW_FEEDBACKS } from "@/constants/contants";
 
 const PreviewListTable = () => {
   return (
