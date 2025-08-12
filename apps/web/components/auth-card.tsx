@@ -9,21 +9,14 @@ import {
 } from "@repo/ui/components/card";
 import { Button } from "@repo/ui/components/button";
 import { AuthForm } from "./auth-form";
+import { getCardContent, type AuthCardVariant } from "@/utils/get-card-content";
 
 type Props = {
-  isSignUp?: boolean;
+  variant: AuthCardVariant;
 };
 
-function AuthCard({ isSignUp }: Props) {
-  let title = "Log in";
-  let linkText = "sign up here";
-  let link = "/sign-up";
-
-  if (isSignUp) {
-    title = "Sign up";
-    linkText = "login in here";
-    link = "/log-in";
-  }
+function AuthCard({ variant }: Props) {
+  const { link, linkText, title } = getCardContent(variant);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
