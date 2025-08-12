@@ -1,4 +1,6 @@
-export const FAKE_PROCESSED_FEEDBACK = [
+import { type Feedback } from "@/types/types";
+
+export const FAKE_PROCESSED_FEEDBACK: Feedback[] = [
   {
     id: "5a55c9dc-b583-486f-95d9-6f0043e45c61",
     content: "dmrxusnse xgiva brf myysdtq dama jimy sbgm",
