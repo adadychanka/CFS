@@ -14,7 +14,7 @@ import {
   FEEDBACK_PAGE_LIMIT,
 } from "@/constants/constants";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
-import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
+import { formatDateByYearMonthDays } from "@/utils/dateUtils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 
@@ -62,7 +62,7 @@ const FeedbackTable = () => {
                   {fd.content}
                 </TableCell>
                 <TableCell>
-                  {formatDatebyYearMonthDays(fd.created_at)}
+                  {formatDateByYearMonthDays(fd.created_at)}
                 </TableCell>
               </TableRow>
             ))
