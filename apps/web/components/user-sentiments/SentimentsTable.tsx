@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,14 +15,23 @@ import {
 } from "@/constants/constants";
 import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
 import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
+import SkeletonFeedbackItem from "@/components/user-sentiments/skeleton-feedback-item";
 
 const SentimentsTable = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+  }, []);
+
   return (
     <div className="overflow-x-auto rounded-md border max-h-[824px]">
       <Table className="min-w-[600px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[140px]">Summary</TableHead>
+            <TableHead className="w-[300px]">Summary</TableHead>
             <TableHead className="w-[100px] text-center">Sentiment</TableHead>
             <TableHead className="w-[100px] text-center">Confidence</TableHead>
             <TableHead className="min-w-[200px]">Content</TableHead>
@@ -28,19 +39,32 @@ const SentimentsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map((fd) => (
-            <TableRow key={fd.id} className="odd:bg-muted/50">
-              <TableCell>{fd.summary}</TableCell>
-              <TableCell className="text-center">
-                <SentimentBadge sentiment={fd.sentiment} />
-              </TableCell>
-              <TableCell className="text-center">{fd.confidence}%</TableCell>
-              <TableCell className="max-w-[300px] truncate" title={fd.content}>
-                {fd.content}
-              </TableCell>
-              <TableCell>{formatDatebyYearMonthDays(fd.created_at)}</TableCell>
-            </TableRow>
-          ))}
+          {isLoading
+            ? [...Array(FEEDBACK_PAGE_LIMIT)].map((el, i) => (
+                <SkeletonFeedbackItem key={i} />
+              ))
+            : FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map(
+                (fd) => (
+                  <TableRow key={fd.id} className="odd:bg-muted/50">
+                    <TableCell>{fd.summary}</TableCell>
+                    <TableCell className="text-center">
+                      <SentimentBadge sentiment={fd.sentiment} />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {fd.confidence}%
+                    </TableCell>
+                    <TableCell
+                      className="max-w-[300px] truncate"
+                      title={fd.content}
+                    >
+                      {fd.content}
+                    </TableCell>
+                    <TableCell>
+                      {formatDatebyYearMonthDays(fd.created_at)}
+                    </TableCell>
+                  </TableRow>
+                ),
+              )}
         </TableBody>
       </Table>
     </div>
