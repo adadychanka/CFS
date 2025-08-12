@@ -26,7 +26,7 @@ const SentimentsTable = () => {
         </TableHeader>
         <TableBody>
           {FAKE_PROCESSED_FEEDBACK.map((fd) => (
-            <TableRow key={fd.id}>
+            <TableRow key={fd.id} className="odd:bg-muted/50">
               <TableCell>{fd.summary}</TableCell>
               <TableCell className="text-center">
                 <SentimentBadge sentiment={fd.sentiment} />
