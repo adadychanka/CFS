@@ -1,17 +1,21 @@
 "use client";
 
 import React from "react";
-import { useDropzone } from "react-dropzone";
 import { FileUpIcon } from "lucide-react";
 import PreviewFiles from "./preview-files";
 import FileUploadActions from "./file-upload-actions";
 import { useCustomDropzone } from "@/hooks/useCustomDropzone";
 
 function Dropzone() {
-  const { files, error, onDrop, handleClear, handleDeleteSingleFile } =
-    useCustomDropzone();
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const {
+    files,
+    error,
+    getInputProps,
+    getRootProps,
+    isDragActive,
+    handleClear,
+    handleDeleteSingleFile,
+  } = useCustomDropzone();
 
   const className = `p-16 flex items-center justify-center mt-1 border border-neutral-200 ${isDragActive ? "bg-gray-100" : ""}`;
 

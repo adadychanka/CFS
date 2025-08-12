@@ -1,22 +1,34 @@
 import { useCallback, useState } from "react";
-import { validateFiles } from "@/utils/files-helper";
+import { validateUploadedFiles } from "@/utils/files-helper";
+import { useDropzone } from "react-dropzone";
 
 export const useCustomDropzone = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const possibleError = validateFiles(acceptedFiles);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const { isValid, error } = validateUploadedFiles(files, acceptedFiles);
 
-    if (acceptedFiles?.length > 0 && !possibleError) {
+      if (acceptedFiles.length === 0) {
+        setError(null);
+        return;
+      }
+
+      if (!isValid) {
+        setError(error);
+        return;
+      }
+
       setError(null);
       setFiles((prevFiles) => {
         return [...prevFiles, ...acceptedFiles];
       });
-    } else {
-      setError(possibleError);
-    }
-  }, []);
+    },
+    [files],
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleClear = useCallback(() => {
     setFiles([]);
@@ -31,7 +43,9 @@ export const useCustomDropzone = () => {
   return {
     files,
     error,
-    onDrop,
+    isDragActive,
+    getInputProps,
+    getRootProps,
     handleClear,
     handleDeleteSingleFile,
   };
