@@ -12,8 +12,6 @@ import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
 import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
 
 const SentimentsTable = () => {
-  console.log(FAKE_PROCESSED_FEEDBACK);
-
   return (
     <div className="overflow-x-auto rounded-md border max-h-[800px]">
       <Table className="min-w-[600px]">
