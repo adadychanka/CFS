@@ -7,13 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/ui/components/table";
-import { FAKE_PROCESSED_FEEDBACK } from "@/constants/constants";
+import {
+  FAKE_PROCESSED_FEEDBACK,
+  FEEDBACK_PAGE_LIMIT,
+} from "@/constants/constants";
 import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
 import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
 
 const SentimentsTable = () => {
   return (
-    <div className="overflow-x-auto rounded-md border max-h-[800px]">
+    <div className="overflow-x-auto rounded-md border max-h-[824px]">
       <Table className="min-w-[600px]">
         <TableHeader>
           <TableRow>
@@ -25,7 +28,7 @@ const SentimentsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {FAKE_PROCESSED_FEEDBACK.map((fd) => (
+          {FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map((fd) => (
             <TableRow key={fd.id} className="odd:bg-muted/50">
               <TableCell>{fd.summary}</TableCell>
               <TableCell className="text-center">
