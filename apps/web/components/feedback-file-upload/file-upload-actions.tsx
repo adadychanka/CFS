@@ -13,7 +13,7 @@ function FileUploadActions({ onClear }: Props) {
         <Trash /> Clear files
       </Button>
       <Button>
-        <LucideUploadCloud /> Upload files
+        <LucideUploadCloud /> Process files
       </Button>
     </div>
   );
