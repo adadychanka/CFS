@@ -8,6 +8,8 @@ import {
   TableRow,
 } from "@repo/ui/components/table";
 import { FAKE_PROCESSED_FEEDBACK } from "@/constants/constants";
+import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
+import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
 
 const SentimentsTable = () => {
   console.log(FAKE_PROCESSED_FEEDBACK);
@@ -20,20 +22,22 @@ const SentimentsTable = () => {
             <TableHead className="w-[140px]">Summary</TableHead>
             <TableHead className="w-[100px] text-center">Sentiment</TableHead>
             <TableHead className="w-[100px] text-center">Confidence</TableHead>
-            <TableHead className="w-[200px]">Content</TableHead>
-            <TableHead className="w-[160px]">Created At</TableHead>
+            <TableHead className="min-w-[200px]">Content</TableHead>
+            <TableHead className="w-[120px]">Created At</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {FAKE_PROCESSED_FEEDBACK.map((fd) => (
             <TableRow key={fd.id}>
               <TableCell>{fd.summary}</TableCell>
-              <TableCell className="text-center">{fd.sentiment}</TableCell>
-              <TableCell className="text-center">{fd.confidence}</TableCell>
+              <TableCell className="text-center">
+                <SentimentBadge sentiment={fd.sentiment} />
+              </TableCell>
+              <TableCell className="text-center">{fd.confidence}%</TableCell>
               <TableCell className="max-w-[300px] truncate" title={fd.content}>
                 {fd.content}
               </TableCell>
-              <TableCell>{fd.created_at}</TableCell>
+              <TableCell>{formatDatebyYearMonthDays(fd.created_at)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
