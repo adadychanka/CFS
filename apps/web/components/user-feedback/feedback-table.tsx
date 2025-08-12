@@ -13,12 +13,12 @@ import {
   FAKE_PROCESSED_FEEDBACK,
   FEEDBACK_PAGE_LIMIT,
 } from "@/constants/constants";
-import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
+import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
-import SkeletonFeedbackItem from "@/components/user-sentiments/skeleton-feedback-item";
-import NoFeedbackMessage from "@/components/user-sentiments/no-feedback-message";
+import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
+import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 
-const SentimentsTable = () => {
+const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const SentimentsTable = () => {
               <TableRow key={fd.id} className="odd:bg-muted/50">
                 <TableCell>{fd.summary}</TableCell>
                 <TableCell className="text-center">
-                  <SentimentBadge sentiment={fd.sentiment} />
+                  <FeedbackBadge sentiment={fd.sentiment} />
                 </TableCell>
                 <TableCell className="text-center">{fd.confidence}%</TableCell>
                 <TableCell
@@ -72,4 +72,4 @@ const SentimentsTable = () => {
   );
 };
 
-export default SentimentsTable;
+export default FeedbackTable;

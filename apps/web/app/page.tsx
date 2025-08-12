@@ -1,5 +1,5 @@
 import Header from "@repo/ui/components/header";
-import SwitchViewTabs from "@/components/user-sentiments/SwitchViewTabs";
+import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
           Charts :)
         </section>
 
-        <SwitchViewTabs />
+        <SwitchTableCollapsedTabs />
       </div>
     </>
   );
