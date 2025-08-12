@@ -1,5 +1,6 @@
 import { type Feedback } from "@/types/types";
 
+export const FEEDBACK_PAGE_LIMIT = 20;
 export const FAKE_PROCESSED_FEEDBACK: Feedback[] = [
   {
     id: "5a55c9dc-b583-486f-95d9-6f0043e45c61",
