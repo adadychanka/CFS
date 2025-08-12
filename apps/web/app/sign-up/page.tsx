@@ -5,7 +5,7 @@ import React from "react";
 function Page() {
   return (
     <AuthCardWrapper>
-      <AuthCard isSignUp />
+      <AuthCard variant="sign-up" />
     </AuthCardWrapper>
   );
 }
