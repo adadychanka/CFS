@@ -30,7 +30,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       date-fns:
-        specifier: ^4.1.0
+        specifier: 4.1.0
         version: 4.1.0
       lucide-react:
         specifier: ^0.475.0
