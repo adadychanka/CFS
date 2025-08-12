@@ -5,9 +5,9 @@ import {
   TabsTrigger,
 } from "@repo/ui/components/tabs";
 import { GalleryVertical, Table2 } from "lucide-react";
-import SentimentsTable from "@/components/user-sentiments/SentimentsTable";
+import FeedbackTable from "@/components/user-feedback/feedback-table";
 
-const SwitchViewTabs = () => {
+const SwitchTableCollapsedTabs = () => {
   return (
     <Tabs defaultValue="manual">
       <TabsList className="mb-4">
@@ -19,7 +19,7 @@ const SwitchViewTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="manual">
-        <SentimentsTable />
+        <FeedbackTable />
       </TabsContent>
       <TabsContent value="file">
         <h2>☘️ Good luck there with collapses</h2>
@@ -28,4 +28,4 @@ const SwitchViewTabs = () => {
   );
 };
 
-export default SwitchViewTabs;
+export default SwitchTableCollapsedTabs;
