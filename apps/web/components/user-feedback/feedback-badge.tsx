@@ -9,7 +9,7 @@ const sentimentColors: Record<Sentiment, string> = {
   unknown: "bg-neutral-200 text-neutral-800",
 };
 
-const SentimentBadge = ({ sentiment }: { sentiment: Sentiment }) => {
+const FeedbackBadge = ({ sentiment }: { sentiment: Sentiment }) => {
   return (
     <Badge
       className={`w-[80px] text-center ${sentimentColors[sentiment]}`}
@@ -20,4 +20,4 @@ const SentimentBadge = ({ sentiment }: { sentiment: Sentiment }) => {
   );
 };
 
-export default SentimentBadge;
+export default FeedbackBadge;

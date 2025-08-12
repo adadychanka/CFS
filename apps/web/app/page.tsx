@@ -1,5 +1,5 @@
-import SwitchViewTabs from "@/components/user-sentiments/SwitchViewTabs";
-import Header from "@/components/header";
+import Header from "@repo/ui/components/header";
+import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function Home() {
           Charts :)
         </section>
 
-        <SwitchViewTabs />
+        <SwitchTableCollapsedTabs />
       </div>
     </>
   );
