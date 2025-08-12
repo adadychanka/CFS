@@ -7,6 +7,7 @@ import {
 
 import { cn } from "@repo/ui/lib/utils";
 import { Button, buttonVariants } from "@repo/ui/components/button";
+import { Slot } from "@radix-ui/react-slot";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -39,17 +40,29 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean;
+  asChild?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">;
 
+/**
+ * PaginationLink
+ *
+ * Renders a pagination link as:
+ * - `<a>` by default
+ * - A custom component (e.g. Next.js `<Link>`) when `asChild` is true
+ *
+ * Uses Radix UI's `<Slot>` to pass styles/props to the child element.
+ */
 function PaginationLink({
   className,
   isActive,
   size = "icon",
+  asChild,
   ...props
 }: PaginationLinkProps) {
+  const Comp = asChild ? Slot : "a";
   return (
-    <a
+    <Comp
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
       data-active={isActive}
