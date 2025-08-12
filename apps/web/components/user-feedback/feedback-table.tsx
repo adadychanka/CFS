@@ -19,6 +19,7 @@ import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-i
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 
 const FeedbackTable = () => {
+  // TODO: connect to API in the future
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
