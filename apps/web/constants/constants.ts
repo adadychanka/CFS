@@ -1,4 +1,4 @@
-export const FAKE_PROCESSED_FEEDBACKS = [
+export const FAKE_PROCESSED_FEEDBACK = [
   {
     id: "5a55c9dc-b583-486f-95d9-6f0043e45c61",
     content: "dmrxusnse xgiva brf myysdtq dama jimy sbgm",
