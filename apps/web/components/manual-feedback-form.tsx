@@ -14,7 +14,7 @@ import { Textarea } from "@repo/ui/components/textarea";
 import { useForm } from "react-hook-form";
 
 const FormSchema = z.object({
-  feedbacks: z.string().min(30, {
+  feedback: z.string().min(30, {
     message: "Bio must be at least 30 characters.",
   }),
 });
@@ -29,13 +29,13 @@ const ManualFeedbackForm = () => {
       <form className="space-y-6">
         <FormField
           control={form.control}
-          name="feedbacks"
+          name="feedback"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Feedbacks</FormLabel>
+              <FormLabel>Feedback</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Paste your feedbacks here. Each line considered as separate item."
+                  placeholder="Paste your feedback here. Each line considered as separate item."
                   className="min-h-[96px] max-h-[300px] overflow-y-auto resize-none"
                   {...field}
                 />
