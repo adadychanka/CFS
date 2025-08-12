@@ -48,7 +48,7 @@ importers:
         specifier: ^7.62.0
         version: 7.62.0(react@19.1.0)
       zod:
-        specifier: ^3.25.76
+        specifier: 3.25.76
         version: 3.25.76
     devDependencies:
       '@repo/eslint-config':
