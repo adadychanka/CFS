@@ -1,8 +1,13 @@
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
-
+import PreviewList from "@/components/feedback-form/preview-list";
 
 const Page = () => {
-  return <ManualFeedbackForm />;
+  return (
+    <div>
+      <ManualFeedbackForm />
+      <PreviewList />
+    </div>
+  );
 };
 
 export default Page;
