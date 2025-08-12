@@ -16,6 +16,7 @@ import {
 import SentimentBadge from "@/components/user-sentiments/sentiment-badge";
 import { formatDatebyYearMonthDays } from "@/utils/dateUtils";
 import SkeletonFeedbackItem from "@/components/user-sentiments/skeleton-feedback-item";
+import NoFeedbackMessage from "@/components/user-sentiments/no-feedback-message";
 
 const SentimentsTable = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,32 +40,32 @@ const SentimentsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading
-            ? [...Array(FEEDBACK_PAGE_LIMIT)].map((el, i) => (
-                <SkeletonFeedbackItem key={i} />
-              ))
-            : FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map(
-                (fd) => (
-                  <TableRow key={fd.id} className="odd:bg-muted/50">
-                    <TableCell>{fd.summary}</TableCell>
-                    <TableCell className="text-center">
-                      <SentimentBadge sentiment={fd.sentiment} />
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {fd.confidence}%
-                    </TableCell>
-                    <TableCell
-                      className="max-w-[300px] truncate"
-                      title={fd.content}
-                    >
-                      {fd.content}
-                    </TableCell>
-                    <TableCell>
-                      {formatDatebyYearMonthDays(fd.created_at)}
-                    </TableCell>
-                  </TableRow>
-                ),
-              )}
+          {isLoading ? (
+            [...Array(FEEDBACK_PAGE_LIMIT)].map((_, i) => (
+              <SkeletonFeedbackItem key={i} />
+            ))
+          ) : FAKE_PROCESSED_FEEDBACK.length === 0 ? (
+            <NoFeedbackMessage />
+          ) : (
+            FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map((fd) => (
+              <TableRow key={fd.id} className="odd:bg-muted/50">
+                <TableCell>{fd.summary}</TableCell>
+                <TableCell className="text-center">
+                  <SentimentBadge sentiment={fd.sentiment} />
+                </TableCell>
+                <TableCell className="text-center">{fd.confidence}%</TableCell>
+                <TableCell
+                  className="max-w-[300px] truncate"
+                  title={fd.content}
+                >
+                  {fd.content}
+                </TableCell>
+                <TableCell>
+                  {formatDatebyYearMonthDays(fd.created_at)}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>
