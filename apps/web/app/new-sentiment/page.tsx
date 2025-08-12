@@ -1,39 +1,5 @@
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@repo/ui/components/tabs";
-import Header from "@/components/header";
-import { type Metadata } from "next";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "New Sentiment",
-  description:
-    "Upload and analyze user reviews from text or CSV files to generate sentiment insights.",
-};
-import ManualFeedbackForm from "@/components/manual-feedback-form";
-
-const Page = () => {
-  return (
-    <>
-      <Header title="New Sentiment" />
-      <div className="max-w-[1280px] mx-auto p-4">
-        <Tabs defaultValue="manual">
-          <TabsList className="mb-2">
-            <TabsTrigger value="manual">Manual entry</TabsTrigger>
-            <TabsTrigger value="file">File upload</TabsTrigger>
-          </TabsList>
-          <TabsContent value="manual">
-            <ManualFeedbackForm />
-          </TabsContent>
-          <TabsContent value="file">
-            <h2>File upload will here</h2>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </>
-  );
-};
-
-export default Page;
+export default function NewSentimentPage() {
+  redirect("/new-sentiment/manual");
+}
