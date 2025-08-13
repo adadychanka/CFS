@@ -10,7 +10,7 @@ import { GalleryVertical, Table2 } from "lucide-react";
 import FeedbackTable from "@/components/user-feedback/feedback-table";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
@@ -21,7 +21,11 @@ const SwitchTableCollapsedTabs = () => {
 
   // RENDER SAFE: only runs when the tab query is invalid
   useEffect(() => {
-    if (requested && !USER_DASHBOARD_TABS.includes(requested) && requested !== "table") {
+    if (
+      requested &&
+      !USER_DASHBOARD_TABS.includes(requested) &&
+      requested !== "table"
+    ) {
       const params = new URLSearchParams(searchParams);
       params.set("tab", "table");
       router.replace(`?${params.toString()}`);
