@@ -7,11 +7,11 @@ import { uploadManualFeedbacks } from "@/lib/actions";
 import { useState } from "react";
 
 type Props = {
-  feedbacks: PreviewFeedback[];
-  onClearFeedbacks: () => void;
+  feedback: PreviewFeedback[];
+  onClearFeedback: () => void;
 };
 
-const ManualFeedbackSubmitButton = ({ feedbacks, onClearFeedbacks }: Props) => {
+const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,11 +19,11 @@ const ManualFeedbackSubmitButton = ({ feedbacks, onClearFeedbacks }: Props) => {
     setLoading(true);
     setError(null);
     try {
-      const feedbacksOnlyString = feedbacks.map((item) => item.feedback);
-      await uploadManualFeedbacks(feedbacksOnlyString);
-      onClearFeedbacks();
+      const feedbackOnlyString = feedback.map((item) => item.feedback);
+      await uploadManualFeedbacks(feedbackOnlyString);
+      onClearFeedback();
     } catch {
-      setError("Failed to upload feedbacks.");
+      setError("Failed to upload feedback.");
     } finally {
       setLoading(false);
     }

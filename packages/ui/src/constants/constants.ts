@@ -33,7 +33,6 @@ export const ADMIN_PAGE_LINKS = [
   },
 ];
 
-
 // Add manual feedback page
 export const TABLPLE_TEXTAREA_TEXT = [
   "The sentiment analysis feature works really well and provides accurate insights. It helps me understand customer feelings quickly and easily.",

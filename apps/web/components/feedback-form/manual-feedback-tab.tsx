@@ -34,7 +34,7 @@ const ManualFeedbackTab = () => {
       />
       <ManualFeedbackSubmitButton
         feedback={feedback}
-        onClearFeedbacks={handleClearFeedbacks}
+        onClearFeedback={handleClearFeedbacks}
       />
     </div>
   );
