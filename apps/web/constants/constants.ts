@@ -254,3 +254,4 @@ export const FAKE_PROCESSED_FEEDBACK: Feedback[] = [
     created_at: "2025-03-23T11:24:29.179565",
   },
 ];
+export const USER_DASHBOARD_TABS = ["table", "grouped"];
