@@ -24,24 +24,13 @@ const PreviewListTable = ({ feedback }: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {feedback.length > 0 ? (
-            feedback.map((item, index) => (
-              <TableRow key={item.id}>
-                <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
-                <TableCell>{item.feedback}</TableCell>
-                <TableCell className="text-center">📕</TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell
-                colSpan={3}
-                className="text-center py-12 text-muted-foreground"
-              >
-                No feedback items yet
-              </TableCell>
+          {feedback.map((item, index) => (
+            <TableRow key={item.id}>
+              <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
+              <TableCell>{item.feedback}</TableCell>
+              <TableCell className="text-center">📕</TableCell>
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
     </div>
