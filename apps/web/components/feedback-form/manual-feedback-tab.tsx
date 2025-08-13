@@ -3,7 +3,7 @@
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
 import PreviewList from "@/components/feedback-form/preview-list";
 import { useState } from "react";
-import {TEST_PREVIEW_FEEDBACKS} from "@/constants/contants";
+import { TEST_PREVIEW_FEEDBACKS } from "@/constants/contants";
 
 export type PreviewFeedback = {
   id: string;
