@@ -28,7 +28,7 @@ import {
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const totalPages = 7;
+  const totalPages = 30;
   const router = useRouter();
 
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -55,20 +55,39 @@ const FeedbackTable = () => {
   }, []);
 
   const renderPageNumbers = () => {
-    const window = 1;
-    let pages: (number | "dots")[] = [];
+    const window = 1; // pages around current
+    const pages: (number | "dots")[] = [];
 
     if (totalPages <= 7) {
-      pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       for (let page = 1; page <= totalPages; page++) {
-        if (
-          page === 1 ||
-          page === totalPages ||
-          (page >= currentPage - window && page <= currentPage + window)
-        ) {
+        // Start zone
+        if (currentPage < 5 && page <= 5) {
           pages.push(page);
-        } else if (pages[pages.length - 1] !== "dots") {
+          continue;
+        }
+
+        // Middle zone
+        if (page >= currentPage - window && page <= currentPage + window) {
+          pages.push(page);
+          continue;
+        }
+
+        // End zone
+        if (currentPage > totalPages - 4 && page >= totalPages - 4) {
+          pages.push(page);
+          continue;
+        }
+
+        // Always include first and last page
+        if (page === 1 || page === totalPages) {
+          pages.push(page);
+          continue;
+        }
+
+        // Fill the dots
+        if (pages[pages.length - 1] !== "dots") {
           pages.push("dots");
         }
       }
@@ -76,7 +95,11 @@ const FeedbackTable = () => {
 
     return pages.map((p, idx) =>
       p === "dots" ? (
-        <span key={`dots-${idx}`} aria-hidden="true" className="px-2">
+        <span
+          key={`dots-${idx}`}
+          aria-hidden="true"
+          className="size-9 text-center"
+        >
           …
         </span>
       ) : (
