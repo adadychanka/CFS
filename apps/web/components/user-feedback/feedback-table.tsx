@@ -28,7 +28,7 @@ import {
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const totalPages = 10;
+  const totalPages = 30;
   const router = useRouter();
 
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -54,6 +54,40 @@ const FeedbackTable = () => {
     }, 500);
   }, []);
 
+  const renderPageNumbers = () => {
+    const window = 1;
+    const pages: (number | "dots")[] = [];
+
+    for (let page = 1; page <= totalPages; page++) {
+      if (
+        page === 1 ||
+        page === totalPages ||
+        (page >= currentPage - window && page <= currentPage + window)
+      ) {
+        pages.push(page);
+      } else if (pages[pages.length - 1] !== "dots") {
+        pages.push("dots");
+      }
+    }
+
+    return pages.map((p, idx) =>
+      p === "dots" ? (
+        <span key={`dots-${idx}`} aria-hidden="true" className="px-2">
+          …
+        </span>
+      ) : (
+        <PaginationLink
+          key={p}
+          isActive={currentPage === p}
+          asChild
+          aria-label={`Go to page ${p}`}
+        >
+          <Link href={getPageLink(p)}>{p}</Link>
+        </PaginationLink>
+      ),
+    );
+  };
+
   return (
     <div className="flex flex-col gap-8">
       {totalPages > 1 && (
@@ -63,11 +97,7 @@ const FeedbackTable = () => {
             href={getPageLink(currentPage - 1)}
           />
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
-            <PaginationLink key={num} isActive={currentPage === num} asChild>
-              <Link href={getPageLink(num)}>{num}</Link>
-            </PaginationLink>
-          ))}
+          {renderPageNumbers()}
 
           <PaginationNextWithLink href={getPageLink(currentPage + 1)} />
         </div>
