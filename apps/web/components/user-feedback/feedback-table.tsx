@@ -82,7 +82,7 @@ const FeedbackTable = () => {
           asChild
           aria-label={`Go to page ${p}`}
         >
-          <Link href={getPageLink(p)}>{p}</Link>
+          <Link href={getPageLink(p)} scroll={false}>{p}</Link>
         </PaginationLink>
       ),
     );
@@ -90,18 +90,6 @@ const FeedbackTable = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      {totalPages > 1 && (
-        <div className="mt-4 flex justify-center gap-2">
-          <PaginationPreviousWithLink
-            asChild
-            href={getPageLink(currentPage - 1)}
-          />
-
-          {renderPageNumbers()}
-
-          <PaginationNextWithLink href={getPageLink(currentPage + 1)} />
-        </div>
-      )}
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
         <Table className="min-w-[600px]">
           <TableHeader>
@@ -149,6 +137,18 @@ const FeedbackTable = () => {
           </TableBody>
         </Table>
       </div>
+      {totalPages > 1 && (
+        <div className="mt-4 flex justify-center gap-2">
+          <PaginationPreviousWithLink
+            asChild
+            href={getPageLink(currentPage - 1)}
+          />
+
+          {renderPageNumbers()}
+
+          <PaginationNextWithLink href={getPageLink(currentPage + 1)} />
+        </div>
+      )}
     </div>
   );
 };
