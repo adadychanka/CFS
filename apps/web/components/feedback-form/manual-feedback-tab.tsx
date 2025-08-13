@@ -10,20 +10,19 @@ export type PreviewFeedback = {
 };
 
 const ManualFeedbackTab = () => {
-  const [feedback, setFeedback] = useState<PreviewFeedback[]>();
+  const [feedback, setFeedback] = useState<PreviewFeedback[]>([]);
 
   const handleAddFeedback = (feedback: PreviewFeedback[]) => {
     setFeedback((prev) => [...prev, ...feedback]);
   };
 
   const handleRemoveFeedback = (id: string) => {
-    setFeedbacks((prev) => prev.filter((e) => e.id !== id));
+    setFeedback((prev) => prev.filter((e) => e.id !== id));
   };
 
   return (
     <div>
       <ManualFeedbackForm onAddFeedback={handleAddFeedback} />
-      <PreviewList feedback={feedback} />
       <PreviewList
         feedback={feedback}
         onRemoveFeedback={handleRemoveFeedback}

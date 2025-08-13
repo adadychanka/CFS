@@ -2,7 +2,7 @@ import PreviewListTable from "@/components/feedback-form/preview-list-table";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 
 type Props = {
-  feedbacks: PreviewFeedback[];
+  feedback: PreviewFeedback[];
   onRemoveFeedback: (feedbackId: string) => void;
 };
 
