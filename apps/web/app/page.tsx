@@ -1,5 +1,6 @@
 import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
+import ChartWrapper from "@/components/e-charts/chart-wrapper";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,9 +13,7 @@ export default function Home() {
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
-        <section className="w-full h-64 mb-8 flex items-center justify-center bg-neutral-100 rounded-md">
-          Charts :)
-        </section>
+        <ChartWrapper />
 
         <SwitchTableCollapsedTabs />
       </div>

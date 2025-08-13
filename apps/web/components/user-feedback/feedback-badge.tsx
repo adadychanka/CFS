@@ -1,6 +1,5 @@
+import { Sentiment } from "@/shared/sentiment-types";
 import { Badge } from "@repo/ui/components/badge";
-
-type Sentiment = "positive" | "neutral" | "negative" | "unknown";
 
 const sentimentColors: Record<Sentiment, string> = {
   positive: "bg-green-200 text-green-800",
