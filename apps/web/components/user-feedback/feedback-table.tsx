@@ -28,7 +28,7 @@ import {
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const totalPages = 30;
+  const totalPages = 7;
   const router = useRouter();
 
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -56,17 +56,21 @@ const FeedbackTable = () => {
 
   const renderPageNumbers = () => {
     const window = 1;
-    const pages: (number | "dots")[] = [];
+    let pages: (number | "dots")[] = [];
 
-    for (let page = 1; page <= totalPages; page++) {
-      if (
-        page === 1 ||
-        page === totalPages ||
-        (page >= currentPage - window && page <= currentPage + window)
-      ) {
-        pages.push(page);
-      } else if (pages[pages.length - 1] !== "dots") {
-        pages.push("dots");
+    if (totalPages <= 7) {
+      pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+    } else {
+      for (let page = 1; page <= totalPages; page++) {
+        if (
+          page === 1 ||
+          page === totalPages ||
+          (page >= currentPage - window && page <= currentPage + window)
+        ) {
+          pages.push(page);
+        } else if (pages[pages.length - 1] !== "dots") {
+          pages.push("dots");
+        }
       }
     }
 
@@ -82,7 +86,9 @@ const FeedbackTable = () => {
           asChild
           aria-label={`Go to page ${p}`}
         >
-          <Link href={getPageLink(p)} scroll={false}>{p}</Link>
+          <Link href={getPageLink(p)} scroll={false}>
+            {p}
+          </Link>
         </PaginationLink>
       ),
     );
