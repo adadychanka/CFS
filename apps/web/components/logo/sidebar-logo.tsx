@@ -3,7 +3,11 @@ import { Brain } from "lucide-react";
 
 const SidebarLogo = () => {
   return (
-    <Link href="/" className="flex items-center gap-2 p-2">
+    <Link
+      href="/"
+      className="flex items-center gap-2 p-2"
+      aria-label="Go to homepage"
+    >
       <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
         <Brain className="size-4" />
       </div>
