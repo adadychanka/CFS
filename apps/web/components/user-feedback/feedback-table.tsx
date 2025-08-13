@@ -98,7 +98,7 @@ const FeedbackTable = () => {
         <span
           key={`dots-${idx}`}
           aria-hidden="true"
-          className="size-9 text-center"
+          className="min-w-9 min-h-9 text-center"
         >
           …
         </span>
@@ -167,7 +167,7 @@ const FeedbackTable = () => {
         </Table>
       </div>
       {totalPages > 1 && (
-        <div className="mt-4 flex justify-center gap-2">
+        <div className="mt-4 flex justify-center gap-1">
           <PaginationPreviousWithLink
             asChild
             href={getPageLink(currentPage === 1 ? 1 : currentPage - 1)}
