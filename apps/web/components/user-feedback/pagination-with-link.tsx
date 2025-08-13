@@ -7,8 +7,11 @@ import { type ComponentProps } from "react";
 export function PaginationPreviousWithLink({
   href,
   className,
+  disabled,
   ...props
-}: { href: string } & ComponentProps<typeof PaginationLink>) {
+}: { href: string; disabled?: boolean } & ComponentProps<
+  typeof PaginationLink
+>) {
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -16,15 +19,28 @@ export function PaginationPreviousWithLink({
       asChild
       {...props}
     >
-      <Link
-        className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
-        href={href}
-        scroll={false}
-        passHref
-      >
-        <ChevronLeftIcon />
-        <span className="hidden sm:block">Previous</span>
-      </Link>
+      {disabled ? (
+        <span
+          className={cn(
+            "gap-1 px-2.5 sm:pr-2.5 opacity-50 cursor-not-allowed select-none",
+            className,
+          )}
+          aria-disabled="true"
+        >
+          <ChevronLeftIcon />
+          <span className="hidden sm:block">Previous</span>
+        </span>
+      ) : (
+        <Link
+          className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
+          href={href!}
+          scroll={false}
+          passHref
+        >
+          <ChevronLeftIcon />
+          <span className="hidden sm:block">Previous</span>
+        </Link>
+      )}
     </PaginationLink>
   );
 }
@@ -32,8 +48,11 @@ export function PaginationPreviousWithLink({
 export function PaginationNextWithLink({
   href,
   className,
+  disabled,
   ...props
-}: { href: string } & ComponentProps<typeof PaginationLink>) {
+}: { href: string; disabled: boolean } & ComponentProps<
+  typeof PaginationLink
+>) {
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -41,15 +60,28 @@ export function PaginationNextWithLink({
       asChild
       {...props}
     >
-      <Link
-        className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
-        href={href}
-        scroll={false}
-        passHref
-      >
-        <span className="hidden sm:block">Next</span>
-        <ChevronRightIcon />
-      </Link>
+      {disabled ? (
+        <span
+          className={cn(
+            "gap-1 px-2.5 sm:pr-2.5 opacity-50 cursor-not-allowed select-none",
+            className,
+          )}
+          aria-disabled="true"
+        >
+          <span className="hidden sm:block">Next</span>
+          <ChevronRightIcon />
+        </span>
+      ) : (
+        <Link
+          className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
+          href={href}
+          scroll={false}
+          passHref
+        >
+          <span className="hidden sm:block">Next</span>
+          <ChevronRightIcon />
+        </Link>
+      )}
     </PaginationLink>
   );
 }
