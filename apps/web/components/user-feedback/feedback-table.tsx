@@ -17,20 +17,31 @@ import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { formatDateByYearMonthDays } from "@/utils/dateUtils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PaginationLink } from "@repo/ui/components/pagination";
 import Link from "next/link";
 import {
   PaginationNextWithLink,
   PaginationPreviousWithLink,
-} from "@/components/user-feedback/paginationControls";
+} from "@/components/user-feedback/pagination-with-link";
 
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
   const totalPages = 10;
+  const router = useRouter();
 
   const currentPage = Number(searchParams.get("page")) || 1;
+
+  // Redirect if the page is out of bounds
+  useEffect(() => {
+    if (currentPage < 1 || currentPage > totalPages) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", "1");
+      router.replace(`?${params.toString()}`);
+    }
+  }, [currentPage, router, searchParams]);
+
   const getPageLink = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
