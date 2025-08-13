@@ -170,12 +170,16 @@ const FeedbackTable = () => {
         <div className="mt-4 flex justify-center gap-2">
           <PaginationPreviousWithLink
             asChild
-            href={getPageLink(currentPage - 1)}
+            href={getPageLink(currentPage === 1 ? 1 : currentPage - 1)}
           />
 
           {renderPageNumbers()}
 
-          <PaginationNextWithLink href={getPageLink(currentPage + 1)} />
+          <PaginationNextWithLink
+            href={getPageLink(
+              currentPage < totalPages ? currentPage + 1 : totalPages,
+            )}
+          />
         </div>
       )}
     </div>
