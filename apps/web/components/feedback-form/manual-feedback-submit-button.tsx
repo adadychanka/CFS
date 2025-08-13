@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@repo/ui/components/button";
 import { Send } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
@@ -33,7 +35,7 @@ const ManualFeedbackSubmitButton = ({ feedbacks, onClearFeedbacks }: Props) => {
 
       <Button onClick={handleSubmit} disabled={loading}>
         <Send />
-        {loading ? "Uploading..." : "Upload feedbacks"}
+        {loading ? "Analyze..." : "Analyze feedback"}
       </Button>
     </div>
   );
