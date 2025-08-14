@@ -6,3 +6,9 @@ export type Feedback = {
   summary: string;
   created_at: string;
 };
+
+export type GroupedFeedback = {
+  id: string;
+  groupName: string;
+  items: Feedback[];
+};
