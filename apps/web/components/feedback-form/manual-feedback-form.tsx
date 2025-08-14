@@ -16,8 +16,8 @@ import { Button } from "@repo/ui/components/button";
 import { Plus, SquareTerminal } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
-import { TABLPLE_TEXTAREA_TEXT } from "@repo/ui/constants/constants";
 import { memo } from "react";
+import { TEST_TEXTAREA_TEXT } from "@/constants/constants";
 
 type Props = {
   onAddFeedback: (feedback: PreviewFeedback[]) => void;
@@ -47,7 +47,7 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
 
   // NOTE: ONLY FOR DEV TESTING
   const handleQuickFill = () => {
-    const combined = TABLPLE_TEXTAREA_TEXT.join("\n");
+    const combined = TEST_TEXTAREA_TEXT.join("\n");
     form.setValue("feedback", combined);
   };
 

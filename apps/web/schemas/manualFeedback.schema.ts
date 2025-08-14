@@ -3,7 +3,7 @@ import {
   FEEDBACK_MAX_ITEMS,
   FEEDBACK_MAX_LENGTH,
   FEEDBACK_MIN_LENGTH,
-} from "@repo/ui/constants/constants";
+} from "@/constants/constants";
 
 export const manualFeedbackSchema = z
   .object({

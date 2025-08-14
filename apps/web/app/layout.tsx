@@ -7,10 +7,10 @@ import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
 import {
+  USER_ROLE,
   ADMIN_PAGE_LINKS,
   USER_PAGE_LINKS,
-  USER_ROLE,
-} from "@repo/ui/constants/constants";
+} from "@/constants/constants";
 
 const fontSans = Geist({
   subsets: ["latin"],
