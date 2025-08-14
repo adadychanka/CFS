@@ -7,6 +7,9 @@ import {
 } from "@repo/ui/components/accordion";
 import { GROUPED_FEEDBACK_DATA } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
+import Link from "next/link";
+
+const FEEDBACK_LIMIT = 10;
 
 const GroupedFeedback = () => {
   return (
@@ -19,8 +22,16 @@ const GroupedFeedback = () => {
               <DynamicFeedbackTable
                 isLoading={false}
                 feedbackList={group.items}
-                feedbackLimit={10}
+                feedbackLimit={FEEDBACK_LIMIT}
               />
+              {group.items.length >= FEEDBACK_LIMIT && (
+                <Link
+                  href={`/result/${group.id}`}
+                  className="px-5 py-2 inline-block my-2 rounded-md bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
+                >
+                  View all results
+                </Link>
+              )}
             </AccordionContent>
           </AccordionItem>
         );
