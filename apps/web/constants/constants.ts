@@ -1,4 +1,7 @@
-import { GroupedFeedback, type Feedback } from "@/types/types";
+import {
+  SentimentAnalysisGroup,
+  type SentimentAnalysisResult,
+} from "@/types/sentimentAnalysisResult";
 
 export const USER_ROLE: "user" | "admin" = "user";
 
@@ -34,7 +37,7 @@ export const ADMIN_PAGE_LINKS = [
 ];
 
 export const FEEDBACK_PAGE_LIMIT = 20;
-export const FAKE_PROCESSED_FEEDBACK: Feedback[] = [
+export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   {
     id: "5a55c9dc-b583-486f-95d9-6f0043e45c61",
     content: "dmrxusnse xgiva brf myysdtq dama jimy sbgm",
@@ -291,7 +294,7 @@ export const USER_DASHBOARD_TABS = ["table", "grouped"];
 
 export const TABLE_PAGINATION_LIMIT = 30;
 
-export const GROUPED_FEEDBACK_DATA: GroupedFeedback[] = [
+export const GROUPED_FEEDBACK_DATA: SentimentAnalysisGroup[] = [
   {
     id: "group-1-customer-service-issues",
     groupName: "Customer Service Issues",

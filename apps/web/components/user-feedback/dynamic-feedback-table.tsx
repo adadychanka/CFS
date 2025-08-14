@@ -12,10 +12,10 @@ import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { formatDateByYearMonthDays } from "@/utils/dateUtils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
-import { Feedback } from "@/types/types";
+import { SentimentAnalysisResult } from "@/types/sentimentAnalysisResult";
 
 type Props = {
-  feedbackList: Feedback[];
+  feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
 };

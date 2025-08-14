@@ -1,5 +1,5 @@
 import { FAKE_PROCESSED_FEEDBACK } from "@/constants/constants";
-import { Sentiment } from "@/shared/sentiment-types";
+import { Sentiment } from "@/types/sentimentAnalysisResult";
 
 function getFeedbackCategory(feedback_type: Sentiment) {
   return FAKE_PROCESSED_FEEDBACK.filter(
