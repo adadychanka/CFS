@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
 } from "@repo/ui/components/table";
 import {
   FAKE_PROCESSED_FEEDBACK,
-  FEEDBACK_PAGE_LIMIT,
+  FEEDBACK_PAGE_LIMIT, TABLE_PAGINATION_LIMIT,
 } from "@/constants/constants";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { formatDateByYearMonthDays } from "@/utils/dateUtils";
@@ -28,14 +28,13 @@ import {
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
-  const totalPages = 30;
   const router = useRouter();
 
   const currentPage = Number(searchParams.get("page")) || 1;
 
   // Redirect if the page is out of bounds
   useEffect(() => {
-    if (currentPage < 1 || currentPage > totalPages) {
+    if (currentPage < 1 || currentPage > TABLE_PAGINATION_LIMIT) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", "1");
       router.replace(`?${params.toString()}`);
@@ -48,20 +47,21 @@ const FeedbackTable = () => {
     return `?${params.toString()}`;
   };
 
+  // Fake loading time
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, []);
 
-  const renderPageNumbers = () => {
+  const paginationNumbers = useMemo(() => {
     const window = 1; // pages around current
     const pages: (number | "dots")[] = [];
 
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    if (TABLE_PAGINATION_LIMIT <= 7) {
+      for (let i = 1; i <= TABLE_PAGINATION_LIMIT; i++) pages.push(i);
     } else {
-      for (let page = 1; page <= totalPages; page++) {
+      for (let page = 1; page <= TABLE_PAGINATION_LIMIT; page++) {
         // Start zone
         if (currentPage < 5 && page <= 5) {
           pages.push(page);
@@ -75,13 +75,13 @@ const FeedbackTable = () => {
         }
 
         // End zone
-        if (currentPage > totalPages - 4 && page >= totalPages - 4) {
+        if (currentPage > TABLE_PAGINATION_LIMIT - 4 && page >= TABLE_PAGINATION_LIMIT - 4) {
           pages.push(page);
           continue;
         }
 
         // Always include first and last page
-        if (page === 1 || page === totalPages) {
+        if (page === 1 || page === TABLE_PAGINATION_LIMIT) {
           pages.push(page);
           continue;
         }
@@ -93,29 +93,8 @@ const FeedbackTable = () => {
       }
     }
 
-    return pages.map((p, idx) =>
-      p === "dots" ? (
-        <span
-          key={`dots-${idx}`}
-          aria-hidden="true"
-          className="min-w-9 min-h-9 text-center"
-        >
-          …
-        </span>
-      ) : (
-        <PaginationLink
-          key={p}
-          isActive={currentPage === p}
-          asChild
-          aria-label={`Go to page ${p}`}
-        >
-          <Link href={getPageLink(p)} scroll={false}>
-            {p}
-          </Link>
-        </PaginationLink>
-      ),
-    );
-  };
+    return pages
+  }, [currentPage]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -166,18 +145,39 @@ const FeedbackTable = () => {
           </TableBody>
         </Table>
       </div>
-      {totalPages > 1 && (
+      {TABLE_PAGINATION_LIMIT > 1 && (
         <div className="mt-4 flex justify-center gap-1">
           <PaginationPreviousWithLink
             href={getPageLink(currentPage - 1)}
             disabled={currentPage === 1}
           />
 
-          {renderPageNumbers()}
+          {paginationNumbers.map((p, idx) =>
+              p === "dots" ? (
+                <span
+                  key={`dots-${idx}`}
+                  aria-hidden="true"
+                  className="min-w-9 min-h-9 text-center"
+                >
+          …
+        </span>
+              ) : (
+                <PaginationLink
+                  key={p}
+                  isActive={currentPage === p}
+                  asChild
+                  aria-label={`Go to page ${p}`}
+                >
+                  <Link href={getPageLink(p)} scroll={false}>
+                    {p}
+                  </Link>
+                </PaginationLink>
+              ),
+          )}
 
           <PaginationNextWithLink
             href={getPageLink(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === TABLE_PAGINATION_LIMIT}
           />
         </div>
       )}

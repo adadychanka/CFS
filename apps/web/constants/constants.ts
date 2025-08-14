@@ -255,3 +255,5 @@ export const FAKE_PROCESSED_FEEDBACK: Feedback[] = [
   },
 ];
 export const USER_DASHBOARD_TABS = ["table", "grouped"];
+
+export const TABLE_PAGINATION_LIMIT = 30;
