@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/components/button";
 import { Plus, SquareTerminal } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { manualFeedbackSchema } from "@/schemas/manualFeedback.schema";
+import { manualFeedbackSchema } from "@/schemas/manual-feedback.schema";
 import { memo } from "react";
 import { TEST_TEXTAREA_TEXT } from "@/constants/constants";
 

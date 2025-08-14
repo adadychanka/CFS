@@ -4,6 +4,7 @@ import {
   FEEDBACK_MAX_LENGTH,
   FEEDBACK_MIN_LENGTH,
 } from "@/constants/constants";
+import { MANUAL_FEEDBACK_ERRORS } from "@/constants/errors";
 
 export const manualFeedbackSchema = z
   .object({
@@ -18,7 +19,7 @@ export const manualFeedbackSchema = z
     if (lines.length === 0) {
       ctx.addIssue({
         path: ["feedback"],
-        message: "Please enter at least one feedback.",
+        message: MANUAL_FEEDBACK_ERRORS.REQUIRED,
         code: z.ZodIssueCode.custom,
       });
     }
@@ -26,7 +27,7 @@ export const manualFeedbackSchema = z
     if (lines.length > FEEDBACK_MAX_ITEMS) {
       ctx.addIssue({
         path: ["feedback"],
-        message: `You can only submit up to ${FEEDBACK_MAX_ITEMS} feedback at once.`,
+        message: MANUAL_FEEDBACK_ERRORS.MAX_ITEMS,
         code: z.ZodIssueCode.custom,
       });
     }
@@ -35,7 +36,7 @@ export const manualFeedbackSchema = z
       if (line.length < FEEDBACK_MIN_LENGTH) {
         ctx.addIssue({
           path: ["feedback"],
-          message: `Each feedback must be at least ${FEEDBACK_MIN_LENGTH} characters.`,
+          message: MANUAL_FEEDBACK_ERRORS.MIN_LENGTH,
           code: z.ZodIssueCode.custom,
         });
         break;
@@ -43,7 +44,7 @@ export const manualFeedbackSchema = z
       if (line.length > FEEDBACK_MAX_LENGTH) {
         ctx.addIssue({
           path: ["feedback"],
-          message: `Each feedback must be no longer than ${FEEDBACK_MAX_LENGTH} characters.`,
+          message: MANUAL_FEEDBACK_ERRORS.MAX_LENGTH,
           code: z.ZodIssueCode.custom,
         });
         break;
