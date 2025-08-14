@@ -2,22 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@repo/ui/components/table";
-import {
   FAKE_PROCESSED_FEEDBACK,
   FEEDBACK_PAGE_LIMIT,
   TABLE_PAGINATION_LIMIT,
 } from "@/constants/constants";
-import FeedbackBadge from "@/components/user-feedback/feedback-badge";
-import { formatDateByYearMonthDays } from "@/utils/dateUtils";
-import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
-import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Pagination,
@@ -29,6 +17,7 @@ import {
   PaginationNextWithLink,
   PaginationPreviousWithLink,
 } from "@/components/user-feedback/pagination-with-link";
+import DynamicFeedbackTable from "./dynamic-feedback-table";
 
 const FeedbackTable = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -107,51 +96,11 @@ const FeedbackTable = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
-        <Table className="min-w-[600px]">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[300px]">Summary</TableHead>
-              <TableHead className="w-[100px] text-center">Sentiment</TableHead>
-              <TableHead className="w-[100px] text-center">
-                Confidence
-              </TableHead>
-              <TableHead className="min-w-[200px]">Content</TableHead>
-              <TableHead className="w-[120px]">Created At</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
-              [...Array(FEEDBACK_PAGE_LIMIT)].map((_, i) => (
-                <SkeletonFeedbackItem key={i} />
-              ))
-            ) : FAKE_PROCESSED_FEEDBACK.length === 0 ? (
-              <NoFeedbackMessage />
-            ) : (
-              FAKE_PROCESSED_FEEDBACK.slice(0, FEEDBACK_PAGE_LIMIT).map(
-                (fd) => (
-                  <TableRow key={fd.id} className="odd:bg-muted/50">
-                    <TableCell>{fd.summary}</TableCell>
-                    <TableCell className="text-center">
-                      <FeedbackBadge sentiment={fd.sentiment} />
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {fd.confidence}%
-                    </TableCell>
-                    <TableCell
-                      className="max-w-[300px] truncate"
-                      title={fd.content}
-                    >
-                      {fd.content}
-                    </TableCell>
-                    <TableCell>
-                      {formatDateByYearMonthDays(fd.created_at)}
-                    </TableCell>
-                  </TableRow>
-                ),
-              )
-            )}
-          </TableBody>
-        </Table>
+        <DynamicFeedbackTable
+          isLoading={isLoading}
+          feedbackList={FAKE_PROCESSED_FEEDBACK}
+          feedbackLimit={FEEDBACK_PAGE_LIMIT}
+        />
       </div>
       {TABLE_PAGINATION_LIMIT > 1 && (
         <Pagination>

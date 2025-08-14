@@ -11,6 +11,7 @@ import FeedbackTable from "@/components/user-feedback/feedback-table";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
+import GroupedFeedback from "./grouped-feedback";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const SwitchTableCollapsedTabs = () => {
         <FeedbackTable />
       </TabsContent>
       <TabsContent value="grouped">
-        <h2>☘️ Good luck there with collapses</h2>
+        <GroupedFeedback/>
       </TabsContent>
     </Tabs>
   );
