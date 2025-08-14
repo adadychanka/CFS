@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,7 +11,8 @@ import {
 } from "@repo/ui/components/table";
 import {
   FAKE_PROCESSED_FEEDBACK,
-  FEEDBACK_PAGE_LIMIT, TABLE_PAGINATION_LIMIT,
+  FEEDBACK_PAGE_LIMIT,
+  TABLE_PAGINATION_LIMIT,
 } from "@/constants/constants";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { formatDateByYearMonthDays } from "@/utils/dateUtils";
@@ -75,7 +76,10 @@ const FeedbackTable = () => {
         }
 
         // End zone
-        if (currentPage > TABLE_PAGINATION_LIMIT - 4 && page >= TABLE_PAGINATION_LIMIT - 4) {
+        if (
+          currentPage > TABLE_PAGINATION_LIMIT - 4 &&
+          page >= TABLE_PAGINATION_LIMIT - 4
+        ) {
           pages.push(page);
           continue;
         }
@@ -93,7 +97,7 @@ const FeedbackTable = () => {
       }
     }
 
-    return pages
+    return pages;
   }, [currentPage]);
 
   return (
@@ -153,26 +157,26 @@ const FeedbackTable = () => {
           />
 
           {paginationNumbers.map((p, idx) =>
-              p === "dots" ? (
-                <span
-                  key={`dots-${idx}`}
-                  aria-hidden="true"
-                  className="min-w-9 min-h-9 text-center"
-                >
-          …
-        </span>
-              ) : (
-                <PaginationLink
-                  key={p}
-                  isActive={currentPage === p}
-                  asChild
-                  aria-label={`Go to page ${p}`}
-                >
-                  <Link href={getPageLink(p)} scroll={false}>
-                    {p}
-                  </Link>
-                </PaginationLink>
-              ),
+            p === "dots" ? (
+              <span
+                key={`dots-${idx}`}
+                aria-hidden="true"
+                className="min-w-9 min-h-9 text-center"
+              >
+                …
+              </span>
+            ) : (
+              <PaginationLink
+                key={p}
+                isActive={currentPage === p}
+                asChild
+                aria-label={`Go to page ${p}`}
+              >
+                <Link href={getPageLink(p)} scroll={false}>
+                  {p}
+                </Link>
+              </PaginationLink>
+            ),
           )}
 
           <PaginationNextWithLink
