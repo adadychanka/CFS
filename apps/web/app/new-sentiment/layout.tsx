@@ -1,9 +1,9 @@
 "use client";
 
 import { type ReactNode } from "react";
-import Header from "@/components/header";
 import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
 import { usePathname, useRouter } from "next/navigation";
+import Header from "@repo/ui/components/header";
 
 const tabs = [
   { tab: "manual", url: "/new-sentiment/manual", label: "Manual Entry" },

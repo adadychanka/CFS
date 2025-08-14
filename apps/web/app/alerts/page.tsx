@@ -1,6 +1,5 @@
-import Header from "@/components/header";
-import React from "react";
 import { type Metadata } from "next";
+import Header from "@repo/ui/components/header";
 
 export const metadata: Metadata = {
   title: "Alerts",

@@ -1,5 +1,5 @@
-import Header from "@/components/header";
 import { type Metadata } from "next";
+import Header from "@repo/ui/components/header";
 
 export const metadata: Metadata = {
   title: "Settings",
