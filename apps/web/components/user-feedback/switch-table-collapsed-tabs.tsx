@@ -53,7 +53,7 @@ const SwitchTableCollapsedTabs = () => {
         <FeedbackTable />
       </TabsContent>
       <TabsContent value="grouped">
-        <GroupedFeedback/>
+        <GroupedFeedback />
       </TabsContent>
     </Tabs>
   );

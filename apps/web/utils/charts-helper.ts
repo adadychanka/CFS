@@ -13,7 +13,6 @@ export function getSentimentsData() {
   const negative = getFeedbackCategory("negative").length;
   const neutral = getFeedbackCategory("neutral").length;
   const unknown = getFeedbackCategory("unknown").length;
-  console.log(positive, negative, negative, unknown, FAKE_PROCESSED_FEEDBACK);
 
   return [positive, negative, neutral, unknown];
 }

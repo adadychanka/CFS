@@ -19,8 +19,6 @@ const hasAllowedFileCount = (files: File[]) => {
 };
 
 function areThereDuplicateFiles(storedFiles: File[], newFiles: File[]) {
-  console.log(storedFiles, newFiles);
-
   const storedNames = new Set(storedFiles.map((file) => file.name));
   return newFiles.some((file) => storedNames.has(file.name));
 }
