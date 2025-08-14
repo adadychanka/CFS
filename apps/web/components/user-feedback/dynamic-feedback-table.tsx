@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@repo/ui/components/table";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
-import { formatDateByYearMonthDays } from "@/utils/dateUtils";
+import { formatCreatedAtDate } from "@/utils/dateUtils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentimentAnalysisResult";
@@ -59,9 +59,7 @@ function DynamicFeedbackTable({
               >
                 {feedback.content}
               </TableCell>
-              <TableCell>
-                {formatDateByYearMonthDays(feedback.created_at)}
-              </TableCell>
+              <TableCell>{formatCreatedAtDate(feedback.created_at)}</TableCell>
             </TableRow>
           ))
         )}
