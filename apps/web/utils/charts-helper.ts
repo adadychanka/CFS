@@ -1,9 +1,9 @@
 import { FAKE_PROCESSED_FEEDBACK } from "@/constants/constants";
 import { Sentiment } from "@/types/sentimentAnalysisResult";
 
-function getFeedbackCategory(feedback_type: Sentiment) {
+function getFeedbackCategory(feedbackType: Sentiment) {
   return FAKE_PROCESSED_FEEDBACK.filter(
-    (feedback) => feedback.sentiment === feedback_type,
+    (feedback) => feedback.sentiment === feedbackType,
   );
 }
 
