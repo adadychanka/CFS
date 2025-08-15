@@ -1,3 +1,4 @@
+import React from "react";
 import { SidebarTrigger } from "@repo/ui/components/sidebar";
 import { Separator } from "@repo/ui/components/separator";
 
@@ -13,7 +14,7 @@ const Header = ({ title }: Props) => {
         orientation="vertical"
         className="mr-2 data-[orientation=vertical]:h-4"
       />
-      <p>{title}</p>
+      <h1>{title}</h1>
     </header>
   );
 };
