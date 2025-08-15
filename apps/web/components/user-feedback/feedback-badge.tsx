@@ -1,5 +1,5 @@
 import { Badge } from "@repo/ui/components/badge";
-import { type Sentiment } from "@/types/sentimentAnalysisResult";
+import { type Sentiment } from "@/types/sentiment-analysis-result";
 
 const sentimentColors: Record<Sentiment, string> = {
   positive: "bg-green-200 text-green-800",
@@ -11,10 +11,10 @@ const sentimentColors: Record<Sentiment, string> = {
 const FeedbackBadge = ({ sentiment }: { sentiment: Sentiment }) => {
   return (
     <Badge
-      className={`w-[80px] text-center ${sentimentColors[sentiment]}`}
+      className={`w-[80px] text-center ${sentimentColors[sentiment]} capitalize`}
       variant="secondary"
     >
-      {sentiment.charAt(0).toUpperCase() + sentiment.slice(1)}
+      {sentiment}
     </Badge>
   );
 };

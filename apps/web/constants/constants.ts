@@ -1,7 +1,7 @@
 import {
   SentimentAnalysisGroup,
   type SentimentAnalysisResult,
-} from "@/types/sentimentAnalysisResult";
+} from "@/types/sentiment-analysis-result";
 
 export const USER_ROLE: "user" | "admin" = "user";
 

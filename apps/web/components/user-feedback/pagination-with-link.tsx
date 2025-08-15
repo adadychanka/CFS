@@ -33,9 +33,8 @@ export function PaginationPreviousWithLink({
       ) : (
         <Link
           className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
-          href={href!}
+          href={href}
           scroll={false}
-          passHref
         >
           <ChevronLeftIcon />
           <span className="hidden sm:block">Previous</span>
@@ -76,7 +75,6 @@ export function PaginationNextWithLink({
           className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
           href={href}
           scroll={false}
-          passHref
         >
           <span className="hidden sm:block">Next</span>
           <ChevronRightIcon />
