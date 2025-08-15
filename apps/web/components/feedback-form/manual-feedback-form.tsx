@@ -18,6 +18,7 @@ import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab"
 import { manualFeedbackSchema } from "@/schemas/manual-feedback.schema";
 import { memo } from "react";
 import { TEST_TEXTAREA_TEXT } from "@/constants/constants";
+import {normalizeFeedbackEntriesFromInput} from "@/utils/normalize-feedback-entries-from-input";
 
 type Props = {
   onAddFeedback: (feedback: PreviewFeedback[]) => void;
@@ -30,17 +31,10 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
   });
 
   const onSubmit = (data: z.infer<typeof manualFeedbackSchema>) => {
-    const feedback = data.feedback
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((item) => ({
-        id: Math.random().toString(36).slice(2),
-        feedback: item,
-      }));
+    const normalizedFeedback = normalizeFeedbackEntriesFromInput(data.feedback);
 
-    if (feedback.length) {
-      onAddFeedback(feedback);
+    if (normalizedFeedback.length) {
+      onAddFeedback(normalizedFeedback);
       form.reset({ feedback: "" });
     }
   };

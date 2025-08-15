@@ -33,6 +33,8 @@ const AppSidebar = ({ items }: Props) => {
   const { setOpenMobile } = useSidebar();
 
   return (
+      <nav aria-label="Primary navigation">
+
     <Sidebar>
       <SidebarHeader>
         <SidebarLogo />
@@ -56,6 +58,7 @@ const AppSidebar = ({ items }: Props) => {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
+      </nav>
   );
 };
 

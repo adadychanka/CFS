@@ -21,7 +21,7 @@ const ManualFeedbackTab = () => {
     setFeedback((prev) => prev.filter((e) => e.id !== id));
   }, []);
 
-  const handleClearFeedbacks = useCallback(() => {
+  const handleClearFeedback = useCallback(() => {
     setFeedback([]);
   }, []);
 
@@ -34,7 +34,7 @@ const ManualFeedbackTab = () => {
       />
       <ManualFeedbackSubmitButton
         feedback={feedback}
-        onClearFeedback={handleClearFeedbacks}
+        onClearFeedback={handleClearFeedback}
       />
     </div>
   );

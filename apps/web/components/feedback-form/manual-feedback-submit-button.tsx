@@ -31,11 +31,11 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
 
   return (
     <div className="pt-4 flex gap-8">
-      <p className="flex-1 text-red-600 mb-2">{error && error}</p>
+      <p className="flex-1 text-red-600 mb-2">{error}</p>
 
       <Button onClick={handleSubmit} disabled={loading}>
         <Send />
-        {loading ? "Analyze..." : "Analyze feedback"}
+        {loading ? "Analyzing..." : "Analyze feedback"}
       </Button>
     </div>
   );
