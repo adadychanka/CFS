@@ -2,6 +2,7 @@ import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
 import ChartWrapper from "@/components/e-charts/chart-wrapper";
 import { type Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -33,7 +34,10 @@ export default function Home() {
       <div className="w-full max-w-[1280px] mx-auto p-4">
         <ChartWrapper />
 
-        <SwitchTableCollapsedTabs />
+        {/* TODO: need custom loading in the future*/}
+        <Suspense fallback={<p>Loading...</p>}>
+          <SwitchTableCollapsedTabs />
+        </Suspense>
       </div>
     </>
   );
