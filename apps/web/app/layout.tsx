@@ -3,13 +3,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
 import AppSidebar from "@/components/app-sidebar";
+import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
 import {
+  USER_ROLE,
   ADMIN_PAGE_LINKS,
   USER_PAGE_LINKS,
-  USER_ROLE,
-} from "@/constants/contants";
+} from "@/constants/constants";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -42,7 +43,7 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar items={sidebarLinks} />
-            <main className="w-full">{children}</main>
+            <main className="w-full pb-16">{children}</main>
           </SidebarProvider>
         </Providers>
       </body>
