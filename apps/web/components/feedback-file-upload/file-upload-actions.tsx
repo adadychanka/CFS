@@ -9,7 +9,7 @@ type Props = {
 function FileUploadActions({ onClear }: Props) {
   return (
     <div className="mt-4 flex gap-2">
-      <Button variant={"outline"} type="button" onClick={onClear}>
+      <Button variant={"outline"} type="reset" onClick={onClear}>
         <Trash /> Clear files
       </Button>
       <Button>

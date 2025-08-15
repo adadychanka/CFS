@@ -15,6 +15,7 @@ function PreviewFiles({ files, onDeleteSingleFile }: Props) {
           <span className="truncate w-[400px] inline-block">{file.name}</span>
           <Button
             variant={"ghost"}
+            aria-label="Delete file"
             onClick={() => onDeleteSingleFile(file.name)}
           >
             <LucideTrash />

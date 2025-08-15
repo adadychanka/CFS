@@ -1,6 +1,6 @@
 "use client";
 
-import { EChartOption } from "@/components/e-charts/types";
+import type { EChartOption } from "@/components/e-charts/types";
 import { getSentimentsData } from "@/utils/charts-helper";
 
 const CHART_CATEGORIES = ["Positive", "Negative", "Unknown", "Neutral"];

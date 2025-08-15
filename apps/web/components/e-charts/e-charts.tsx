@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { EChartOption } from "./types";
+import type { EChartOption } from "./types";
 import { useChart } from "@/hooks/useChart";
 
 type Props = {

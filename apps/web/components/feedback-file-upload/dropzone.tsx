@@ -5,6 +5,7 @@ import { FileUpIcon } from "lucide-react";
 import PreviewFiles from "./preview-files";
 import FileUploadActions from "./file-upload-actions";
 import { useCustomDropzone } from "@/hooks/useCustomDropzone";
+import { cn } from "@repo/ui/lib/utils";
 
 function Dropzone() {
   const {
@@ -17,7 +18,10 @@ function Dropzone() {
     handleDeleteSingleFile,
   } = useCustomDropzone();
 
-  const className = `p-16 flex items-center justify-center mt-1 border border-neutral-200 ${isDragActive ? "bg-gray-100" : ""}`;
+  const className = cn(
+    "p-16 flex items-center justify-center mt-1 border border-neutral-200",
+    { "bg-gray-100": isDragActive },
+  );
 
   return (
     <form>
