@@ -7,4 +7,4 @@ export const normalizeFeedbackEntriesFromInput = (feedback: string) => {
       id: crypto.randomUUID(),
       feedback: item,
     }));
-}
+};

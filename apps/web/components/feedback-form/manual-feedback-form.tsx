@@ -18,7 +18,7 @@ import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab"
 import { manualFeedbackSchema } from "@/schemas/manual-feedback.schema";
 import { memo } from "react";
 import { TEST_TEXTAREA_TEXT } from "@/constants/constants";
-import {normalizeFeedbackEntriesFromInput} from "@/utils/normalize-feedback-entries-from-input";
+import { normalizeFeedbackEntriesFromInput } from "@/utils/normalize-feedback-entries-from-input";
 
 type Props = {
   onAddFeedback: (feedback: PreviewFeedback[]) => void;

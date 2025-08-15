@@ -33,32 +33,34 @@ const AppSidebar = ({ items }: Props) => {
   const { setOpenMobile } = useSidebar();
 
   return (
-      <nav aria-label="Primary navigation">
-
-    <Sidebar>
-      <SidebarHeader>
-        <SidebarLogo />
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url} onClick={() => setOpenMobile(false)}>
-                      {/*<item.icon />*/}
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
-      </nav>
+    <nav aria-label="Primary navigation">
+      <Sidebar>
+        <SidebarHeader>
+          <SidebarLogo />
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link
+                        href={item.url}
+                        onClick={() => setOpenMobile(false)}
+                      >
+                        {/*<item.icon />*/}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </nav>
   );
 };
 
