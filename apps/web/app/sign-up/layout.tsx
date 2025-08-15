@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
 import React from "react";
+import { METADATA } from "@/constants/metadata";
 
 type Props = {
   children: React.ReactNode;
@@ -20,8 +21,8 @@ export const metadata: Metadata = {
     title: "Sign Up | FeedbackSentiment",
     description:
       "Join FeedbackSentiment to get sentiment insights from customer feedback and make data-driven decisions.",
-    url: "https://feedbacksentiment.com/signup",
-    siteName: "FeedbackSentiment",
+    url: METADATA.URL,
+    siteName: METADATA.siteName,
     type: "website",
   },
 };
