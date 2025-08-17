@@ -3,6 +3,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -13,12 +14,9 @@ import {
 } from "@repo/ui/components/sidebar";
 import Link from "next/link";
 import SidebarLogo from "@/components/logo/sidebar-logo";
-import {
-  ADMIN_PAGE_LINKS,
-  USER_PAGE_LINKS,
-  USER_ROLE,
-} from "@/constants/constants";
-import { usePathname } from "next/navigation";
+import {ADMIN_PAGE_LINKS, USER_PAGE_LINKS, USER_ROLE,} from "@/constants/constants";
+import {usePathname} from "next/navigation";
+import {LogOut} from "lucide-react";
 
 const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
@@ -66,6 +64,16 @@ const AppSidebar = () => {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <LogOut />
+                <span>Logout</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
       </Sidebar>
     </nav>
   );
