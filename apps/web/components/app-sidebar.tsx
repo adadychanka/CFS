@@ -18,9 +18,11 @@ import {
   USER_PAGE_LINKS,
   USER_ROLE,
 } from "@/constants/constants";
+import { usePathname } from "next/navigation";
 
 const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
+  const pathname = usePathname();
 
   const isAdmin = USER_ROLE === "admin";
   const sidebarLinks = isAdmin ? ADMIN_PAGE_LINKS : USER_PAGE_LINKS;
@@ -40,7 +42,15 @@ const AppSidebar = () => {
 
                   return (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton
+                        isActive={
+                          item.url === "/"
+                            ? pathname === "/"
+                            : pathname.startsWith(item.url + "/") ||
+                              pathname === item.url
+                        }
+                        asChild
+                      >
                         <Link
                           href={item.url}
                           onClick={() => setOpenMobile(false)}
