@@ -13,24 +13,17 @@ import {
 } from "@repo/ui/components/sidebar";
 import Link from "next/link";
 import SidebarLogo from "@/components/logo/sidebar-logo";
+import {
+  ADMIN_PAGE_LINKS,
+  USER_PAGE_LINKS,
+  USER_ROLE,
+} from "@/constants/constants";
 
-type SidebarItem = {
-  title: string;
-  url: string;
-  // icon: LucideIcon;
-};
-
-type Props = {
-  items: SidebarItem[];
-};
-
-/**
- * Application sidebar
- * @param items
- * @constructor
- */
-const AppSidebar = ({ items }: Props) => {
+const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
+
+  const isAdmin = USER_ROLE === "admin";
+  const sidebarLinks = isAdmin ? ADMIN_PAGE_LINKS : USER_PAGE_LINKS;
 
   return (
     <nav aria-label="Primary navigation">
@@ -42,19 +35,23 @@ const AppSidebar = ({ items }: Props) => {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={item.url}
-                        onClick={() => setOpenMobile(false)}
-                      >
-                        {/*<item.icon />*/}
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {sidebarLinks.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link
+                          href={item.url}
+                          onClick={() => setOpenMobile(false)}
+                        >
+                          <Icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
