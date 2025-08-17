@@ -14,9 +14,13 @@ import {
 } from "@repo/ui/components/sidebar";
 import Link from "next/link";
 import SidebarLogo from "@/components/logo/sidebar-logo";
-import {ADMIN_PAGE_LINKS, USER_PAGE_LINKS, USER_ROLE,} from "@/constants/constants";
-import {usePathname} from "next/navigation";
-import {LogOut} from "lucide-react";
+import {
+  ADMIN_PAGE_LINKS,
+  USER_PAGE_LINKS,
+  USER_ROLE,
+} from "@/constants/constants";
+import { usePathname } from "next/navigation";
+import LogoutButton from "@/components/auth/logout-button";
 
 const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
@@ -67,10 +71,7 @@ const AppSidebar = () => {
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton>
-                <LogOut />
-                <span>Logout</span>
-              </SidebarMenuButton>
+              <LogoutButton />
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
