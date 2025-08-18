@@ -49,3 +49,9 @@
 
 - Show **success toast notification**
 - Optional: Redirect after completion
+
+### Online chart
+
+You can [see the online chart here](https://excalidraw.com/#json=fPhb7y7GZohHdUp6Ak_Qr,x6rsZtl1MYGKhDS3nmRC_A).
+
+⚠️ Note it might erase your existing charts on excalidraw.
