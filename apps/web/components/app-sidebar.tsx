@@ -38,16 +38,19 @@ const AppSidebar = () => {
             <SidebarGroupContent>
               <SidebarMenu>
                 {sidebarLinks.map((item) => {
-                  const isActive =
-                    item.url === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(item.url + "/") ||
-                        pathname === item.url;
-                  const Icon = isActive ? item.icon.solid : item.icon.outline;
+                  const Icon = item.icon;
 
                   return (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton isActive={isActive} asChild>
+                      <SidebarMenuButton
+                        isActive={
+                          item.url === "/"
+                            ? pathname === "/"
+                            : pathname.startsWith(item.url + "/") ||
+                              pathname === item.url
+                        }
+                        asChild
+                      >
                         <Link
                           href={item.url}
                           onClick={() => setOpenMobile(false)}
