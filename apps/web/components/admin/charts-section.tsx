@@ -1,8 +1,8 @@
 "use client";
 
 import ApiUsageChart from "@/components/e-charts/api-usage-chart";
-import ErrorsChart from "@/components/e-charts/errors-chart";
 import AnalyzedSentiments from "@/components/e-charts/analyzed-sentiments";
+import ErrorsChart from "@/components/e-charts/errors-chart";
 
 const ChartsSection = () => {
   return (
