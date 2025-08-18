@@ -6,7 +6,7 @@ import ErrorsChart from "@/components/e-charts/errors-chart";
 
 const ChartsSection = () => {
   return (
-    <div className="p-4 grid grid-cols-2 gap-4">
+    <div className="p-4 flex flex-wrap gap-4">
       <ApiUsageChart />
       <AnalyzedSentiments />
       <ErrorsChart />
