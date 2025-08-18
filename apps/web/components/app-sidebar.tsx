@@ -13,8 +13,12 @@ import {
 } from "@repo/ui/components/sidebar";
 import Link from "next/link";
 import SidebarLogo from "@/components/logo/sidebar-logo";
-import {ADMIN_PAGE_LINKS, USER_PAGE_LINKS, USER_ROLE,} from "@/constants/constants";
-import {usePathname} from "next/navigation";
+import {
+  ADMIN_PAGE_LINKS,
+  USER_PAGE_LINKS,
+  USER_ROLE,
+} from "@/constants/constants";
+import { usePathname } from "next/navigation";
 
 const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
@@ -34,21 +38,16 @@ const AppSidebar = () => {
             <SidebarGroupContent>
               <SidebarMenu>
                 {sidebarLinks.map((item) => {
-                  const isActive =     item.url === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.url + "/") ||
-                    pathname === item.url;
-                  const Icon = isActive ? item.icon.solid : item.icon.outline
-
+                  const isActive =
+                    item.url === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.url + "/") ||
+                        pathname === item.url;
+                  const Icon = isActive ? item.icon.solid : item.icon.outline;
 
                   return (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        isActive={
-                          isActive
-                        }
-                        asChild
-                      >
+                      <SidebarMenuButton isActive={isActive} asChild>
                         <Link
                           href={item.url}
                           onClick={() => setOpenMobile(false)}
