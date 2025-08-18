@@ -4,6 +4,9 @@ import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {
   color: "#525252",
+  title: {
+    text: "Error History",
+  },
   xAxis: {
     type: "category",
     data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
