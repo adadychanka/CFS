@@ -1,6 +1,6 @@
-import { useDrawChart } from "@/hooks/useDrawChart";
 import { EChartOption } from "@/components/e-charts/types";
 import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
+import ECharts from "@/components/e-charts/e-charts";
 
 const testOptions: EChartOption = {
   color: "#a3a3a3",
@@ -26,11 +26,9 @@ const testOptions: EChartOption = {
 };
 
 const ErrorsChart = () => {
-  const { chartRef } = useDrawChart(testOptions);
-
   return (
     <NewChartWrapper>
-      <div ref={chartRef} className="w-full h-full"></div>
+      <ECharts options={testOptions} />
     </NewChartWrapper>
   );
 };
