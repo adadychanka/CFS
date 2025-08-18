@@ -1,8 +1,11 @@
+import {SentimentAnalysisGroup, type SentimentAnalysisResult,} from "@/types/sentiment-analysis-result";
 import {
-  SentimentAnalysisGroup,
-  type SentimentAnalysisResult,
-} from "@/types/sentiment-analysis-result";
-import { HomeIcon, Plus, Settings, TriangleAlert } from "lucide-react";
+  Cog6ToothIcon as SettingsOutline,
+  HomeIcon as HomeOutline,
+  PlusIcon as PlusOutline,
+} from "@heroicons/react/24/outline"
+
+import {Cog6ToothIcon as SettingsSolid, HomeIcon as HomeSolid, PlusIcon as PlusSolid,} from "@heroicons/react/24/solid"
 
 export const USER_ROLE: "user" | "admin" = "user";
 
@@ -10,32 +13,27 @@ export const USER_PAGE_LINKS = [
   {
     title: "Dashboard",
     url: "/",
-    icon: HomeIcon,
+    icon: { outline: HomeOutline, solid: HomeSolid },
   },
   {
     title: "New Sentiment",
     url: "/new-sentiment",
-    icon: Plus,
+    icon: { outline: PlusOutline, solid: PlusSolid },
   },
-];
+]
 
 export const ADMIN_PAGE_LINKS = [
   {
     title: "Dashboard",
     url: "/",
-    icon: HomeIcon,
-  },
-  {
-    title: "Alerts",
-    url: "/alerts",
-    icon: TriangleAlert,
+    icon: { outline: HomeOutline, solid: HomeSolid },
   },
   {
     title: "Settings",
     url: "/settings",
-    icon: Settings,
+    icon: { outline: SettingsOutline, solid: SettingsSolid },
   },
-];
+]
 
 export const FEEDBACK_PAGE_LIMIT = 20;
 export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [

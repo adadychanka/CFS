@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@heroicons/react": "2.2.0",
     "@hookform/resolvers": "^5.2.1",
     "@repo/ui": "workspace:*",
     "date-fns": "4.1.0",
