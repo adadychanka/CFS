@@ -1,5 +1,5 @@
-import { useDrawChart } from "@/hooks/useDrawChart";
-import { EChartOption } from "@/components/e-charts/types";
+import {useDrawChart} from "@/hooks/useDrawChart";
+import {EChartOption} from "@/components/e-charts/types";
 import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {
@@ -26,7 +26,7 @@ const ApiUsageChart = () => {
   const { chartRef } = useDrawChart(testOptions);
 
   return (
-    <NewChartWrapper className="@2xl:col-span-full @2xl:aspect-[5/2]">
+    <NewChartWrapper className="@2xl:col-span-full  @2xl:aspect-[5/2] @4xl:aspect-[3/1]">
       <div ref={chartRef} className="w-full h-full"></div>
     </NewChartWrapper>
   );
