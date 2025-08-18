@@ -4,6 +4,9 @@ import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {
   color: "#525252",
+  title: {
+    text: "API usage",
+  },
   xAxis: {
     type: "category",
     data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -23,7 +26,7 @@ const ApiUsageChart = () => {
   const { chartRef } = useDrawChart(testOptions);
 
   return (
-    <NewChartWrapper>
+    <NewChartWrapper className="@2xl:col-span-full @2xl:aspect-[5/2]">
       <div ref={chartRef} className="w-full h-full"></div>
     </NewChartWrapper>
   );

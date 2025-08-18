@@ -33,7 +33,7 @@ const Page = () => {
     <div>
       <Header title="Admin Dashboard" />
 
-      <div className="max-w-[1280px] mx-auto p-4">
+      <div className="w-full max-w-[1280px] mx-auto p-4 @container">
         <ChartsSection />
       </div>
     </div>
