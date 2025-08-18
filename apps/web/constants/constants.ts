@@ -2,17 +2,7 @@ import {
   SentimentAnalysisGroup,
   type SentimentAnalysisResult,
 } from "@/types/sentiment-analysis-result";
-import {
-  Cog6ToothIcon as SettingsOutline,
-  HomeIcon as HomeOutline,
-  PlusIcon as PlusOutline,
-} from "@heroicons/react/24/outline";
-
-import {
-  Cog6ToothIcon as SettingsSolid,
-  HomeIcon as HomeSolid,
-  PlusIcon as PlusSolid,
-} from "@heroicons/react/24/solid";
+import { HomeIcon, Plus, Settings, TriangleAlert } from "lucide-react";
 
 export const USER_ROLE: "user" | "admin" = "user";
 
@@ -20,12 +10,12 @@ export const USER_PAGE_LINKS = [
   {
     title: "Dashboard",
     url: "/",
-    icon: { outline: HomeOutline, solid: HomeSolid },
+    icon: HomeIcon,
   },
   {
     title: "New Sentiment",
     url: "/new-sentiment",
-    icon: { outline: PlusOutline, solid: PlusSolid },
+    icon: Plus,
   },
 ];
 
@@ -33,12 +23,17 @@ export const ADMIN_PAGE_LINKS = [
   {
     title: "Dashboard",
     url: "/",
-    icon: { outline: HomeOutline, solid: HomeSolid },
+    icon: HomeIcon,
+  },
+  {
+    title: "Alerts",
+    url: "/alerts",
+    icon: TriangleAlert,
   },
   {
     title: "Settings",
     url: "/settings",
-    icon: { outline: SettingsOutline, solid: SettingsSolid },
+    icon: Settings,
   },
 ];
 
