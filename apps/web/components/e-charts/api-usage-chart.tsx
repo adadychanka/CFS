@@ -1,5 +1,5 @@
-import {useDrawChart} from "@/hooks/useDrawChart";
-import {EChartOption} from "@/components/e-charts/types";
+import { useDrawChart } from "@/hooks/useDrawChart";
+import { EChartOption } from "@/components/e-charts/types";
 import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {

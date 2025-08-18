@@ -1,5 +1,5 @@
-import {ReactNode} from "react";
-import {cn} from "@repo/ui/lib/utils";
+import { ReactNode } from "react";
+import { cn } from "@repo/ui/lib/utils";
 
 const NewChartWrapper = ({
   className,
