@@ -3,6 +3,7 @@
 import { LogOut } from "lucide-react";
 import { SidebarMenuButton } from "@repo/ui/components/sidebar";
 import { useRouter } from "next/navigation";
+import { AUTH_MESSAGES } from "@/constants/response-messages";
 
 const LogoutButton = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const LogoutButton = () => {
         });
       }
     } catch (e) {
-      console.error(e);
+      console.error(AUTH_MESSAGES.LOGOUT.ERROR, e);
     } finally {
       localStorage.removeItem("token");
       router.replace("/log-in");
