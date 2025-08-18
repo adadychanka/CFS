@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
 import Header from "@repo/ui/components/header";
+import ChartsSection from "@/components/admin/charts-section";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -31,6 +32,10 @@ const Page = () => {
   return (
     <div>
       <Header title="Admin Dashboard" />
+
+      <div className="max-w-[1280px] mx-auto p-4">
+        <ChartsSection />
+      </div>
     </div>
   );
 };
