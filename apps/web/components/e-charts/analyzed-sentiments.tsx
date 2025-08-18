@@ -1,11 +1,13 @@
+"use client";
+
 import { useDrawChart } from "@/hooks/useDrawChart";
 import { EChartOption } from "@/components/e-charts/types";
 import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {
-  color: "#525252",
+  color: "#a3a3a3",
   title: {
-    text: "AI analysis",
+    text: "AI Analysis",
   },
   xAxis: {
     type: "category",
@@ -17,9 +19,10 @@ const testOptions: EChartOption = {
   },
   series: [
     {
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      data: [450, 520, 610, 700, 640, 390, 430],
       type: "line",
       areaStyle: {},
+      smooth: true,
     },
   ],
 };

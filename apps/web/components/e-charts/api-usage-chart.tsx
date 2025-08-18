@@ -3,12 +3,13 @@ import { EChartOption } from "@/components/e-charts/types";
 import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 
 const testOptions: EChartOption = {
-  color: "#525252",
+  color: "#a3a3a3",
   title: {
     text: "API usage",
   },
   xAxis: {
     type: "category",
+    boundaryGap: false,
     data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   },
   yAxis: {
@@ -16,8 +17,10 @@ const testOptions: EChartOption = {
   },
   series: [
     {
-      data: [14, 31, 14, 21, 13, 14, 26],
+      data: [1200, 1450, 1320, 1580, 1700, 1100, 1250],
       type: "line",
+      areaStyle: {},
+      smooth: true,
     },
   ],
 };
