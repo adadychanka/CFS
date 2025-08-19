@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
-import AppSidebar from "@/components/app-sidebar";
 import React from "react";
-
-import { SidebarProvider } from "@repo/ui/components/sidebar";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -32,12 +29,7 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>
-          <SidebarProvider>
-            <AppSidebar />
-            <main className="w-full pb-16">{children}</main>
-          </SidebarProvider>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
