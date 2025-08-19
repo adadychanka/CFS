@@ -57,7 +57,7 @@ function AuthForm({ variant }: Props) {
         }
       });
     } catch (error: unknown) {
-      console.log(error);
+      console.error(error);
 
       setServerError("An unexpected error occurred");
     }
