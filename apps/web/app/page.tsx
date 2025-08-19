@@ -1,6 +1,6 @@
 import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
-import ChartWrapper from "@/components/e-charts/chart-wrapper";
+import DashboardChartWrapper from "@/components/e-charts/dashboard-chart-wrapper";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 
@@ -32,7 +32,7 @@ export default function Home() {
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
-        <ChartWrapper />
+        <DashboardChartWrapper />
 
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>

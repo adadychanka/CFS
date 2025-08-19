@@ -1,5 +1,5 @@
 import { EChartOption } from "@/components/e-charts/types";
-import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
+import AdminChartWrapper from "@/components/e-charts/admin-chart-wrapper";
 import ECharts from "@/components/e-charts/e-charts";
 
 const testOptions: EChartOption = {
@@ -27,9 +27,9 @@ const testOptions: EChartOption = {
 
 const ApiUsageChart = () => {
   return (
-    <NewChartWrapper className="@2xl:col-span-full  @2xl:aspect-[5/2] @4xl:aspect-[3/1]">
+    <AdminChartWrapper className="@2xl:col-span-full  @2xl:aspect-[5/2] @4xl:aspect-[3/1]">
       <ECharts options={testOptions} />
-    </NewChartWrapper>
+    </AdminChartWrapper>
   );
 };
 
