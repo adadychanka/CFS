@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
 import type { EChartOption } from "./types";
-import { useChart } from "@/hooks/useChart";
+import { useDrawChart } from "@/hooks/useDrawChart";
 
 type Props = {
   options: EChartOption;
   isLoading?: boolean;
 };
 
-function ECharts({ isLoading }: Props) {
-  const { chartRef } = useChart(isLoading);
+function ECharts({ options, isLoading }: Props) {
+  const { chartRef } = useDrawChart(options, isLoading);
 
   return <div ref={chartRef} className="w-full h-full"></div>;
 }

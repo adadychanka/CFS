@@ -2,12 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
-import { useChartOptions } from "./useChartOptions";
+import { EChartOption } from "@/components/e-charts/types";
 
-const useChart = (isLoading?: boolean) => {
+/**
+ * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
+ *
+ * @example
+ * const { chartRef } = useDrawChart(options, isLoading);
+ * return <div ref={chartRef} className="w-full h-full" />;
+ */
+const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
-  const { options } = useChartOptions();
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
@@ -48,4 +54,4 @@ const useChart = (isLoading?: boolean) => {
   };
 };
 
-export { useChart };
+export { useDrawChart };

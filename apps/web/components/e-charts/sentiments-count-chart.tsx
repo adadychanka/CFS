@@ -1,7 +1,12 @@
 "use client";
 
-import type { EChartOption } from "@/components/e-charts/types";
+import type { EChartOption } from "./types";
+import { useDrawChart } from "@/hooks/useDrawChart";
 import { getSentimentsData } from "@/utils/charts-helper";
+
+type Props = {
+  isLoading?: boolean;
+};
 
 const CHART_CATEGORIES = ["Positive", "Negative", "Unknown", "Neutral"];
 
@@ -23,11 +28,10 @@ const DEFAULT_CHART_OPTIONS: EChartOption = {
   ],
 };
 
-const useChartOptions = () => {
-  //TODO Processing options will be here
-  return {
-    options: DEFAULT_CHART_OPTIONS,
-  };
-};
+function SentimentsCountChart({ isLoading }: Props) {
+  const { chartRef } = useDrawChart(DEFAULT_CHART_OPTIONS, isLoading);
 
-export { useChartOptions };
+  return <div ref={chartRef} className="w-full h-full"></div>;
+}
+
+export default SentimentsCountChart;
