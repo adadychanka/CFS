@@ -1,5 +1,3 @@
-"use client";
-
 import ApiUsageChart from "@/components/e-charts/api-usage-chart";
 import AnalyzedSentimentsChart from "@/components/e-charts/analyzed-sentiments-chart";
 import ErrorsChart from "@/components/e-charts/errors-chart";
