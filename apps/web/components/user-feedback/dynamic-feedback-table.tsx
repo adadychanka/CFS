@@ -18,12 +18,16 @@ type Props = {
   feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
+  error?: string | null;
+  onRetry?: () => void;
 };
 
 function DynamicFeedbackTable({
   feedbackList,
   isLoading,
   feedbackLimit,
+  error,
+  onRetry,
 }: Props) {
   return (
     <Table className="min-w-[600px]">
@@ -41,8 +45,10 @@ function DynamicFeedbackTable({
           [...Array(feedbackLimit)].map((_, i) => (
             <SkeletonFeedbackItem key={i} />
           ))
+        ) : error ? (
+          <NoFeedbackMessage type="error" onRetry={onRetry} />
         ) : feedbackList.length === 0 ? (
-          <NoFeedbackMessage />
+          <NoFeedbackMessage type="empty" />
         ) : (
           feedbackList.slice(0, feedbackLimit).map((feedback) => (
             <TableRow key={feedback.id} className="odd:bg-muted/50">
