@@ -4,8 +4,12 @@ import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 const FeedbackTable = () => {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,11 +19,11 @@ const FeedbackTable = () => {
     setError(null);
 
     try {
-      const response = await fetch("/api/feedback");
+      const response = await fetch(
+        `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+      );
 
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
 
       const result = await response.json();
 
@@ -46,7 +50,7 @@ const FeedbackTable = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     fetchData();
@@ -60,7 +64,7 @@ const FeedbackTable = () => {
           feedbackList={data}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error}
-          onRetry={fetchData} // retry button will call this
+          onRetry={fetchData}
         />
       </div>
       <FeedbackTablePagination />
