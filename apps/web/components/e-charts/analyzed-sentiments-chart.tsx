@@ -1,7 +1,7 @@
 "use client";
 
 import { EChartOption } from "@/components/e-charts/types";
-import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
+import AdminChartWrapper from "@/components/e-charts/admin-chart-wrapper";
 import ECharts from "@/components/e-charts/e-charts";
 
 const testOptions: EChartOption = {
@@ -29,9 +29,9 @@ const testOptions: EChartOption = {
 
 const AnalyzedSentimentsChart = () => {
   return (
-    <NewChartWrapper>
+    <AdminChartWrapper>
       <ECharts options={testOptions} />
-    </NewChartWrapper>
+    </AdminChartWrapper>
   );
 };
 

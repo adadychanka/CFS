@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@repo/ui/lib/utils";
 
-const NewChartWrapper = ({
+const AdminChartWrapper = ({
   className,
   children,
 }: {
@@ -20,4 +20,4 @@ const NewChartWrapper = ({
   );
 };
 
-export default NewChartWrapper;
+export default AdminChartWrapper;
