@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import Header from "@repo/ui/components/header";
 import { METADATA } from "@/constants/metadata";
 
 export const metadata: Metadata = {
@@ -23,9 +22,11 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
+  //TODO Add SideBar Provider Before using Header and Sidebar
   return (
     <>
-      <Header title="Alerts" />
+      {/* <Header title="Alerts" /> */}
+      <h2 className="text-lg">Alerts Page</h2>
     </>
   );
 };
