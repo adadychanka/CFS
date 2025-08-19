@@ -3,7 +3,7 @@ import NewChartWrapper from "@/components/e-charts/new-chart-wrapper";
 import ECharts from "@/components/e-charts/e-charts";
 
 const testOptions: EChartOption = {
-  color: "#a3a3a3",
+  color: "#525252",
   title: {
     text: "Error History",
   },
