@@ -52,7 +52,6 @@ const nextAuthInstance = NextAuth({
             );
 
             if (!response || !response.data) return null;
-            console.log(response.data);
 
             return {
               token: response.data.token,
