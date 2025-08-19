@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import { EChartOption } from "@/components/e-charts/types";
 
+/**
+ * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
+ *
+ * @example
+ * const { chartRef } = useDrawChart(options, isLoading);
+ * return <div ref={chartRef} className="w-full h-full" />;
+ */
 const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
