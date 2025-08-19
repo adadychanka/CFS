@@ -23,7 +23,7 @@ function AuthCard({ variant }: Props) {
         <CardTitle className="text-center text-xl">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <AuthForm />
+        <AuthForm variant={variant} />
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button variant="ghost" className="hover:bg-transparent">
