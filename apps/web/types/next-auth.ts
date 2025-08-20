@@ -9,3 +9,9 @@ export type UserCredentials = {
   email: string;
   password: string;
 };
+
+export type AuthResult = {
+  token: string;
+  role: string;
+  redirectTo: string;
+} | null;

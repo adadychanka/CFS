@@ -1,20 +1,64 @@
-import axios from "axios";
+class ApiClient {
+  private baseUrl: string;
+  private token: string | null = null;
 
-const api = axios.create({
-  baseURL: process.env!.API,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-// TODO: Add token dynamically
-
-api.interceptors.request.use((config) => {
-  const token = "";
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
   }
-  return config;
-});
+
+  setToken(token: string) {
+    this.token = token;
+  }
+
+  private getHeaders(): HeadersInit {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (this.token) {
+      headers["Authorization"] = `Bearer ${this.token}`;
+    }
+
+    return headers;
+  }
+
+  async get<T>(endpoint: string): Promise<T> {
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      headers: this.getHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `GET ${endpoint} failed: ${response.status}: ${response.statusText}w`,
+      );
+    }
+
+    return response.json();
+  }
+
+  async post<T>(endpoint: string, body: unknown): Promise<T> {
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: "POST",
+      headers: this.getHeaders(),
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `POST ${endpoint} failed: ${response.status}: ${response.statusText}`,
+      );
+    }
+
+    return response.json();
+  }
+}
+
+const API = process.env.NEXT_PUBLIC_API;
+
+if (!API) {
+  throw new Error("API URL is not found in Environment!");
+}
+
+const api = new ApiClient(API);
 
 export default api;

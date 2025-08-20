@@ -26,7 +26,7 @@ function AuthCard({ variant }: Props) {
         <AuthForm variant={variant} />
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button variant="ghost" className="hover:bg-transparent">
+        <Button variant="ghost" className="hover:bg-transparent gap-1">
           You can{" "}
           <Link href={link} className="text-blue-500">
             {linkText}
