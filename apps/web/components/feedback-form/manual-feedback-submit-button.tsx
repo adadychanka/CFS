@@ -19,14 +19,23 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setError(null);
     try {
       const feedbackOnlyString = feedback.map((item) => item.feedback);
-      await fetch("/api/feedback/manual", {
+
+      const res = await fetch("/api/feedback/manual", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ feedback: feedbackOnlyString }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Unknown error");
+        return;
+      }
+
       onClearFeedback();
-    } catch {
-      setError("Failed to upload feedback.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
     }
