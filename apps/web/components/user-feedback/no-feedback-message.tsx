@@ -21,6 +21,7 @@ const NoFeedbackMessage = ({ type, onRetry }: NoFeedbackMessageProps) => {
           variant="outline"
           onClick={onRetry}
           className="flex items-center gap-2"
+          aria-label="Retry loading sentiment analysis"
         >
           <RefreshCcw className="h-4 w-4" />
           Try again
@@ -29,7 +30,7 @@ const NoFeedbackMessage = ({ type, onRetry }: NoFeedbackMessageProps) => {
     </>
   ) : (
     <>
-      <p className="text-lg font-medium">No feedbacks found</p>
+      <p className="text-lg font-medium">No feedback found</p>
       <p className="text-sm text-neutral-600">
         Looks like there’s nothing here yet. Check back later or add some
         feedback.
