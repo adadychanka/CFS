@@ -37,7 +37,7 @@ export const ADMIN_PAGE_LINKS = [
   },
 ];
 
-export const FEEDBACK_PAGE_LIMIT = 3;
+export const FEEDBACK_PAGE_LIMIT = 20;
 export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   {
     id: "fbk_001",

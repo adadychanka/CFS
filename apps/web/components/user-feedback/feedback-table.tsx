@@ -31,6 +31,8 @@ const FeedbackTable = () => {
     fetcher,
   );
 
+  console.log(data);
+
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
@@ -42,7 +44,7 @@ const FeedbackTable = () => {
           onRetry={() => mutate()}
         />
       </div>
-      <FeedbackTablePagination />
+      {data && <FeedbackTablePagination limit={data.pagination.pages | 0} />}
     </div>
   );
 };
