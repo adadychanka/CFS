@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@repo/ui/components/button";
-import { Send } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { useState } from "react";
 
@@ -46,8 +46,8 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
       <p className="flex-1 text-red-600 mb-2">{error}</p>
 
       <Button onClick={handleSubmit} disabled={loading}>
-        <Send />
-        {loading ? "Analyzing..." : "Analyze feedback"}
+        <Sparkles />
+        {loading ? "Analyzing..." : <span>Analyze feedback</span>}
       </Button>
     </div>
   );
