@@ -37,17 +37,11 @@ export async function GET(req: NextRequest) {
     }
 
     if (res.status === 403) {
-      return NextResponse.json(
-        { message: "Forbidden. You do not have access to this resource." },
-        { status: 403 },
-      );
+      return NextResponse.json({ status: 403 });
     }
 
     if (res.status === 500) {
-      return NextResponse.json(
-        { message: "Internal Server Error" },
-        { status: 500 },
-      );
+      return NextResponse.json({ status: 500 });
     }
 
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
