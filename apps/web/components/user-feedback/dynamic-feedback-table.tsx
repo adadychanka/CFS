@@ -13,12 +13,13 @@ import { formatCreatedAtDate } from "@/utils/date-utils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
+import { FetchError } from "@/types/http";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
-  error?: string | null;
+  error?: FetchError | null;
   onRetry?: () => void;
 };
 

@@ -1,5 +1,6 @@
-// export type PaginationMeta = {
-//   totalItems: number;
-//   totalPages: number;
-//   currentPage: number;
-// };
+export type PaginationMeta = {
+  limit: number;
+  page: number;
+  total: number;
+  pages: number;
+};
