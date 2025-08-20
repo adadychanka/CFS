@@ -3,7 +3,6 @@
 import { Button } from "@repo/ui/components/button";
 import { Send } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { uploadManualFeedbacks } from "@/lib/actions";
 import { useState } from "react";
 
 type Props = {
@@ -20,7 +19,11 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setError(null);
     try {
       const feedbackOnlyString = feedback.map((item) => item.feedback);
-      await uploadManualFeedbacks(feedbackOnlyString);
+      await fetch("/api/feedback/manual", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ feedback: feedbackOnlyString }),
+      });
       onClearFeedback();
     } catch {
       setError("Failed to upload feedback.");
