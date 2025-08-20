@@ -38,7 +38,7 @@ const FeedbackTable = () => {
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
         <DynamicFeedbackTable
           isLoading={isLoading}
-          feedbackList={data?.data || []}
+          feedbackList={data?.feedbacks || []}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error?.message || null}
           onRetry={() => mutate()}

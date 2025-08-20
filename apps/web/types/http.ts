@@ -2,7 +2,7 @@ import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { PaginationMeta } from "@/types/pagination-meta";
 
 export type getFeedbackResponse = {
-  data: SentimentAnalysisResult[];
+  feedbacks: SentimentAnalysisResult[];
   pagination: PaginationMeta;
 };
 
