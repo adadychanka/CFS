@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    // TODO: Connect to real API ;(
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
 
@@ -11,6 +12,7 @@ export async function GET(req: NextRequest) {
       throw new Error("Random simulated error");
     }
 
+    // TODO: 401 is not caught
     const res = await fetch(
       `https://dummyjson.com/products?limit=${limit}&skip=${skip}`,
     );
@@ -20,6 +22,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ success: true, feedback });
   } catch (e: unknown) {
+    // TODO: only 500 caught,
     const message = e instanceof Error ? e.message : "Internal Server Error";
 
     return NextResponse.json({ message }, { status: 500 });
