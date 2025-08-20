@@ -1,6 +1,5 @@
 "use client";
 
-import { TABLE_PAGINATION_LIMIT } from "@/constants/constants";
 import {
   Pagination,
   PaginationContent,
@@ -16,16 +15,20 @@ import { usePaginationNumbers } from "@/hooks/usePaginationNumbers";
 import { usePageGuard } from "@/hooks/usePageGuard";
 import { getPageLink } from "@/utils/get-page-link";
 
-const FeedbackTablePagination = () => {
+type Props = {
+  limit: number;
+};
+
+const FeedbackTablePagination = ({ limit }: Props) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  usePageGuard(currentPage);
-  const paginationNumbers = usePaginationNumbers(currentPage);
+  usePageGuard(currentPage, limit);
+  const paginationNumbers = usePaginationNumbers(currentPage, limit);
 
   return (
     <>
-      {TABLE_PAGINATION_LIMIT > 1 && (
+      {limit > 1 && (
         <Pagination>
           <PaginationContent className="mt-4 flex justify-center gap-1">
             <PaginationPreviousWithLink
@@ -58,7 +61,7 @@ const FeedbackTablePagination = () => {
 
             <PaginationNextWithLink
               href={getPageLink(searchParams, currentPage + 1)}
-              disabled={currentPage === TABLE_PAGINATION_LIMIT}
+              disabled={currentPage === limit}
             />
           </PaginationContent>
         </Pagination>

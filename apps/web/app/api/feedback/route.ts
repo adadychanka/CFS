@@ -44,9 +44,9 @@ export async function GET(req: NextRequest) {
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
 
     const body = await res.json();
-    const data: getFeedbackResponse = body.data.data;
+    const data: getFeedbackResponse = body.data;
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json(data);
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Internal Server Error";
 

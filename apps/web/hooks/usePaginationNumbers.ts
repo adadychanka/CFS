@@ -1,4 +1,3 @@
-import { TABLE_PAGINATION_LIMIT } from "@/constants/constants";
 import { useMemo } from "react";
 
 /**
@@ -6,16 +5,17 @@ import { useMemo } from "react";
  * The output adapts to the current page and the total number of pages.
  *
  * @param currentPage
+ * @param limit
  */
-export const usePaginationNumbers = (currentPage: number) => {
+export const usePaginationNumbers = (currentPage: number, limit: number) => {
   return useMemo(() => {
     const window = 1; // pages around current
     const pages: (number | "dots")[] = [];
 
-    if (TABLE_PAGINATION_LIMIT <= 7) {
-      for (let i = 1; i <= TABLE_PAGINATION_LIMIT; i++) pages.push(i);
+    if (limit <= 7) {
+      for (let i = 1; i <= limit; i++) pages.push(i);
     } else {
-      for (let page = 1; page <= TABLE_PAGINATION_LIMIT; page++) {
+      for (let page = 1; page <= limit; page++) {
         // Start zone
         if (currentPage < 5 && page <= 5) {
           pages.push(page);
@@ -29,16 +29,13 @@ export const usePaginationNumbers = (currentPage: number) => {
         }
 
         // End zone
-        if (
-          currentPage > TABLE_PAGINATION_LIMIT - 4 &&
-          page >= TABLE_PAGINATION_LIMIT - 4
-        ) {
+        if (currentPage > limit - 4 && page >= limit - 4) {
           pages.push(page);
           continue;
         }
 
         // Always include the first and last page
-        if (page === 1 || page === TABLE_PAGINATION_LIMIT) {
+        if (page === 1 || page === limit) {
           pages.push(page);
           continue;
         }
