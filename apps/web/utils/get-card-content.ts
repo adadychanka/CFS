@@ -23,6 +23,25 @@ const AUTH_CARD_CONTENT: Record<AuthCardVariant, CardContent> = {
   "sign-up": SIGN_UP_CARD_CONTENT,
 };
 
+const DEFAULT_BUTTON_TEXT = {
+  "sign-in": "Log in",
+  "sign-up": "Sign up",
+};
+
+const PENDING_BUTTON_TEXT = {
+  "sign-in": "Logging in...",
+  "sign-up": "Signing up...",
+};
+
 export function getCardContent(variant: AuthCardVariant): CardContent {
   return AUTH_CARD_CONTENT[variant] || SIGN_IN_CARD_CONTENT;
+}
+
+export function getSubmitButtonContent(
+  variant: AuthCardVariant,
+  isPending: boolean,
+) {
+  return isPending
+    ? PENDING_BUTTON_TEXT[variant]
+    : DEFAULT_BUTTON_TEXT[variant];
 }

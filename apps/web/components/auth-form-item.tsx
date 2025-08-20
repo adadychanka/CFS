@@ -17,12 +17,18 @@ type Props = {
   placeholder: string;
 };
 
+const POSSIBLE_INPUT_TYPES = ["email", "password"];
+
 function AuthFormItem({ field, label, placeholder }: Props) {
+  const inputType = POSSIBLE_INPUT_TYPES.includes(field.name)
+    ? field.name
+    : "text";
+
   return (
     <FormItem>
       <FormLabel>{label}</FormLabel>
       <FormControl>
-        <Input placeholder={placeholder} {...field} />
+        <Input placeholder={placeholder} {...field} type={inputType} />
       </FormControl>
       <FormMessage />
     </FormItem>
