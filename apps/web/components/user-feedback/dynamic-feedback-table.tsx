@@ -65,7 +65,7 @@ function DynamicFeedbackTable({
               >
                 {feedback.content}
               </TableCell>
-              <TableCell>{formatCreatedAtDate(feedback.created_at)}</TableCell>
+              <TableCell>{formatCreatedAtDate(feedback.createdAt)}</TableCell>
             </TableRow>
           ))
         )}

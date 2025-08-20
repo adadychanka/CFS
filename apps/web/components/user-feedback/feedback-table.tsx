@@ -5,12 +5,13 @@ import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 
 const FeedbackTable = () => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<SentimentAnalysisResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,25 +27,7 @@ const FeedbackTable = () => {
       if (!response.ok) throw new Error(`API error: ${response.status}`);
 
       const result = await response.json();
-
-      // TODO: remove this after connecting
-      const processed = result.feedback.products.map(
-        (el: {
-          id: number;
-          title: string;
-          description: string;
-          stock: number;
-        }) => ({
-          id: el.id,
-          summary: el.title,
-          content: el.description,
-          sentiment: "unknown",
-          confidence: el.stock,
-          created_at: "2024-11-01T11:24:29.176905",
-        }),
-      );
-
-      setData(processed);
+      setData(result.feedback);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
