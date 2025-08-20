@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
-import { loginOrRegisterAction } from "./lib/actions";
+import { loginOrRegister } from "../lib/actions";
 import { authConfig } from "./auth.config";
 import "next-auth/jwt";
-import { Auth, SignIn, SignOut } from "./types/next-auth";
+import { Auth, SignIn, SignOut } from "../types/next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -16,8 +16,6 @@ declare module "next-auth" {
   interface User {
     token: string;
     role: string;
-    name: string;
-    email: string;
   }
 }
 
@@ -46,22 +44,19 @@ const nextAuthInstance = NextAuth({
         if (parsedCredentials.success) {
           const { email, password, variant } = parsedCredentials.data;
           try {
-            const response = await loginOrRegisterAction(
-              { email, password },
-              variant,
-            );
+            const response = await loginOrRegister(variant, {
+              email,
+              password,
+            });
 
-            if (!response || !response.data) return null;
-
+            if (!response || !response) return null;
             return {
-              token: response.data.token,
-              role: response.data.role,
-              email: response.data.email || "",
-              name: response.data.name || "",
+              token: response.token,
+              role: response.role,
             };
           } catch (error: unknown) {
             if (
-              error instanceof Object &&
+              error instanceof Object && // checking if the error is coming from backend or not
               "response" in error &&
               error.response instanceof Object &&
               "data" in error.response &&
@@ -82,6 +77,6 @@ const nextAuthInstance = NextAuth({
   ],
 });
 
-export const auth: Auth = nextAuthInstance.auth;
+export const auth: Auth = nextAuthInstance.auth; // gives session (token, role)
 export const signIn: SignIn = nextAuthInstance.signIn;
 export const signOut: SignOut = nextAuthInstance.signOut;

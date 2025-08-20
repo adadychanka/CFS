@@ -15,8 +15,6 @@ export const authConfig: NextAuthConfig = {
       if (user) {
         token.token = user.token;
         token.role = user.role;
-        token.email = user.email;
-        token.name = user.name;
       }
       return token;
     },
@@ -26,7 +24,7 @@ export const authConfig: NextAuthConfig = {
         session.user = {
           ...session.user,
           token: token.token,
-          role: token.role,
+          role: token.role, // we can access this data using auth in auth.ts
         };
       }
       return session;

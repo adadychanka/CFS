@@ -22,7 +22,7 @@ function AuthFormItem({ field, label, placeholder }: Props) {
     <FormItem>
       <FormLabel>{label}</FormLabel>
       <FormControl>
-        <Input placeholder={placeholder} {...field} />
+        <Input placeholder={placeholder} {...field} type={field.name} />
       </FormControl>
       <FormMessage />
     </FormItem>

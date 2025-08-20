@@ -11,7 +11,10 @@ import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { authAction } from "@/lib/actions";
 import { Info } from "lucide-react";
-import { type AuthCardVariant } from "@/utils/get-card-content";
+import {
+  getSubmitButtonContent,
+  type AuthCardVariant,
+} from "@/utils/get-card-content";
 
 const formSchema = z.object({
   email: z.string().email().min(5, {
@@ -92,8 +95,13 @@ function AuthForm({ variant }: Props) {
           )}
         />
         <input type="hidden" name="redirectTo" value={callbackUrl} />
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Submitting..." : "Submit"}
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isPending}
+          aria-busy={isPending}
+        >
+          {getSubmitButtonContent(variant, isPending)}
         </Button>
         {serverError && (
           <div className="flex justify-start gap-1">
