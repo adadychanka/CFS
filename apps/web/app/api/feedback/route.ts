@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getFeedbackResponse } from "@/types/http";
 
+// type PaginationMeta = {
+//   totalItems: number;
+//   totalPages: number;
+//   currentPage: number;
+// };
+
 export async function GET(req: NextRequest) {
   try {
     // TODO: Connect to real API ;(
+    // TODO: connect pagination limits to the API meta
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
 
