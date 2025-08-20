@@ -6,13 +6,4 @@ export type getFeedbackResponse = {
   pagination: PaginationMeta;
 };
 
-export class FetchError extends Error {
-  status: number;
-  info?: unknown;
-
-  constructor(message: string, status: number, info?: unknown) {
-    super(message);
-    this.status = status;
-    this.info = info;
-  }
-}
+export class FetchError {}

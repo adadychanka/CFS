@@ -5,7 +5,8 @@ import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { redirect, useSearchParams } from "next/navigation";
-import { FetchError, getFeedbackResponse } from "@/types/http";
+import { type getFeedbackResponse } from "@/types/http";
+import { FetchError } from "@/lib/errors";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
