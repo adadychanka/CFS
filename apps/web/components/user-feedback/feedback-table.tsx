@@ -27,6 +27,7 @@ const FeedbackTable = () => {
 
       const result = await response.json();
 
+      // TODO: remove this after connecting
       const processed = result.feedback.products.map(
         (el: {
           id: number;
@@ -45,7 +46,6 @@ const FeedbackTable = () => {
 
       setData(processed);
     } catch (err: unknown) {
-      console.error(err);
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
