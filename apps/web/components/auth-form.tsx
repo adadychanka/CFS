@@ -44,6 +44,7 @@ function AuthForm({ variant }: Props) {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    setServerError(null);
     try {
       setTransition(async () => {
         const formData = new FormData();
