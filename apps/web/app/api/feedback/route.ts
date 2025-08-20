@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const BACKEND_MY_TOKEN = process.env.BACKEND_MY_TOKEN;
 
     const res = await fetch(
-      `${BACKEND_URL}/api/feedback?limit=${limit}&skip=${page}`,
+      `${BACKEND_URL}/api/feedback?limit=${limit}&page=${page}`,
       {
         method: "GET",
         headers: {
