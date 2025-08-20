@@ -3,6 +3,7 @@ import { getFeedbackResponse } from "@/types/http";
 
 export async function GET(req: NextRequest) {
   try {
+    // TODO: Connect to real API ;(
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
 
@@ -12,6 +13,7 @@ export async function GET(req: NextRequest) {
     // eslint-disable-next-line turbo/no-undeclared-env-vars
     const BACKEND_MY_TOKEN = process.env.BACKEND_MY_TOKEN;
 
+    // TODO: 401 is not caught
     const res = await fetch(
       `${BACKEND_URL}/api/feedback?limit=${limit}&page=${page}`,
       {
@@ -48,6 +50,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data);
   } catch (e: unknown) {
+    // TODO: only 500 caught,
     const message = e instanceof Error ? e.message : "Internal Server Error";
 
     return NextResponse.json({ message }, { status: 500 });
