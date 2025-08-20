@@ -4,6 +4,7 @@ import { Button } from "@repo/ui/components/button";
 import { Sparkles } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type Props = {
   feedback: PreviewFeedback[];
@@ -33,6 +34,7 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
         return;
       }
 
+      toast.success(data.message);
       onClearFeedback();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unknown error");
