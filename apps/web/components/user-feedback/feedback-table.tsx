@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { FetchError, getFeedbackResponse } from "@/types/http";
 
 export const fetcher = async (url: string) => {
@@ -31,7 +31,9 @@ const FeedbackTable = () => {
     fetcher,
   );
 
-  console.log(data);
+  if (error instanceof FetchError && error.status === 403) {
+    redirect("/suspended");
+  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -40,7 +42,7 @@ const FeedbackTable = () => {
           isLoading={isLoading}
           feedbackList={data?.feedbacks || []}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
-          error={error?.message || null}
+          error={error}
           onRetry={() => mutate()}
         />
       </div>

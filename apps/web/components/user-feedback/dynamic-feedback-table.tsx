@@ -19,7 +19,7 @@ type Props = {
   feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
-  error?: FetchError | null;
+  error?: FetchError;
   onRetry?: () => void;
 };
 
