@@ -37,11 +37,11 @@ export async function GET(req: NextRequest) {
     }
 
     if (res.status === 403) {
-      return NextResponse.json({ status: 403 });
+      return NextResponse.json({}, { status: 403 });
     }
 
     if (res.status === 500) {
-      return NextResponse.json({ status: 500 });
+      return NextResponse.json({}, { status: 500 });
     }
 
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
