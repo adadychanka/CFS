@@ -5,13 +5,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@repo/ui/components/accordion";
-import { GROUPED_FEEDBACK_DATA } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import Link from "next/link";
+import { GROUPED_FEEDBACK_DATA } from "@/constants/constants";
 
 const FEEDBACK_LIMIT = 10;
 
-const GroupedFeedback = () => {
+// const fetcher: Fetcher = (endpoint: string) => api.get(endpoint);
+
+function GroupedFeedback() {
+  // const { data, error } = useSWR("/api/feedback/grouped", fetcher);
+
   return (
     <Accordion type="single" className="w-full" collapsible>
       {GROUPED_FEEDBACK_DATA.map((group) => {
@@ -38,6 +42,6 @@ const GroupedFeedback = () => {
       })}
     </Accordion>
   );
-};
+}
 
 export default GroupedFeedback;
