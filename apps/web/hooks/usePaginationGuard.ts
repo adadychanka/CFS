@@ -7,7 +7,7 @@ import { useEffect } from "react";
  * @param currentPage
  * @param limit
  */
-export const usePageGuard = (currentPage: number, limit: number) => {
+export const usePaginationGuard = (currentPage: number, limit: number) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 

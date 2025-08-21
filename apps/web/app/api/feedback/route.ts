@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getFeedbackResponse } from "@/types/http";
+import { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 
 export async function GET(req: NextRequest) {
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     }
 
     const body = await res.json();
-    const data: getFeedbackResponse = body.data;
+    const data: GetFeedbackResponse = body.data;
 
     return NextResponse.json(data);
   } catch (e: unknown) {

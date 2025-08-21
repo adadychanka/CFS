@@ -4,6 +4,7 @@ import {
 } from "@/types/sentiment-analysis-result";
 import { HomeIcon, Plus, Settings, TriangleAlert } from "lucide-react";
 
+// Sidebar
 export const USER_ROLE: "user" | "admin" = "user";
 
 export const USER_PAGE_LINKS = [
@@ -37,6 +38,12 @@ export const ADMIN_PAGE_LINKS = [
   },
 ];
 
+// Pagination
+export const PAGINATION_WINDOW = 1; // Count of links should be shown around the current active page
+export const PAGINATION_MAX_VISIBLE = 7; // if there are more pages than this, pagination starts skipping
+export const PAGINATION_EDGE_LIMIT = 5; // shows the number of pages at the edge of pagination
+
+// Analyzed sentiment table
 export const FEEDBACK_PAGE_LIMIT = 20;
 export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   {

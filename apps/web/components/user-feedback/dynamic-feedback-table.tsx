@@ -13,7 +13,7 @@ import { formatCreatedAtDate } from "@/utils/date-utils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
-import { type FetchError } from "@/types/http";
+import { FetchError } from "@/lib/errors";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[];

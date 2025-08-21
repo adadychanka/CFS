@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { usePaginationNumbers } from "@/hooks/usePaginationNumbers";
-import { usePageGuard } from "@/hooks/usePageGuard";
+import { usePaginationGuard } from "@/hooks/usePaginationGuard";
 import { getPageLink } from "@/utils/get-page-link";
 
 type Props = {
@@ -23,7 +23,7 @@ const FeedbackTablePagination = ({ limit }: Props) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  usePageGuard(currentPage, limit);
+  usePaginationGuard(currentPage, limit);
   const paginationNumbers = usePaginationNumbers(currentPage, limit);
 
   return (
