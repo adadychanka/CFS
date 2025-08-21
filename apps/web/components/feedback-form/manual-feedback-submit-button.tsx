@@ -32,10 +32,17 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setIsLoading(false);
   };
 
+  const isFeedbackEmpty = feedback.length === 0;
+
   return (
     <div className="pt-4 flex gap-8">
+      {isFeedbackEmpty && !errorMessage && (
+        <p className="flex-1 text-neutral-800 mb-2">
+          Please add feedback before submitting.
+        </p>
+      )}
       <p className="flex-1 text-red-600 mb-2">{errorMessage && errorMessage}</p>
-      <Button onClick={handleFetch} disabled={isLoading}>
+      <Button onClick={handleFetch} disabled={isLoading || isFeedbackEmpty}>
         <Sparkles />
         {isLoading ? "Analyzing..." : "Analyze feedback"}
       </Button>
