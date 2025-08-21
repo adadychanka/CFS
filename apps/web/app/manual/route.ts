@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getFeedbackResponse } from "@/types/http";
+import { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 
 export async function POST(req: NextRequest) {
@@ -10,26 +10,22 @@ export async function POST(req: NextRequest) {
     }
 
     const reqBody = await req.json();
-    const res = await fetch(
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
-      `${process.env.BACKEND_API}/api/feedback/manual`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${session.user.token}`,
-        },
-        body: JSON.stringify({
-          feedback: reqBody.feedback,
-        }),
+    const res = await fetch(`${process.env.BACKEND_API}/api/feedback/manual`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.user.token}`,
       },
-    );
+      body: JSON.stringify({
+        feedback: reqBody.feedback,
+      }),
+    });
 
     if (!res.ok) {
       return NextResponse.json({}, { status: res.status });
     }
 
     const body = await res.json();
-    const data: getFeedbackResponse = body.data;
+    const data: GetFeedbackResponse = body.data;
 
     return NextResponse.json(data);
   } catch (e: unknown) {
