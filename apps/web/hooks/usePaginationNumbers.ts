@@ -48,5 +48,5 @@ export const usePaginationNumbers = (currentPage: number, limit: number) => {
     }
 
     return pages;
-  }, [currentPage]);
+  }, [currentPage, limit]);
 };
