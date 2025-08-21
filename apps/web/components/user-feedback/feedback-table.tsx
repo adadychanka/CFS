@@ -31,6 +31,9 @@ const FeedbackTable = () => {
   const { data, error, isLoading, mutate } = useSWR<getFeedbackResponse>(
     `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
     fetcher,
+    {
+      keepPreviousData: true,
+    },
   );
 
   if (error instanceof FetchError) clientAuthGuard(error);
@@ -46,6 +49,7 @@ const FeedbackTable = () => {
           onRetry={() => mutate()}
         />
       </div>
+
       {data && <FeedbackTablePagination limit={data.pagination.pages | 0} />}
     </div>
   );
