@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
 
     const res = await fetch(
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
       `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}`,
       {
         method: "GET",
