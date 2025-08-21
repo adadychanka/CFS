@@ -36,12 +36,6 @@ class ApiClient {
     return response.json();
   }
 
-  async getRaw(endpoint: string): Promise<Response> {
-    return fetch(`${this.baseUrl}${endpoint}`, {
-      headers: this.getHeaders(),
-    });
-  }
-
   async post<T>(endpoint: string, body: unknown): Promise<T> {
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       method: "POST",
@@ -56,14 +50,6 @@ class ApiClient {
     }
 
     return response.json();
-  }
-
-  async postRaw(endpoint: string, body: unknown): Promise<Response> {
-    return fetch(`${this.baseUrl}${endpoint}`, {
-      method: "POST",
-      headers: this.getHeaders(),
-      body: JSON.stringify(body),
-    });
   }
 }
 
