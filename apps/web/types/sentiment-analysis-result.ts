@@ -2,7 +2,7 @@ export type Sentiment = "positive" | "neutral" | "negative" | "unknown";
 
 export type SentimentAnalysisResult = {
   content: string;
-  sentiment: Sentiment;
+  sentiment: "positive" | "neutral" | "negative" | "unknown";
   confidence: number;
   summary: string;
   userId: string;
