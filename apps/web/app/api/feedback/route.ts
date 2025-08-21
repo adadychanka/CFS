@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
-import api from "@/lib/api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,8 +13,13 @@ export async function GET(req: NextRequest) {
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
 
-    const res = await api.getRaw(
+    const res = await fetch(
       `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
+        },
+      },
     );
 
     if (!res.ok) {
