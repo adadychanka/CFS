@@ -11,14 +11,14 @@ function Page() {
         Your account has been suspended. Please contact support if you think
         this is a mistake.
       </p>
-      <div className="flex gap-4 flex-wrap justify-center">
-        <a href="mailto:someone@example.com">
-          <Button variant="outline">
-            {" "}
-            <Phone /> Contact Support
-          </Button>
-        </a>
-      </div>
+      <form
+        action="mailto:someone@example.com"
+        className="flex gap-4 flex-wrap justify-center"
+      >
+        <Button variant="outline">
+          <Phone /> Contact Support
+        </Button>
+      </form>
     </div>
   );
 }

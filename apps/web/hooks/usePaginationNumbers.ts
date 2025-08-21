@@ -1,4 +1,9 @@
 import { useMemo } from "react";
+import {
+  PAGINATION_EDGE_LIMIT,
+  PAGINATION_MAX_VISIBLE,
+  PAGINATION_WINDOW,
+} from "@/constants/constants";
 
 /**
  * Generates a pagination sequence of page numbers and dots for a given current page.
@@ -9,27 +14,35 @@ import { useMemo } from "react";
  */
 export const usePaginationNumbers = (currentPage: number, limit: number) => {
   return useMemo(() => {
-    const window = 1; // pages around current
     const pages: (number | "dots")[] = [];
 
-    if (limit <= 7) {
+    if (limit <= PAGINATION_MAX_VISIBLE) {
       for (let i = 1; i <= limit; i++) pages.push(i);
     } else {
       for (let page = 1; page <= limit; page++) {
         // Start zone
-        if (currentPage < 5 && page <= 5) {
+        if (
+          currentPage < PAGINATION_EDGE_LIMIT &&
+          page <= PAGINATION_EDGE_LIMIT
+        ) {
           pages.push(page);
           continue;
         }
 
         // Middle zone
-        if (page >= currentPage - window && page <= currentPage + window) {
+        if (
+          page >= currentPage - PAGINATION_WINDOW &&
+          page <= currentPage + PAGINATION_WINDOW
+        ) {
           pages.push(page);
           continue;
         }
 
         // End zone
-        if (currentPage > limit - 4 && page >= limit - 4) {
+        if (
+          currentPage > limit - PAGINATION_EDGE_LIMIT + 1 &&
+          page > limit - PAGINATION_EDGE_LIMIT
+        ) {
           pages.push(page);
           continue;
         }

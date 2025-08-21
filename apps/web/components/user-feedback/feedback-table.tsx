@@ -5,7 +5,7 @@ import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { useSearchParams } from "next/navigation";
-import { type getFeedbackResponse } from "@/types/http";
+import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 
@@ -28,7 +28,7 @@ const FeedbackTable = () => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  const { data, error, isLoading, mutate } = useSWR<getFeedbackResponse>(
+  const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
     `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
     fetcher,
     {
