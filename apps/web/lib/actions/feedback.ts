@@ -14,18 +14,14 @@ export const uploadManualFeedbacks = async (feedback: PreviewFeedback[]) => {
       feedbacks: feedback.map((feedback) => feedback.feedback),
     };
 
-    const res = await fetch(
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
-      `${process.env.BACKEND_API}/api/feedback/manual`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.user.token}`,
-        },
-        body: JSON.stringify(formattedFeedback),
+    const res = await fetch(`${process.env.BACKEND_API}/api/feedback/manual`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.user.token}`,
       },
-    );
+      body: JSON.stringify(formattedFeedback),
+    });
     const data = await res.json();
 
     if (!res.ok) {
