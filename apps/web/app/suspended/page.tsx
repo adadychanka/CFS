@@ -1,5 +1,10 @@
 import { Button } from "@repo/ui/components/button";
 import { Lock, Phone } from "lucide-react";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Account Suspended",
+};
 
 // TODO: if suspended protect other routes
 function Page() {
