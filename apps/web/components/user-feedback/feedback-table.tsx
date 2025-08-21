@@ -36,7 +36,7 @@ const FeedbackTable = () => {
     },
   );
 
-  if (error instanceof FetchError) clientAuthGuard(error);
+  if (error instanceof FetchError) clientAuthGuard(error.status);
 
   return (
     <div className="flex flex-col gap-8">

@@ -1,10 +1,11 @@
 "use client";
 
 import { Button } from "@repo/ui/components/button";
-import { Send } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { uploadManualFeedbacks } from "@/lib/actions";
+import { uploadManualFeedbacks } from "@/lib/actions/feedback";
 import { useState } from "react";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
 
 type Props = {
   feedback: PreviewFeedback[];
@@ -12,30 +13,31 @@ type Props = {
 };
 
 const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const feedbackOnlyString = feedback.map((item) => item.feedback);
-      await uploadManualFeedbacks(feedbackOnlyString);
+  const handleFetch = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    const result = await uploadManualFeedbacks(feedback);
+
+    if (result.success) {
       onClearFeedback();
-    } catch {
-      setError("Failed to upload feedback.");
-    } finally {
-      setLoading(false);
+    } else {
+      clientAuthGuard(result.status);
+      setErrorMessage(result.message ?? "Something went wrong");
     }
+
+    setIsLoading(false);
   };
 
   return (
     <div className="pt-4 flex gap-8">
-      <p className="flex-1 text-red-600 mb-2">{error}</p>
-
-      <Button onClick={handleSubmit} disabled={loading}>
-        <Send />
-        {loading ? "Analyzing..." : "Analyze feedback"}
+      <p className="flex-1 text-red-600 mb-2">{errorMessage && errorMessage}</p>
+      <Button onClick={handleFetch} disabled={isLoading}>
+        <Sparkles />
+        {isLoading ? "Analyzing..." : "Analyze feedback"}
       </Button>
     </div>
   );
