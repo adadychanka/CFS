@@ -1,4 +1,4 @@
-import { EChartOption } from "@/components/e-charts/types";
+import { EChartOption } from "@/types/charts";
 import AdminChartWrapper from "@/components/e-charts/admin-chart-wrapper";
 import ECharts from "@/components/e-charts/e-charts";
 

@@ -8,7 +8,7 @@ import type {
 } from "@/types/next-auth";
 import { AuthCardVariant } from "@/utils/get-card-content";
 import { signIn, signOut } from "@/auth/auth";
-import api from "./api";
+import { api } from "./api";
 
 //TODO: Change types for Post method in API call
 const register = async ({ email, password }: UserCredentials) => {
