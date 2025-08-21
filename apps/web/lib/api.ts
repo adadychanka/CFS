@@ -2,7 +2,7 @@ class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
 
-  constructor(baseUrl: string) {
+  constructor(baseUrl: string = "") {
     this.baseUrl = baseUrl;
   }
 
@@ -60,5 +60,6 @@ if (!API) {
 }
 
 const api = new ApiClient(API);
+const clientApi = new ApiClient();
 
-export default api;
+export { api, clientApi };

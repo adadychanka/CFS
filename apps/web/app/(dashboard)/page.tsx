@@ -1,7 +1,7 @@
 import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
-import DashboardChartWrapper from "@/components/e-charts/dashboard-chart-wrapper";
 import { Suspense } from "react";
+import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 
 export default function Home() {
   return (
