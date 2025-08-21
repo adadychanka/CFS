@@ -103,9 +103,6 @@ export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   },
 ];
 export const USER_DASHBOARD_TABS = ["table", "grouped"];
-
-export const TABLE_PAGINATION_LIMIT = 30;
-
 export const GROUPED_FEEDBACK_DATA: SentimentAnalysisGroup[] = [
   {
     id: "group_001",
