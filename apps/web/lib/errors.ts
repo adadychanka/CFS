@@ -1,3 +1,7 @@
+/**
+ * A custom error object with a status and optional info fields
+ * Extends the Error object for easier HTTP error handling
+ */
 export class FetchError extends Error {
   status: number;
   info?: unknown;
