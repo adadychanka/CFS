@@ -7,6 +7,7 @@ import FeedbackTablePagination from "@/components/user-feedback/feedback-table-p
 import { redirect, useSearchParams } from "next/navigation";
 import { type getFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
+import { signOut } from "next-auth/react";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -34,6 +35,8 @@ const FeedbackTable = () => {
 
   if (error instanceof FetchError && error.status === 403) {
     redirect("/suspended");
+  } else if (error instanceof FetchError && error.status === 401) {
+    signOut({ redirectTo: "/log-in" });
   }
 
   return (

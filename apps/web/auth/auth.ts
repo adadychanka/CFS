@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
-import { loginOrRegister } from "../lib/actions";
+import { loginOrRegister } from "@/lib/actions";
 import { authConfig } from "./auth.config";
 import "next-auth/jwt";
-import { Auth, SignIn, SignOut } from "../types/next-auth";
+import { Auth, Handlers, SignIn, SignOut } from "@/types/next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -77,6 +77,7 @@ const nextAuthInstance = NextAuth({
   ],
 });
 
+export const handlers: Handlers = nextAuthInstance.handlers;
 export const auth: Auth = nextAuthInstance.auth; // gives session (token, role)
 export const signIn: SignIn = nextAuthInstance.signIn;
 export const signOut: SignOut = nextAuthInstance.signOut;
