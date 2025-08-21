@@ -33,7 +33,6 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(data);
   } catch (e: unknown) {
-    // TODO: only 500 caught,
     const message = e instanceof Error ? e.message : "Internal Server Error";
 
     return NextResponse.json({ message }, { status: 500 });

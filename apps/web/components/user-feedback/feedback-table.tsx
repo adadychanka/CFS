@@ -4,10 +4,10 @@ import useSWR from "swr";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { type getFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
-import { signOut } from "next-auth/react";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -33,11 +33,7 @@ const FeedbackTable = () => {
     fetcher,
   );
 
-  if (error instanceof FetchError && error.status === 403) {
-    redirect("/suspended");
-  } else if (error instanceof FetchError && error.status === 401) {
-    signOut({ redirectTo: "/log-in" });
-  }
+  if (error instanceof FetchError) clientAuthGuard(error);
 
   return (
     <div className="flex flex-col gap-8">
