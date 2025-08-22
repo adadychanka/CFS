@@ -6,7 +6,10 @@ export async function GET(req: NextRequest) {
     const session = await auth();
 
     if (!session) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, status: 401, message: "Unauthorized" },
+        { status: 401 },
+      );
     }
 
     const type = req.nextUrl.searchParams.get("type");
@@ -22,7 +25,14 @@ export async function GET(req: NextRequest) {
     );
 
     if (!res.ok) {
-      return NextResponse.json({}, { status: res.status });
+      return NextResponse.json(
+        {
+          success: false,
+          status: res.status,
+          message: `Backend request failed with ${res.status}`,
+        },
+        { status: res.status },
+      );
     }
 
     const contentDisposition = res.headers.get("content-disposition");
@@ -30,7 +40,11 @@ export async function GET(req: NextRequest) {
 
     if (!contentDisposition || !contentType) {
       return NextResponse.json(
-        { message: "Missing required headers" },
+        {
+          success: false,
+          status: 500,
+          message: "Missing required headers",
+        },
         { status: 500 },
       );
     }
@@ -45,6 +59,9 @@ export async function GET(req: NextRequest) {
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Internal Server Error";
 
-    return NextResponse.json({ message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, status: 500, message },
+      { status: 500 },
+    );
   }
 }

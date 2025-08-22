@@ -9,39 +9,53 @@ import {
 } from "@repo/ui/components/dropdown-menu";
 import { Button } from "@repo/ui/components/button";
 import { Download, FileSpreadsheet, FileText } from "lucide-react";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { toast } from "sonner";
 
 const handleDownload = async (
   type: "summarized" | "detailed",
   format: "csv" | "pdf",
 ) => {
-  const res = await fetch(`/api/feedback/report?type=${type}&format=${format}`);
+  try {
+    const res = await fetch(
+      `/api/feedback/report?type=${type}&format=${format}`,
+    );
 
-  if (!res.ok) {
-    console.error("Download failed:", res.status, res.statusText);
-    return;
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        clientAuthGuard(res.status);
+        return;
+      }
+
+      toast.error("Download failed");
+      return;
+    }
+
+    const contentDisposition = res.headers.get("content-disposition");
+    const contentType = res.headers.get("content-type");
+
+    if (!contentDisposition || !contentType) {
+      return;
+    }
+
+    const blob = await res.blob();
+    const fileURL = URL.createObjectURL(blob);
+
+    const filename = `feedback-${type}.${format}`;
+
+    // Simulated download
+    const link = document.createElement("a");
+    link.href = fileURL;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(fileURL);
+  } catch (err) {
+    console.error("Unexpected error while downloading:", err);
+    toast.error("Download failed");
   }
-
-  const contentDisposition = res.headers.get("content-disposition");
-  const contentType = res.headers.get("content-type");
-
-  if (!contentDisposition || !contentType) {
-    return;
-  }
-
-  const blob = await res.blob();
-  const fileURL = URL.createObjectURL(blob);
-
-  const filename = `feedback-${type}.${format}`;
-
-  // Simulated download
-  const link = document.createElement("a");
-  link.href = fileURL;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  URL.revokeObjectURL(fileURL);
 };
 
 const ExportDropdown = () => {
