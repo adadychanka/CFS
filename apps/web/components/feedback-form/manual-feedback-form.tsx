@@ -41,13 +41,10 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
 
   // NOTE: ONLY FOR DEV TESTING
   const handleQuickFill = () => {
-    const randomTwo = TEST_TEXTAREA_TEXT.sort(() => 0.5 - Math.random()).slice(
-      0,
-      2,
-    );
-
-    const combined = randomTwo.join("\n");
-    form.setValue("feedback", combined);
+    const randomTwo = TEST_TEXTAREA_TEXT.sort(() => 0.5 - Math.random())
+      .slice(0, 2)
+      .join("\n");
+    form.setValue("feedback", randomTwo);
   };
 
   return (

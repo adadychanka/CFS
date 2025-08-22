@@ -17,7 +17,7 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleFetch = async () => {
+  const handleUploadFeedback = async () => {
     setIsLoading(true);
     setErrorMessage(null);
 
@@ -36,7 +36,7 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
   return (
     <div className="pt-4 flex gap-8">
       <p className="flex-1 text-red-600 mb-2">{errorMessage && errorMessage}</p>
-      <Button onClick={handleFetch} disabled={isLoading}>
+      <Button onClick={handleUploadFeedback} disabled={isLoading}>
         <Sparkles />
         {isLoading ? "Analyzing..." : "Analyze feedback"}
       </Button>
