@@ -13,8 +13,6 @@ export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
   const data = await res.json();
 
-  console.log(res);
-
   if (!res.ok) {
     throw new FetchError(
       data.message || "Something went wrong",
@@ -31,7 +29,7 @@ function DashboardChart() {
     data: result,
     error,
     isLoading,
-  } = useSWR<SentimentSummaryResponse, Error>(
+  } = useSWR<SentimentSummaryResponse>(
     "/api/feedback/sentiment-summary",
     fetcher,
   );
