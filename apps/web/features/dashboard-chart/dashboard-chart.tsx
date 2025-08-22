@@ -7,7 +7,7 @@ import { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import DashboardChartFallback from "./dashboard-chart-fallback";
 import { FetchError } from "@/lib/errors";
-// import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -60,7 +60,7 @@ function DashboardChart() {
   const { chartRef } = useDrawChart(chartOptions, isLoading);
   console.log(error);
 
-  // if (error instanceof FetchError) clientAuthGuard(error);
+  if (error instanceof FetchError) clientAuthGuard(error);
 
   if (hasError) {
     return <DashboardChartFallback error />;
