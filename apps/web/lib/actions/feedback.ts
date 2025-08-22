@@ -3,15 +3,15 @@
 import type { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { auth } from "@/auth/auth";
 
-export const uploadManualFeedbacks = async (feedback: PreviewFeedback[]) => {
-  try {
-    const session = await auth();
-    if (!session) {
-      return { success: false, status: 401, message: "Unauthorized" };
-    }
+export async function uploadManualFeedback(feedback: PreviewFeedback[]) {
+  const session = await auth();
+  if (!session) {
+    return { success: false, status: 401, message: "Unauthorized" };
+  }
 
+  try {
     const formattedFeedback = {
-      feedbacks: feedback.map((feedback) => feedback.feedback),
+      feedbacks: feedback.map((f) => f.feedback),
     };
 
     const res = await fetch(`${process.env.BACKEND_API}/api/feedback/manual`, {
@@ -22,14 +22,10 @@ export const uploadManualFeedbacks = async (feedback: PreviewFeedback[]) => {
       },
       body: JSON.stringify(formattedFeedback),
     });
-    const data = await res.json();
 
     if (!res.ok) {
-      return {
-        success: false,
-        status: res.status,
-        message: data.message,
-      };
+      const data = await res.json();
+      return { success: false, status: res.status, message: data.message };
     }
 
     return {
@@ -41,4 +37,4 @@ export const uploadManualFeedbacks = async (feedback: PreviewFeedback[]) => {
     const message = e instanceof Error ? e.message : "Internal Server Error";
     return { success: false, status: 500, message };
   }
-};
+}
