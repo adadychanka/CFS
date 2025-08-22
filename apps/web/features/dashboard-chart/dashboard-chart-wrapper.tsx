@@ -1,4 +1,3 @@
-"use client";
 import DashboardChart from "./dashboard-chart";
 
 function DashboardChartWrapper() {
