@@ -11,7 +11,11 @@ import { EChartOption } from "@/types/charts";
  * const { chartRef } = useDrawChart(options, isLoading);
  * return <div ref={chartRef} className="w-full h-full" />;
  */
-const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
+const useDrawChart = (
+  options: EChartOption,
+  isLoading?: boolean,
+  refresh?: boolean,
+) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
 
@@ -40,7 +44,7 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
       chartInstance.dispose();
       setChart(null);
     };
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (chart) {

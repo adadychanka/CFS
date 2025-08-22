@@ -4,8 +4,8 @@ import type { EChartOption } from "../../types/charts";
 import { useDrawChart } from "@/hooks/useDrawChart";
 import { clientApi } from "@/lib/api";
 import { SentimentSummaryResponse } from "@/types/sentiment-summary";
-import { Info } from "lucide-react";
 import useSWR from "swr";
+import DashboardChartFallback from "./dashboard-chart-fallback";
 
 const fetcher = (url: string) => clientApi.get<SentimentSummaryResponse>(url);
 
@@ -19,7 +19,9 @@ function DashboardChart() {
     fetcher,
   );
 
-  // --- derive chart options ---
+  const categories = result?.data?.map((item) => item.sentiment) ?? [];
+  const data = result?.data?.map((item) => item.count) ?? [];
+
   const chartOptions: EChartOption = {
     title: {
       text: "Proportions of Sentiment Types",
@@ -27,26 +29,32 @@ function DashboardChart() {
     tooltip: {},
     color: "#393E46",
     xAxis: {
-      data: result?.data?.map((item) => item.sentiment) ?? [],
+      data: categories,
     },
     yAxis: {},
     series: [
       {
         type: "bar",
-        data: result?.data?.map((item) => item.count) ?? [],
+        data: data,
       },
     ],
   };
 
-  const { chartRef } = useDrawChart(chartOptions, isLoading);
+  const hasError = Boolean(error);
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center w-full h-full gap-2 text-red-600">
-        <Info className="w-5 h-5" />
-        <span>Failed to load chart data. Please try again later.</span>
-      </div>
-    );
+  const { chartRef } = useDrawChart(chartOptions, isLoading);
+  console.log(result, isLoading, error);
+
+  if (hasError) {
+    return <DashboardChartFallback error />;
+  }
+
+  if (isLoading) {
+    return <DashboardChartFallback loading />;
+  }
+
+  if (categories.length === 0 || data.length === 0) {
+    return <DashboardChartFallback message="There is no data to display" />;
   }
 
   return <div ref={chartRef} className="w-full h-full" />;

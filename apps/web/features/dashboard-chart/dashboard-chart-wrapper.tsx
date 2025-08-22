@@ -1,4 +1,5 @@
-import DashboardChart from "@/features/dashboard-chart/dashboard-chart";
+"use client";
+import DashboardChart from "./dashboard-chart";
 
 function DashboardChartWrapper() {
   return (
