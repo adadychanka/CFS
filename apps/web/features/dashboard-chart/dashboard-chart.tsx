@@ -6,8 +6,25 @@ import { clientApi } from "@/lib/api";
 import { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import DashboardChartFallback from "./dashboard-chart-fallback";
+import { FetchError } from "@/lib/errors";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
 
-const fetcher = (url: string) => clientApi.get<SentimentSummaryResponse>(url);
+export const fetcher = async (url: string) => {
+  const res = await clientApi.get(url);
+  const data = await res.json();
+
+  console.log(res);
+
+  if (!res.ok) {
+    throw new FetchError(
+      data.message || "Something went wrong",
+      res.status,
+      data,
+    );
+  }
+
+  return data;
+};
 
 function DashboardChart() {
   const {
@@ -43,7 +60,8 @@ function DashboardChart() {
   const hasError = Boolean(error);
 
   const { chartRef } = useDrawChart(chartOptions, isLoading);
-  console.log(result, isLoading, error);
+
+  if (error instanceof FetchError) clientAuthGuard(error);
 
   if (hasError) {
     return <DashboardChartFallback error />;
@@ -54,7 +72,7 @@ function DashboardChart() {
   }
 
   if (categories.length === 0 || data.length === 0) {
-    return <DashboardChartFallback message="There is no data to display" />;
+    return <DashboardChartFallback message="No data found" />;
   }
 
   return <div ref={chartRef} className="w-full h-full" />;

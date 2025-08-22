@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
@@ -22,18 +24,19 @@ class ApiClient {
     return headers;
   }
 
-  async get<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      headers: this.getHeaders(),
-    });
+  async get(endpoint: string) {
+    try {
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        headers: this.getHeaders(),
+      });
 
-    if (!response.ok) {
-      throw new Error(
-        `GET ${endpoint} failed: ${response.status}: ${response.statusText}`,
-      );
+      return res;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
+
+      return NextResponse.json({ message }, { status: 500 });
     }
-
-    return response.json();
   }
 
   async post<T>(endpoint: string, body: unknown): Promise<T> {
