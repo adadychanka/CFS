@@ -8,7 +8,9 @@ export default function Home() {
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
-        <DashboardChartWrapper />
+        <Suspense fallback={<p>Loading In Page....</p>}>
+          <DashboardChartWrapper />
+        </Suspense>
 
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>

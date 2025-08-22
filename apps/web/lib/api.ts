@@ -29,7 +29,7 @@ class ApiClient {
 
     if (!response.ok) {
       throw new Error(
-        `GET ${endpoint} failed: ${response.status}: ${response.statusText}w`,
+        `GET ${endpoint} failed: ${response.status}: ${response.statusText}`,
       );
     }
 
