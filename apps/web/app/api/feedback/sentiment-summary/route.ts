@@ -1,5 +1,6 @@
 import { auth } from "@/auth/auth";
 import { api } from "@/lib/api";
+import { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -19,13 +20,11 @@ export async function GET() {
   }
 
   try {
-    const data = await api.get("/api/feedback/sentiment-summary");
-    console.log(data, "hello");
+    const response = await api.get("/api/feedback/sentiment-summary");
+    const result: SentimentSummaryResponse = await response.json();
 
-    return NextResponse.json(data);
+    return NextResponse.json(result);
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json(error, { status: 500 });
   }
 }
