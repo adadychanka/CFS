@@ -22,12 +22,12 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setErrorMessage(null);
 
     const result = await uploadManualFeedback(feedback);
-    if (result?.success) {
+    if (result.success) {
       toast.success(result.message);
       onClearFeedback();
     } else {
-      clientAuthGuard(result?.status);
-      setErrorMessage(result?.message ?? "Something went wrong");
+      clientAuthGuard(result.status);
+      setErrorMessage(result.message ?? "Something went wrong");
     }
 
     setIsLoading(false);
