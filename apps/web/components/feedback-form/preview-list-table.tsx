@@ -9,6 +9,7 @@ import {
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { Button } from "@repo/ui/components/button";
 import { Trash2 } from "lucide-react";
+import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
 
 type Props = {
   feedback: PreviewFeedback[];
@@ -29,7 +30,12 @@ const PreviewListTable = ({ feedback, onRemoveFeedback }: Props) => {
         <TableBody>
           {feedback.length > 0 ? (
             feedback.map((item, index) => (
-              <TableRow key={item.id}>
+              <TableRow
+                key={item.id}
+                className={
+                  index >= FEEDBACK_MAX_ITEMS ? "text-neutral-600" : ""
+                }
+              >
                 <TableCell className="pl-4 font-medium">{index + 1}</TableCell>
                 <TableCell className="whitespace-normal break-words">
                   {item.feedback}

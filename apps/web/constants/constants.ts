@@ -250,4 +250,4 @@ export const TEST_TEXTAREA_TEXT = [
 
 export const FEEDBACK_MIN_LENGTH = 10;
 export const FEEDBACK_MAX_LENGTH = 300;
-export const FEEDBACK_MAX_ITEMS = 100;
+export const FEEDBACK_MAX_ITEMS = 3;
