@@ -4,6 +4,7 @@ import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form"
 import PreviewList from "@/components/feedback-form/preview-list";
 import { useCallback, useState } from "react";
 import ManualFeedbackSubmitButton from "@/components/feedback-form/manual-feedback-submit-button";
+import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
 
 export type PreviewFeedback = {
   id: string;
@@ -22,8 +23,12 @@ const ManualFeedbackTab = () => {
   }, []);
 
   const handleClearFeedback = useCallback(() => {
-    setFeedback([]);
-  }, []);
+    if (feedback.length > FEEDBACK_MAX_ITEMS) {
+      setFeedback((prev) => prev.slice(FEEDBACK_MAX_ITEMS));
+    } else {
+      setFeedback([]);
+    }
+  }, [feedback.length]);
 
   return (
     <div>
