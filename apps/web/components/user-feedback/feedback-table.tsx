@@ -1,33 +1,56 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  FAKE_PROCESSED_FEEDBACK,
-  FEEDBACK_PAGE_LIMIT,
-} from "@/constants/constants";
+import useSWR from "swr";
+import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
+import { type GetFeedbackResponse } from "@/types/http";
+import { FetchError } from "@/lib/errors";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
 
-const FeedbackTable = () => {
-  const [isLoading, setIsLoading] = useState(true);
+export const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
 
-  // Fake loading time
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
+  if (!res.ok) {
+    throw new FetchError(
+      data.message || "Something went wrong",
+      res.status,
+      data,
+    );
+  }
+
+  return data;
+};
+
+type Props = {
+  currentPage: number;
+};
+
+const FeedbackTable = ({ currentPage }: Props) => {
+  const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
+    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    },
+  );
+
+  if (error instanceof FetchError) clientAuthGuard(error);
 
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
         <DynamicFeedbackTable
           isLoading={isLoading}
-          feedbackList={FAKE_PROCESSED_FEEDBACK}
+          feedbackList={data?.feedbacks || []}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
+          error={error}
+          onRetry={() => mutate()}
         />
       </div>
-      <FeedbackTablePagination />
+
+      {data && <FeedbackTablePagination limit={data.pagination.pages | 0} />}
     </div>
   );
 };

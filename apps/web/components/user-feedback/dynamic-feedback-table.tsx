@@ -13,17 +13,22 @@ import { formatCreatedAtDate } from "@/utils/date-utils";
 import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-item";
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
+import { FetchError } from "@/lib/errors";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
+  error?: FetchError;
+  onRetry?: () => void;
 };
 
 function DynamicFeedbackTable({
   feedbackList,
   isLoading,
   feedbackLimit,
+  error,
+  onRetry,
 }: Props) {
   return (
     <Table className="min-w-[600px]">
@@ -41,8 +46,10 @@ function DynamicFeedbackTable({
           [...Array(feedbackLimit)].map((_, i) => (
             <SkeletonFeedbackItem key={i} />
           ))
+        ) : error ? (
+          <NoFeedbackMessage type="error" onRetry={onRetry} />
         ) : feedbackList.length === 0 ? (
-          <NoFeedbackMessage />
+          <NoFeedbackMessage type="empty" />
         ) : (
           feedbackList.slice(0, feedbackLimit).map((feedback) => (
             <TableRow key={feedback.id} className="odd:bg-muted/50">
@@ -59,7 +66,7 @@ function DynamicFeedbackTable({
               >
                 {feedback.content}
               </TableCell>
-              <TableCell>{formatCreatedAtDate(feedback.created_at)}</TableCell>
+              <TableCell>{formatCreatedAtDate(feedback.createdAt)}</TableCell>
             </TableRow>
           ))
         )}

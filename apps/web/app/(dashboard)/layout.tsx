@@ -1,8 +1,9 @@
-import Header from "@repo/ui/components/header";
-import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
-import DashboardChartWrapper from "@/components/e-charts/dashboard-chart-wrapper";
-import { type Metadata } from "next";
-import { Suspense } from "react";
+import type { Metadata } from "next";
+import "@repo/ui/globals.css";
+import AppSidebar from "@/components/app-sidebar";
+import React from "react";
+
+import { SidebarProvider } from "@repo/ui/components/sidebar";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -27,18 +28,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <>
-      <Header title="Dashboard" />
-      <div className="w-full max-w-[1280px] mx-auto p-4">
-        <DashboardChartWrapper />
-
-        {/* TODO: need custom loading in the future*/}
-        <Suspense fallback={<p>Loading...</p>}>
-          <SwitchTableCollapsedTabs />
-        </Suspense>
-      </div>
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full pb-16">{children}</main>
+    </SidebarProvider>
   );
 }

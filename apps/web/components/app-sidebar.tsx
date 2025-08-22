@@ -3,6 +3,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -19,6 +20,7 @@ import {
   USER_ROLE,
 } from "@/constants/constants";
 import { usePathname } from "next/navigation";
+import LogoutButton from "@/components/auth/logout-button";
 
 const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
@@ -66,6 +68,13 @@ const AppSidebar = () => {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <LogoutButton />
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
       </Sidebar>
     </nav>
   );
