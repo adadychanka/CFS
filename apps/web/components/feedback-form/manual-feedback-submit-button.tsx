@@ -3,9 +3,10 @@
 import { Button } from "@repo/ui/components/button";
 import { Sparkles } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
-import { uploadManualFeedbacks } from "@/lib/actions/feedback";
+import { uploadManualFeedback } from "@/lib/actions/feedback";
 import { useState } from "react";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { toast } from "sonner";
 
 type Props = {
   feedback: PreviewFeedback[];
@@ -20,13 +21,13 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setIsLoading(true);
     setErrorMessage(null);
 
-    const result = await uploadManualFeedbacks(feedback);
-
-    if (result.success) {
+    const result = await uploadManualFeedback(feedback);
+    if (result?.success) {
+      toast.success(result.message);
       onClearFeedback();
     } else {
-      clientAuthGuard(result.status);
-      setErrorMessage(result.message ?? "Something went wrong");
+      clientAuthGuard(result?.status);
+      setErrorMessage(result?.message ?? "Something went wrong");
     }
 
     setIsLoading(false);
