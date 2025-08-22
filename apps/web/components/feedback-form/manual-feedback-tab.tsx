@@ -1,7 +1,7 @@
 "use client";
 
 import ManualFeedbackForm from "@/components/feedback-form/manual-feedback-form";
-import PreviewList from "@/components/feedback-form/preview-list";
+import PreviewListSection from "@/components/feedback-form/preview-list/preview-list-section";
 import { useCallback, useState } from "react";
 import ManualFeedbackSubmitButton from "@/components/feedback-form/manual-feedback-submit-button";
 import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
@@ -33,7 +33,7 @@ const ManualFeedbackTab = () => {
   return (
     <div>
       <ManualFeedbackForm onAddFeedback={handleAddFeedback} />
-      <PreviewList
+      <PreviewListSection
         feedback={feedback}
         onRemoveFeedback={handleRemoveFeedback}
       />
