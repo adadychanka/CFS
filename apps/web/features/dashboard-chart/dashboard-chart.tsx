@@ -58,9 +58,8 @@ function DashboardChart() {
   const hasError = Boolean(error);
 
   const { chartRef } = useDrawChart(chartOptions, isLoading);
-  console.log(error);
 
-  if (error instanceof FetchError) clientAuthGuard(error);
+  if (error instanceof FetchError) clientAuthGuard(error.status);
 
   if (hasError) {
     return <DashboardChartFallback error />;
