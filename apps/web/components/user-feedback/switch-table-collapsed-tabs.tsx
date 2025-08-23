@@ -11,8 +11,8 @@ import FeedbackTable from "@/components/user-feedback/feedback-table";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
-import GroupedFeedback from "./grouped-feedback";
 import ExportDropdown from "@/components/export/export-dropdown";
+import GroupedFeedback from "@/features/grouped-feedback/grouped-feedback";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
