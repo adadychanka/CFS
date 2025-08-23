@@ -26,14 +26,14 @@ export function FeedbackTableFilterDropdown() {
     if (!FEEDBACK_FILTERS.includes(filterOnURLQuery)) {
       const params = new URLSearchParams(searchParams);
       params.set("sentiment", "no-filter");
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   }, [filterOnURLQuery, searchParams, router]);
 
   const handleChange = (newValue: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("sentiment", newValue);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (
