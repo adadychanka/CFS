@@ -14,11 +14,13 @@ import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-i
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { FetchError } from "@/lib/errors";
+import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[];
   isLoading: boolean;
   feedbackLimit: number;
+  isFilteringEnabled?: boolean;
   error?: FetchError;
   onRetry?: () => void;
 };
@@ -27,6 +29,7 @@ function DynamicFeedbackTable({
   feedbackList,
   isLoading,
   feedbackLimit,
+  isFilteringEnabled,
   error,
   onRetry,
 }: Props) {
@@ -35,7 +38,9 @@ function DynamicFeedbackTable({
       <TableHeader>
         <TableRow>
           <TableHead className="w-[300px]">Summary</TableHead>
-          <TableHead className="w-[100px] text-center">Sentiment</TableHead>
+          <TableHead className="w-[120px] text-center">
+            {isFilteringEnabled ? <FeedbackTableFilterDropdown /> : "Sentiment"}
+          </TableHead>
           <TableHead className="w-[100px] text-center">Confidence</TableHead>
           <TableHead className="min-w-[200px]">Content</TableHead>
           <TableHead className="w-[120px]">Created At</TableHead>
