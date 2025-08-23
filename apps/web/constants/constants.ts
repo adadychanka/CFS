@@ -44,6 +44,13 @@ export const PAGINATION_MAX_VISIBLE = 7; // if there are more pages than this, p
 export const PAGINATION_EDGE_LIMIT = 5; // shows the number of pages at the edge of pagination
 
 // Analyzed sentiment table
+export const FEEDBACK_FILTERS = [
+  "positive",
+  "neutral",
+  "negative",
+  "unknow",
+  "no-filter",
+];
 export const FEEDBACK_PAGE_LIMIT = 20;
 export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   {
