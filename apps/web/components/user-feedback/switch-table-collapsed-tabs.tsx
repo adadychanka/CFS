@@ -31,14 +31,14 @@ const SwitchTableCollapsedTabs = () => {
     ) {
       const params = new URLSearchParams(searchParams);
       params.set("tab", "table");
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   }, [requested, searchParams, router]);
 
   const handleTabChange = (newValue: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("tab", newValue);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (

@@ -25,7 +25,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const onTabChange = (value: string) => {
     const tab = tabs.find((t) => t.tab === value);
     if (tab) {
-      router.push(tab.url);
+      router.push(tab.url, { scroll: false });
     }
   };
 
