@@ -17,6 +17,7 @@ const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+  const filterOnURLQuery = searchParams.get("sentiment") || "no-filter";
 
   const requested = searchParams.get("tab") || "";
   const tab = USER_DASHBOARD_TABS.includes(requested) ? requested : "table";
@@ -51,7 +52,7 @@ const SwitchTableCollapsedTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="table">
-        <FeedbackTable currentPage={currentPage} />
+        <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery} />
       </TabsContent>
       <TabsContent value="grouped">
         <GroupedFeedback />
