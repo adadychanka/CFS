@@ -35,13 +35,15 @@ function DynamicFeedbackTable({
   onRetry,
   isGrouped,
 }: Props) {
-  const groupedSentimentsTable = useGroupedSentimentTable({
-    data: feedbackList as GroupedFeedbackDataItems[],
+  const groupedTable = useGroupedSentimentTable({
+    data: isGrouped ? (feedbackList as GroupedFeedbackDataItems[]) : [],
   });
-  const feedbackTable = useFeedbackTable({
-    data: feedbackList as SentimentAnalysisResult[],
+
+  const regularTable = useFeedbackTable({
+    data: !isGrouped ? (feedbackList as SentimentAnalysisResult[]) : [],
   });
-  const currentTable = isGrouped ? groupedSentimentsTable : feedbackTable;
+
+  const currentTable = isGrouped ? groupedTable : regularTable;
 
   return (
     <Table className="min-w-[600px]">
