@@ -44,6 +44,7 @@ const FeedbackTable = ({ currentPage }: Props) => {
         <DynamicFeedbackTable
           isLoading={isLoading}
           feedbackList={data?.feedbacks || []}
+          isFilteringEnabled={true}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error}
           onRetry={() => mutate()}
