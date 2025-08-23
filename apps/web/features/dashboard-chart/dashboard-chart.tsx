@@ -3,7 +3,7 @@
 import type { EChartOption } from "../../types/charts";
 import { useDrawChart } from "@/hooks/useDrawChart";
 import { clientApi } from "@/lib/api";
-import { SentimentSummaryResponse } from "@/types/sentiment-summary";
+import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import DashboardChartFallback from "./dashboard-chart-fallback";
 import { FetchError } from "@/lib/errors";
