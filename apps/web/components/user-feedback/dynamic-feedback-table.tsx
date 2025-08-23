@@ -32,6 +32,7 @@ function DynamicFeedbackTable({
   tableHeads,
   tableRows,
 }: Props) {
+
   return (
     <Table className="min-w-[600px]">
       <TableHeader>
