@@ -1,4 +1,4 @@
-import FileUpload from "@/components/feedback-file-upload/file-upload";
+import FileUpload from "@/features/feedback-file-upload/file-upload";
 import React from "react";
 import type { Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
