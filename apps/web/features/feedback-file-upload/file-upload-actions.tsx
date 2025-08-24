@@ -8,11 +8,11 @@ type Props = {
 
 function FileUploadActions({ onClear }: Props) {
   return (
-    <div className="mt-4 flex gap-2">
+    <div className="mt-4 flex gap-2 justify-end">
       <Button variant={"outline"} type="reset" onClick={onClear}>
         <Trash /> Clear files
       </Button>
-      <Button>
+      <Button type="submit">
         <LucideUploadCloud /> Process files
       </Button>
     </div>
