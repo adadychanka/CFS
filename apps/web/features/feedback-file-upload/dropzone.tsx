@@ -20,7 +20,7 @@ import { useCustomDropzone } from "@/hooks/useCustomDropzone";
 import { cn } from "@repo/ui/lib/utils";
 
 const fileUploadSchema = z.object({
-  files: z.array(z.instanceof(File)).optional(),
+  files: z.array(z.instanceof(File)),
 });
 
 type FileUploadFormData = z.infer<typeof fileUploadSchema>;
@@ -88,7 +88,7 @@ function Dropzone() {
 
         {/* Your existing file preview and actions - unchanged */}
         {files.length > 0 && (
-          <section>
+          <section className="mt-10">
             <PreviewFiles
               files={files}
               onDeleteSingleFile={handleDeleteSingleFile}
