@@ -1,8 +1,8 @@
 import { z } from "zod";
 import {
+  FEEDBACK_MAX_ITEMS,
   FEEDBACK_MAX_LENGTH,
   FEEDBACK_MIN_LENGTH,
-  FEEDBACK_TEXTAREA_MAX_ITEMS,
 } from "@/constants/constants";
 import { MANUAL_FEEDBACK_ERRORS } from "@/constants/errors";
 
@@ -24,7 +24,7 @@ export const manualFeedbackSchema = z
       });
     }
 
-    if (lines.length > FEEDBACK_TEXTAREA_MAX_ITEMS) {
+    if (lines.length > FEEDBACK_MAX_ITEMS) {
       ctx.addIssue({
         path: ["feedback"],
         message: MANUAL_FEEDBACK_ERRORS.MAX_ITEMS,
