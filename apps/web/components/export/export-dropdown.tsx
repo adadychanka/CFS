@@ -11,17 +11,19 @@ import { Button } from "@repo/ui/components/button";
 import { Download, FileSpreadsheet, FileText } from "lucide-react";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { toast } from "sonner";
+import { downloadReport } from "@/lib/actions/feedback";
+import { formatCreatedAtDate } from "@/utils/date-utils";
+import { base64ToBlobConverter } from "@/utils/base64-to-blob-converter";
+import { browserFileDownloader } from "@/utils/browser-file-downloader";
 
 const handleDownload = async (
   type: "summarized" | "detailed",
   format: "csv" | "pdf",
 ) => {
   try {
-    const res = await fetch(
-      `/api/feedback/report?type=${type}&format=${format}`,
-    );
+    const res = await downloadReport(type, format);
 
-    if (!res.ok) {
+    if (!res.success) {
       if (res.status === 401 || res.status === 403) {
         clientAuthGuard(res.status);
         return;
@@ -31,27 +33,15 @@ const handleDownload = async (
       return;
     }
 
-    const contentDisposition = res.headers.get("content-disposition");
-    const contentType = res.headers.get("content-type");
+    if (res.data) {
+      // Prepare file
+      const filename = `feedback-${type}-${formatCreatedAtDate(new Date())}.${format}`;
+      const contentType = format === "csv" ? "text/csv" : "application/pdf";
 
-    if (!contentDisposition || !contentType) {
-      return;
+      // Download file
+      const blob = base64ToBlobConverter(res.data, contentType);
+      browserFileDownloader(blob, filename);
     }
-
-    const blob = await res.blob();
-    const fileURL = URL.createObjectURL(blob);
-
-    const filename = `feedback-${type}.${format}`;
-
-    // Simulated download
-    const link = document.createElement("a");
-    link.href = fileURL;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    URL.revokeObjectURL(fileURL);
   } catch (err) {
     console.error("Unexpected error while downloading:", err);
     toast.error("Download failed");
