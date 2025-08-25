@@ -1,7 +1,9 @@
 import { auth } from "@/auth/auth";
-import { api } from "@/lib/api";
+import { getServerApi } from "@/lib/server-api";
 import { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import { NextResponse } from "next/server";
+
+const api = await getServerApi();
 
 export async function GET() {
   const session = await auth();

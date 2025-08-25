@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-class ApiClient {
+export class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
 
@@ -56,13 +56,6 @@ class ApiClient {
   }
 }
 
-const API = process.env.NEXT_PUBLIC_API;
-
-if (!API) {
-  throw new Error("API URL is not found in Environment!");
-}
-
-const api = new ApiClient(API);
 const clientApi = new ApiClient();
 
-export { api, clientApi };
+export { clientApi };
