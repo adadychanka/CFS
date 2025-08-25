@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { FileUpIcon } from "lucide-react";
 import {
   Form,
@@ -14,55 +11,35 @@ import {
   FormMessage,
   FormDescription,
 } from "@repo/ui/components/form";
-import PreviewFiles from "./preview/preview-files";
 import FileUploadActions from "./file-upload-actions";
-import { useCustomDropzone } from "@/hooks/useCustomDropzone";
 import { cn } from "@repo/ui/lib/utils";
+import PreviewFileSection from "./preview/preview-file-section";
+import useFileUpload from "@/hooks/useFileUpload";
+import PreviewFileErrors from "./preview/preview-file-erros";
 
-const fileUploadSchema = z.object({
-  files: z.array(z.instanceof(File)),
-});
-
-type FileUploadFormData = z.infer<typeof fileUploadSchema>;
-
-function Dropzone() {
-  const form = useForm<FileUploadFormData>({
-    resolver: zodResolver(fileUploadSchema),
-    defaultValues: {
-      files: [],
-    },
-  });
-
+function FileUploadDropzone() {
   const {
-    files,
+    form,
+    serverErrors,
     error,
     getInputProps,
     getRootProps,
     isDragActive,
-    handleClear,
+    handleClearData,
+    handleSubmit,
+    isLoading,
+    files,
     handleDeleteSingleFile,
-  } = useCustomDropzone();
-
-  React.useEffect(() => {
-    form.setValue("files", files);
-  }, [files, form]);
-
-  const onSubmit = async (data: FileUploadFormData) => {
-    try {
-      console.log("Form submitted with files:", data, files);
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-  };
+  } = useFileUpload();
 
   const className = cn(
-    "p-16 flex items-center justify-center mt-1 border border-neutral-200",
+    "p-16 flex items-center justify-center flex-col gap-2  mt-1 border border-neutral-200",
     { "bg-gray-100": isDragActive },
   );
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
         <FormField
           control={form.control}
           name="files"
@@ -74,8 +51,9 @@ function Dropzone() {
               </FormDescription>
               <FormControl>
                 <div {...getRootProps({ className })}>
-                  <input {...getInputProps()} />
+                  <input {...getInputProps()} id="file" />
                   {<FileUpIcon width={"50px"} height={"50px"} />}
+                  <label htmlFor="file">Upload or drag and drop</label>
                 </div>
               </FormControl>
               <FormMessage />
@@ -83,17 +61,19 @@ function Dropzone() {
           )}
         />
 
-        {/* Your existing error handling - unchanged */}
         {error && <p className="text-red-600 mt-1">{error}</p>}
 
-        {/* Your existing file preview and actions - unchanged */}
         {files.length > 0 && (
           <section className="mt-10">
-            <PreviewFiles
+            <PreviewFileSection
               files={files}
               onDeleteSingleFile={handleDeleteSingleFile}
             />
-            <FileUploadActions onClear={handleClear} />
+            {serverErrors && <PreviewFileErrors serverErrors={serverErrors} />}
+            <FileUploadActions
+              onClear={handleClearData}
+              isLoading={isLoading}
+            />
           </section>
         )}
       </form>
@@ -101,4 +81,4 @@ function Dropzone() {
   );
 }
 
-export default Dropzone;
+export default FileUploadDropzone;
