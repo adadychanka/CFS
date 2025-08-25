@@ -1,13 +1,10 @@
 "use client";
 
-import type { EChartOption } from "../../types/charts";
-import { useDrawChart } from "@/hooks/useDrawChart";
 import { clientApi } from "@/lib/api";
-import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
-import useSWR from "swr";
 import DashboardChartFallback from "./dashboard-chart-fallback";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import useDashboardChart from "@/hooks/useDashboardChart";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -25,39 +22,7 @@ export const fetcher = async (url: string) => {
 };
 
 function DashboardChart() {
-  const {
-    data: result,
-    error,
-    isLoading,
-  } = useSWR<SentimentSummaryResponse>(
-    "/api/feedback/sentiment-summary",
-    fetcher,
-  );
-
-  const categories = result?.data?.map((item) => item.sentiment) ?? [];
-  const data = result?.data?.map((item) => item.count) ?? [];
-
-  const chartOptions: EChartOption = {
-    title: {
-      text: "Proportions of Sentiment Types",
-    },
-    tooltip: {},
-    color: "#393E46",
-    xAxis: {
-      data: categories,
-    },
-    yAxis: {},
-    series: [
-      {
-        type: "bar",
-        data: data,
-      },
-    ],
-  };
-
-  const hasError = Boolean(error);
-
-  const { chartRef } = useDrawChart(chartOptions, isLoading);
+  const { chartRef, hasError, error, isLoading, isEmpty } = useDashboardChart();
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
@@ -69,7 +34,7 @@ function DashboardChart() {
     return <DashboardChartFallback loading />;
   }
 
-  if (categories.length === 0 || data.length === 0) {
+  if (isEmpty) {
     return <DashboardChartFallback message="No data found" />;
   }
 
