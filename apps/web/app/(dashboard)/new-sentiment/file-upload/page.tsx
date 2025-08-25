@@ -1,4 +1,4 @@
-import FileUpload from "@/features/feedback-file-upload/file-upload";
+import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
 import React from "react";
 import type { Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 function Page() {
   return (
     <div>
-      <FileUpload />
+      <FileUploadForm />
     </div>
   );
 }
