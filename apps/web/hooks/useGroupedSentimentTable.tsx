@@ -3,7 +3,7 @@ import { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
 import { Sentiment } from "@/types/sentiment-analysis-result";
 import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import React from "react";
-import { useDynamicTable } from "./useDynamicTable";
+import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 
 type Props = {
   data: GroupedFeedbackDataItems[];
@@ -29,7 +29,11 @@ function useGroupedSentimentTable({ data }: Props) {
     </TableRow>
   );
 
-  const { tableHeads, tableRows } = useDynamicTable({ data, heads, renderRow });
+  const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
+    data,
+    heads,
+    renderRow,
+  });
   return {
     tableHeads,
     tableRows,
