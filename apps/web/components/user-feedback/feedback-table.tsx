@@ -40,7 +40,7 @@ const FeedbackTable = ({ currentPage }: Props) => {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="overflow-x-auto rounded-md border max-h-[824px]">
+      <div className="overflow-x-auto rounded-md border">
         <DynamicFeedbackTable
           isLoading={isLoading}
           feedbackList={data?.feedbacks || []}
