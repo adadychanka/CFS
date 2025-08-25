@@ -1,5 +1,3 @@
-"use client";
-
 export default function DashboardChartLoader() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
