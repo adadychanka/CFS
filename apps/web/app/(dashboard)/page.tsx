@@ -31,11 +31,11 @@ export default function Home() {
           >
             {isSampleMode ? (
               <>
-                <FlaskConical /> Enter sample mode
+                <LogOut /> Exit sample mode
               </>
             ) : (
               <>
-                <LogOut /> Exit sample mode
+                <FlaskConical /> Enter sample mode
               </>
             )}
           </Button>
