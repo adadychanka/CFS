@@ -12,7 +12,7 @@ export type UseDynamicTableData = {
   tableRows: JSX.Element[];
 };
 
-export function useDynamicTable<T>({
+export function useDynamicTableHeadsAndRows<T>({
   data,
   limit = data.length,
   heads,

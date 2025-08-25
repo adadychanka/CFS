@@ -8,11 +8,10 @@ import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-i
 import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
-import useGroupedSentimentTable from "@/hooks/useGroupedSentimentTable";
-import useFeedbackTable from "@/hooks/useFeedbackTable";
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
+import { UseDynamicTableData } from "@/hooks/useDynamicTableHeadsAndRows";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[] | GroupedFeedbackDataItems[];
@@ -21,7 +20,8 @@ type Props = {
   isFilteringEnabled?: boolean;
   error?: FetchError;
   onRetry?: () => void;
-  isGrouped?: boolean;
+  tableHeads: UseDynamicTableData["tableHeads"];
+  tableRows: UseDynamicTableData["tableRows"];
 };
 
 const ERROR_ELEMENT_COL_SPAN = 5;
@@ -30,25 +30,14 @@ function DynamicFeedbackTable({
   feedbackList,
   isLoading,
   feedbackLimit,
-  isFilteringEnabled,
   error,
-  onRetry,
-  isGrouped,
+  tableHeads,
+  tableRows,
 }: Props) {
-  const groupedTable = useGroupedSentimentTable({
-    data: isGrouped ? (feedbackList as GroupedFeedbackDataItems[]) : [],
-  });
-
-  const regularTable = useFeedbackTable({
-    data: !isGrouped ? (feedbackList as SentimentAnalysisResult[]) : [],
-  });
-
-  const currentTable = isGrouped ? groupedTable : regularTable;
-
   return (
     <Table className="min-w-[600px]">
       <TableHeader>
-        <TableRow>{currentTable.tableHeads}</TableRow>
+        <TableRow>{tableHeads}</TableRow>
       </TableHeader>
 
       <TableBody>
@@ -83,7 +72,7 @@ function DynamicFeedbackTable({
         {/* Data */}
         {!isLoading &&
           !error &&
-          feedbackList.length > 0 && currentTable.tableRows}
+          feedbackList.length > 0 && tableRows}
       </TableBody>
     </Table>
   );
