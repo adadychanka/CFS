@@ -1,25 +1,9 @@
 "use client";
 
-import { clientApi } from "@/lib/api";
 import DashboardChartFallback from "./dashboard-chart-fallback";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useDashboardChart from "@/hooks/useDashboardChart";
-
-export const fetcher = async (url: string) => {
-  const res = await clientApi.get(url);
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new FetchError(
-      data.message || "Something went wrong",
-      res.status,
-      data,
-    );
-  }
-
-  return data;
-};
 
 function DashboardChart() {
   const { chartRef, hasError, error, isLoading, isEmpty } = useDashboardChart();
