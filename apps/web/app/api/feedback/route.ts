@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
+import { FEEDBACK_FILTERS } from "@/constants/constants";
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,9 +13,13 @@ export async function GET(req: NextRequest) {
 
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
+    const sentimentParam = `${req.nextUrl.searchParams.get("sentiment")}`;
+    const sentiment = FEEDBACK_FILTERS.includes(sentimentParam)
+      ? sentimentParam
+      : null;
 
     const res = await fetch(
-      `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}`,
+      `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}${sentiment ? `&sentiment=${sentiment}` : ""}`,
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,
