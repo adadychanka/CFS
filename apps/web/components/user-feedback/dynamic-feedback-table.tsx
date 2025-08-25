@@ -11,8 +11,7 @@ import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
-import useGroupedSentimentTable from "@/hooks/useGroupedSentimentTable";
-import useFeedbackTable from "@/hooks/useFeedbackTable";
+import { UseDynamicTableData } from "@/hooks/useDynamicTableHeadsAndRows";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[] | GroupedFeedbackDataItems[];
@@ -20,7 +19,8 @@ type Props = {
   feedbackLimit: number;
   error?: FetchError;
   onRetry?: () => void;
-  isGrouped?: boolean;
+  tableHeads: UseDynamicTableData["tableHeads"];
+  tableRows: UseDynamicTableData["tableRows"];
 };
 
 function DynamicFeedbackTable({
@@ -29,22 +29,13 @@ function DynamicFeedbackTable({
   feedbackLimit,
   error,
   onRetry,
-  isGrouped,
+  tableHeads,
+  tableRows,
 }: Props) {
-  const groupedTable = useGroupedSentimentTable({
-    data: isGrouped ? (feedbackList as GroupedFeedbackDataItems[]) : [],
-  });
-
-  const regularTable = useFeedbackTable({
-    data: !isGrouped ? (feedbackList as SentimentAnalysisResult[]) : [],
-  });
-
-  const currentTable = isGrouped ? groupedTable : regularTable;
-
   return (
     <Table className="min-w-[600px]">
       <TableHeader>
-        <TableRow>{currentTable.tableHeads}</TableRow>
+        <TableRow>{tableHeads}</TableRow>
       </TableHeader>
       <TableBody>
         {isLoading ? (
@@ -56,7 +47,7 @@ function DynamicFeedbackTable({
         ) : feedbackList.length === 0 ? (
           <NoFeedbackMessage type="empty" />
         ) : (
-          currentTable.tableRows
+          tableRows
         )}
       </TableBody>
     </Table>

@@ -7,6 +7,7 @@ import FeedbackTablePagination from "@/components/user-feedback/feedback-table-p
 import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import useFeedbackTable from "@/hooks/useFeedbackTable";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -38,6 +39,10 @@ const FeedbackTable = ({ currentPage }: Props) => {
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
+  const { tableHeads, tableRows } = useFeedbackTable({
+    data: data?.feedbacks || [],
+  });
+
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-md border">
@@ -47,6 +52,8 @@ const FeedbackTable = ({ currentPage }: Props) => {
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error}
           onRetry={() => mutate()}
+          tableHeads={tableHeads}
+          tableRows={tableRows}
         />
       </div>
 
