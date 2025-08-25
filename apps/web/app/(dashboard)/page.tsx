@@ -17,7 +17,12 @@ export default function Home() {
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
         {/*TODO: this can go inside the header*/}
-        <div className="pb-8 flex justify-end">
+        <div className="pb-8 flex items-center justify-between gap-1">
+          <span className="text-sm text-neutral-600">
+            Turning on sample mode will not affect your date. All of you
+            analyzed sentiments securely stored.
+          </span>
+
           <Button
             size="sm"
             variant="outline"
