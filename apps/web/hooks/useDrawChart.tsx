@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
-import { EChartOption } from "@/types/charts";
+import type { EChartOption } from "@/types/charts";
 
 /**
  * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
