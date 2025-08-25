@@ -1,5 +1,10 @@
+/**
+ * Simulates file download using browser APIs.
+ *
+ * @param blob
+ * @param filename
+ */
 export const browserFileDownloader = (blob: Blob, filename: string) => {
-  // Simulated download
   const fileURL = URL.createObjectURL(blob);
 
   const link = document.createElement("a");
