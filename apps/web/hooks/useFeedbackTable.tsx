@@ -2,7 +2,7 @@ import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import React from "react";
-import { useDynamicTable } from "./useDynamicTable";
+import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
 
@@ -43,7 +43,11 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
     </TableRow>
   );
 
-  const { tableHeads, tableRows } = useDynamicTable({ data, heads, renderRow });
+  const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
+    data,
+    heads,
+    renderRow,
+  });
 
   return {
     tableHeads,
