@@ -13,7 +13,11 @@ import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
 import GroupedFeedback from "./grouped-feedback";
 
-const SwitchTableCollapsedTabs = () => {
+type Props = {
+  isSampleMode: boolean;
+};
+
+const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -51,7 +55,7 @@ const SwitchTableCollapsedTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="table">
-        <FeedbackTable currentPage={currentPage} />
+        <FeedbackTable currentPage={currentPage} isSampleMode={isSampleMode} />
       </TabsContent>
       <TabsContent value="grouped">
         <GroupedFeedback />

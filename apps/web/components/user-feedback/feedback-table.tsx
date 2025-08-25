@@ -25,11 +25,15 @@ export const fetcher = async (url: string) => {
 
 type Props = {
   currentPage: number;
+  isSampleMode: boolean;
 };
 
-const FeedbackTable = ({ currentPage }: Props) => {
+const FeedbackTable = ({ currentPage, isSampleMode }: Props) => {
+  const fetchURL = isSampleMode
+    ? `/api/feedback/sample?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`
+    : `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`;
   const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
-    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+    fetchURL,
     fetcher,
     {
       keepPreviousData: true,
