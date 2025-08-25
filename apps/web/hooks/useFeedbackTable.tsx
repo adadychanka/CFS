@@ -1,7 +1,7 @@
-import FeedbackBadge from "@/components/user-feedback/feedback-badge";
-import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
-import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import React from "react";
+import FeedbackBadge from "@/components/user-feedback/feedback-badge";
+import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
+import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";

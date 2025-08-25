@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { Accordion } from "@repo/ui/components/accordion";
 import { clientApi } from "@/lib/api";
 import { FetchError } from "@/lib/errors";
-import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
+import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackFallback from "./grouped-feedback-fallback";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import SingleGroupedSentiments from "./single-grouped-sentiments";
