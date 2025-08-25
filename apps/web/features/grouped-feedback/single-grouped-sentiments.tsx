@@ -34,7 +34,7 @@ function SingleGroupedSentiments({ data, summary, isLoading }: Props) {
         />
         {data.length >= FEEDBACK_LIMIT && (
           <Link
-            href={`/result/${summary}`}
+            href={`/grouped/${summary}`}
             className="px-5 py-2 inline-block my-2 rounded-md bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
           >
             View all results

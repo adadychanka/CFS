@@ -3,7 +3,7 @@ import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { NextResponse } from "next/server";
 import { getServerApi } from "@/lib/server-api";
 
-const api = await getServerApi()
+const api = await getServerApi();
 export async function GET() {
   const session = await auth();
   if (session?.user.token) {
