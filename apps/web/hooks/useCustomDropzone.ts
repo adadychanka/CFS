@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { validateUploadedFiles } from "@/utils/files-helper";
 import { useDropzone } from "react-dropzone";
+import { validateUploadedFiles } from "@/utils/files-helper";
 
 export const useCustomDropzone = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -22,7 +22,7 @@ export const useCustomDropzone = () => {
 
       setError(null);
       setFiles((prevFiles) => {
-        return [...prevFiles, ...acceptedFiles];
+        return [...acceptedFiles, ...prevFiles];
       });
     },
     [files],
@@ -32,6 +32,10 @@ export const useCustomDropzone = () => {
 
   const handleClear = useCallback(() => {
     setFiles([]);
+  }, []);
+
+  const handleClearErrors = useCallback(() => {
+    setError(null);
   }, []);
 
   const handleDeleteSingleFile = useCallback((fileName: string) => {
@@ -47,6 +51,7 @@ export const useCustomDropzone = () => {
     getInputProps,
     getRootProps,
     handleClear,
+    handleClearErrors,
     handleDeleteSingleFile,
   };
 };
