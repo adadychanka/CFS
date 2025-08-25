@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
-import { EChartOption } from "@/components/e-charts/types";
+import type { EChartOption } from "@/types/charts";
 
 /**
  * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
@@ -15,28 +15,37 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
 
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
+  //Creating a chart once at initial render
   useEffect(() => {
+    if (!chartRef.current) return;
+
     const chartInstance = echarts.init(chartRef.current);
-    chartInstance.setOption(options);
     setChart(chartInstance);
 
-    const resizeObserver = new window.ResizeObserver((entries) => {
-      entries.map(({ target }) => {
+    resizeObserverRef.current = new window.ResizeObserver((entries) => {
+      entries.forEach(({ target }) => {
         if (target instanceof HTMLDivElement) {
           const instance = echarts.getInstanceByDom(target);
-          if (instance) {
-            instance.resize();
-          }
+          instance?.resize();
         }
       });
     });
-    resizeObserver.observe(chartRef.current!);
+
+    resizeObserverRef.current.observe(chartRef.current);
 
     return () => {
-      resizeObserver.disconnect();
+      resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [options]);
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (chart) {
+      chart.setOption(options);
+    }
+  }, [chart, options]);
 
   useEffect(() => {
     if (!chart) {

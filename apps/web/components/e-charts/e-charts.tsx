@@ -1,6 +1,6 @@
 "use client";
 
-import type { EChartOption } from "./types";
+import type { EChartOption } from "../../types/charts";
 import { useDrawChart } from "@/hooks/useDrawChart";
 
 type Props = {

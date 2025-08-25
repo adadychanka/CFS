@@ -1,8 +1,10 @@
-class ApiClient {
+import { NextResponse } from "next/server";
+
+export class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
 
-  constructor(baseUrl: string) {
+  constructor(baseUrl: string = "") {
     this.baseUrl = baseUrl;
   }
 
@@ -22,18 +24,19 @@ class ApiClient {
     return headers;
   }
 
-  async get<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      headers: this.getHeaders(),
-    });
+  async get(endpoint: string) {
+    try {
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        headers: this.getHeaders(),
+      });
 
-    if (!response.ok) {
-      throw new Error(
-        `GET ${endpoint} failed: ${response.status}: ${response.statusText}w`,
-      );
+      return res;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
+
+      return NextResponse.json({ message }, { status: 500 });
     }
-
-    return response.json();
   }
 
   async post<T>(endpoint: string, body: unknown): Promise<T> {
@@ -53,12 +56,6 @@ class ApiClient {
   }
 }
 
-const API = process.env.NEXT_PUBLIC_API;
+const clientApi = new ApiClient();
 
-if (!API) {
-  throw new Error("API URL is not found in Environment!");
-}
-
-const api = new ApiClient(API);
-
-export default api;
+export { clientApi };
