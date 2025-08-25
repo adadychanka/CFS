@@ -38,7 +38,6 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
     return () => {
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
-      setChart(null);
     };
   }, [isLoading]);
 
