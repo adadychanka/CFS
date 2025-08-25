@@ -1,8 +1,8 @@
-import FeedbackBadge from "@/components/user-feedback/feedback-badge";
-import { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
-import { Sentiment } from "@/types/sentiment-analysis-result";
-import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import React from "react";
+import FeedbackBadge from "@/components/user-feedback/feedback-badge";
+import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
+import type { Sentiment } from "@/types/sentiment-analysis-result";
+import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 
 type Props = {
