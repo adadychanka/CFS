@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
 import GroupedFeedback from "./grouped-feedback";
+import ExportDropdown from "@/components/export/export-dropdown";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
@@ -42,14 +43,17 @@ const SwitchTableCollapsedTabs = () => {
 
   return (
     <Tabs value={tab} onValueChange={handleTabChange}>
-      <TabsList className="mb-4">
-        <TabsTrigger value="table">
-          <Table2 /> Table
-        </TabsTrigger>
-        <TabsTrigger value="grouped">
-          <GalleryVertical /> Grouped
-        </TabsTrigger>
-      </TabsList>
+      <div className="flex items-center justify-between">
+        <TabsList className="mb-4">
+          <TabsTrigger value="table">
+            <Table2 /> Table
+          </TabsTrigger>
+          <TabsTrigger value="grouped">
+            <GalleryVertical /> Grouped
+          </TabsTrigger>
+        </TabsList>
+        <ExportDropdown />
+      </div>
       <TabsContent value="table">
         <FeedbackTable currentPage={currentPage} />
       </TabsContent>

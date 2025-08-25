@@ -39,3 +39,51 @@ export async function uploadManualFeedback(feedback: PreviewFeedback[]) {
     return { success: false, status: 500, message };
   }
 }
+
+export async function downloadReport(type: string, format: string) {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return {
+        success: false,
+        status: 401,
+        message: "Unauthorized",
+      };
+    }
+
+    const res = await fetch(
+      `${process.env.BACKEND_API}/api/feedback/report?type=${type}&format=${format}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.token}`,
+        },
+      },
+    );
+
+    if (!res.ok) {
+      return {
+        success: false,
+        status: res.status,
+        message: `Backend request failed with ${res.status}`,
+      };
+    }
+
+    const arrayBuffer = await res.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+
+    return {
+      success: true,
+      status: res.status,
+      data: base64,
+    };
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Internal Server Error";
+
+    return {
+      success: false,
+      status: 500,
+      message,
+    };
+  }
+}
