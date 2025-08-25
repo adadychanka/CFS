@@ -1,3 +1,5 @@
+import React from "react";
+import Link from "next/link";
 import DynamicFeedbackTable from "@/components/user-feedback/dynamic-feedback-table";
 import useGroupedSentimentTable from "@/hooks/useGroupedSentimentTable";
 import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
@@ -7,8 +9,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@repo/ui/components/accordion";
-import Link from "next/link";
-import React from "react";
 
 type Props = {
   data: GroupedFeedbackDataItems[];
