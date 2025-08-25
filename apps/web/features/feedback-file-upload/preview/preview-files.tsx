@@ -12,7 +12,7 @@ type Props = {
   onDeleteSingleFile: (fileName: string) => void;
 };
 
-const PreviewListTable = ({ files, onDeleteSingleFile }: Props) => {
+const PreviewFilesTable = ({ files, onDeleteSingleFile }: Props) => {
   return (
     <div className="overflow-x-auto rounded-md border max-h-[800px]">
       <Table className="min-w-[600px] table-fixed">
@@ -35,4 +35,4 @@ const PreviewListTable = ({ files, onDeleteSingleFile }: Props) => {
   );
 };
 
-export default PreviewListTable;
+export default PreviewFilesTable;

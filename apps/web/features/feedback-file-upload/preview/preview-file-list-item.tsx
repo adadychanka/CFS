@@ -1,9 +1,9 @@
+import React from "react";
+import { Trash2 } from "lucide-react";
 import { TableCell, TableRow } from "@repo/ui/components/table";
 import { Badge } from "@repo/ui/components/badge";
 import { Button } from "@repo/ui/components/button";
-import { Trash2 } from "lucide-react";
-import React from "react";
-import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
+import { MAX_FILES_PER_UPLOAD } from "@/constants/constants";
 
 type Props = {
   index: number;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const PreviewFileListItem = ({ index, file, onDeleteSingleFile }: Props) => {
-  const isReadyToAnalyze = index >= FEEDBACK_MAX_ITEMS;
+  const isReadyToAnalyze = index >= MAX_FILES_PER_UPLOAD;
 
   return (
     <TableRow
