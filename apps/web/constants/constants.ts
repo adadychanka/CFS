@@ -130,3 +130,4 @@ export const TEST_TEXTAREA_TEXT = [
 export const FEEDBACK_MIN_LENGTH = 10;
 export const FEEDBACK_MAX_LENGTH = 300;
 export const FEEDBACK_MAX_ITEMS = 3;
+export const MAX_FILES_PER_UPLOAD = 3;

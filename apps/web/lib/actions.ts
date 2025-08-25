@@ -12,17 +12,20 @@ import { api } from "./api";
 
 //TODO: Change types for Post method in API call
 const register = async ({ email, password }: UserCredentials) => {
-  return await api.post<AuthResponse>("/api/auth/register", {
+  const response = await api.post("/api/auth/register", {
     email,
     password,
   });
+  return await response.json();
 };
 
 const login = async ({ email, password }: UserCredentials) => {
-  return await api.post<AuthResponse>("/api/auth/login", {
+  const response = await api.post("/api/auth/login", {
     email,
     password,
   });
+
+  return await response.json();
 };
 
 export const loginOrRegister = async (
@@ -31,7 +34,7 @@ export const loginOrRegister = async (
 ) => {
   let result: AuthResult | null = null;
 
-  const response =
+  const response: AuthResponse =
     authType === "sign-in"
       ? await login(userCredentials)
       : await register(userCredentials);
