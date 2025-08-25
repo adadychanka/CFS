@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
 import ChartsSection from "@/components/admin/charts-section";
+import UsersSection from "@/components/users/users-section";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -35,6 +36,7 @@ const Page = () => {
 
       <div className="w-full max-w-[1280px] mx-auto p-4 @container">
         <ChartsSection />
+        <UsersSection />
       </div>
     </div>
   );
