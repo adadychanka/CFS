@@ -7,6 +7,9 @@ import FeedbackTablePagination from "@/components/user-feedback/feedback-table-p
 import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { Button } from "@repo/ui/components/button";
+import { SwatchBook } from "lucide-react";
+import { useState } from "react";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -25,11 +28,17 @@ export const fetcher = async (url: string) => {
 
 type Props = {
   currentPage: number;
+  // isSampleMode: boolean;
 };
 
 const FeedbackTable = ({ currentPage }: Props) => {
+  const [isSampleMode, setIsSampleMode] = useState(false);
+
+  const fetchURL = isSampleMode
+    ? `/api/feedback/sample?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`
+    : `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`;
   const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
-    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+    fetchURL,
     fetcher,
     {
       keepPreviousData: true,
@@ -40,6 +49,18 @@ const FeedbackTable = ({ currentPage }: Props) => {
 
   return (
     <div className="flex flex-col gap-8">
+      <div className="pb-8 flex justify-end">
+        <Button
+          size="sm"
+          variant="outline"
+          aria-label="Toggle sample mode for user dashboard"
+          className={isSampleMode ? "border-green-500" : "border-neutral-200"}
+          onClick={() => setIsSampleMode((prev) => !prev)}
+        >
+          <SwatchBook /> Sample mode
+        </Button>
+      </div>
+
       <div className="overflow-x-auto rounded-md border max-h-[824px]">
         <DynamicFeedbackTable
           isLoading={isLoading}
