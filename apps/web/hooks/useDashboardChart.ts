@@ -59,7 +59,7 @@ function useDashboardChart() {
 
   const hasError = Boolean(error);
 
-  const { chartRef } = useDrawChart(chartOptions, isLoading);
+  const { chartRef } = useDrawChart(chartOptions, { isLoading });
   return {
     chartRef,
     hasError,

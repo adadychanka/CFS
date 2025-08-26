@@ -11,7 +11,13 @@ import type { EChartOption } from "@/types/charts";
  * const { chartRef } = useDrawChart(options, isLoading);
  * return <div ref={chartRef} className="w-full h-full" />;
  */
-const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
+const useDrawChart = (
+  options: EChartOption,
+  optionalParams?: {
+    handler?: (params: echarts.ECElementEvent) => void;
+    isLoading?: boolean;
+  },
+) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
 
@@ -39,7 +45,7 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [isLoading]);
+  }, [optionalParams?.isLoading]);
 
   useEffect(() => {
     if (chart) {
@@ -48,15 +54,25 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
   }, [chart, options]);
 
   useEffect(() => {
+    if (!chart || !optionalParams?.handler) return;
+
+    chart.on("click", optionalParams.handler);
+
+    return () => {
+      chart.off("click", optionalParams.handler);
+    };
+  }, [chart, optionalParams?.handler]);
+
+  useEffect(() => {
     if (!chart) {
       return;
     }
-    if (isLoading) {
+    if (optionalParams?.isLoading) {
       chart.showLoading();
       return;
     }
     chart.hideLoading();
-  }, [chart, isLoading]);
+  }, [chart, optionalParams?.isLoading]);
 
   return {
     chartRef,
