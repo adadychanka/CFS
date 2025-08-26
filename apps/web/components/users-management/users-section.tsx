@@ -1,4 +1,4 @@
-import UsersList from "@/components/users/users-list";
+import UsersList from "@/components/users-management/users-list";
 import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { Search } from "lucide-react";
