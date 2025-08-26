@@ -19,7 +19,13 @@ type Props = {
   limit: number;
 };
 
-const FeedbackTablePagination = ({ limit }: Props) => {
+/**
+ * A pagination component works with a client URL query
+ *
+ * @param limit
+ * @constructor
+ */
+const PaginationSection = ({ limit }: Props) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -70,4 +76,4 @@ const FeedbackTablePagination = ({ limit }: Props) => {
   );
 };
 
-export default FeedbackTablePagination;
+export default PaginationSection;
