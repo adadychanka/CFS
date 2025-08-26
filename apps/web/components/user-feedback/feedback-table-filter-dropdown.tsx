@@ -17,15 +17,15 @@ export function FeedbackTableFilterDropdown() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filterOnURLQuery = searchParams.get("sentiment") || "no-filter";
+  const filterOnURLQuery = searchParams.get("sentiment") || "all";
   const selectedFilter = FEEDBACK_FILTERS.includes(filterOnURLQuery)
     ? filterOnURLQuery
-    : "no-filter";
+    : "all";
 
   useEffect(() => {
     if (!FEEDBACK_FILTERS.includes(filterOnURLQuery)) {
       const params = new URLSearchParams(searchParams);
-      params.set("sentiment", "no-filter");
+      params.set("sentiment", "all");
       router.replace(`?${params.toString()}`, { scroll: false });
     }
   }, [filterOnURLQuery, searchParams, router]);
@@ -49,9 +49,7 @@ export function FeedbackTableFilterDropdown() {
           value={selectedFilter}
           onValueChange={handleChange}
         >
-          <DropdownMenuRadioItem value="no-filter">
-            no filter
-          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="all">all types</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="positive">
             positive
           </DropdownMenuRadioItem>
