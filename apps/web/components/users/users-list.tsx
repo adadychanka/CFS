@@ -14,7 +14,7 @@ import { Ban, PauseCircle } from "lucide-react";
 const UsersList = () => {
   return (
     <div className="overflow-x-auto rounded-md border">
-      <Table className="min-w-[600px]">
+      <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Email</TableHead>
