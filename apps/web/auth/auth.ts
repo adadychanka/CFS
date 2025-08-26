@@ -5,24 +5,25 @@ import { loginOrRegister } from "@/lib/actions";
 import { authConfig } from "./auth.config";
 import "next-auth/jwt";
 import { Auth, Handlers, SignIn, SignOut } from "@/types/next-auth";
+import { type UserRole } from "@/types/roles";
 
 declare module "next-auth" {
   interface Session {
     user: {
       token: string;
-      role: string;
+      role: UserRole;
     };
   }
   interface User {
     token: string;
-    role: string;
+    role: UserRole;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     token: string;
-    role: string;
+    role: UserRole;
     email?: string;
     name?: string;
   }
