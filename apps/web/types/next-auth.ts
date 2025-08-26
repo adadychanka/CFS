@@ -1,4 +1,4 @@
-import { NextAuthResult } from "next-auth";
+import { type NextAuthResult } from "next-auth";
 import z from "zod";
 import { UserRole } from "./roles";
 
