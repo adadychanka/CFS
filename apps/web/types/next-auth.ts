@@ -1,5 +1,6 @@
-import { NextAuthResult } from "next-auth";
+import { type NextAuthResult } from "next-auth";
 import z from "zod";
+import { UserRole } from "./roles";
 
 export type Auth = NextAuthResult["auth"];
 export type SignIn = NextAuthResult["signIn"];
@@ -18,7 +19,7 @@ export const AuthResponseSchema = z.object({
   data: z
     .object({
       token: z.string(),
-      role: z.string(),
+      role: z.enum(["ADMIN", "USER"] satisfies [UserRole, UserRole]),
       redirectTo: z.string(),
     })
     .optional(),
