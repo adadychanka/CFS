@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
-import { loginOrRegister } from "@/lib/actions";
+import { authenticate } from "@/lib/actions";
 import { authConfig } from "./auth.config";
 import "next-auth/jwt";
 import { Auth, Handlers, SignIn, SignOut } from "@/types/next-auth";
@@ -38,14 +38,19 @@ const nextAuthInstance = NextAuth({
           .object({
             email: z.string().email(),
             password: z.string().min(8),
-            variant: z.enum(["sign-in", "sign-up"]),
+            variant: z.enum([
+              "sign-in",
+              "sign-up",
+              "admin-sign-up",
+              "admin-sign-in",
+            ]),
           })
           .safeParse(credentials);
 
         if (parsedCredentials.success) {
           const { email, password, variant } = parsedCredentials.data;
           try {
-            const response = await loginOrRegister(variant, {
+            const response = await authenticate(variant, {
               email,
               password,
             });

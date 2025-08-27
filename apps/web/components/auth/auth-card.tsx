@@ -13,10 +13,13 @@ import { getCardContent, type AuthCardVariant } from "@/utils/get-card-content";
 
 type Props = {
   variant: AuthCardVariant;
+  isAdmin?: boolean;
 };
 
-function AuthCard({ variant }: Props) {
+function AuthCard({ variant, isAdmin = false }: Props) {
   const { link, linkText, title } = getCardContent(variant);
+  const isLinkVisible = isAdmin || link !== "/admin/sign-up";
+
   return (
     <Card className="w-full max-w-md shadow-md">
       <CardHeader>
@@ -26,12 +29,14 @@ function AuthCard({ variant }: Props) {
         <AuthForm variant={variant} />
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button variant="ghost" className="hover:bg-transparent gap-1">
-          You can{" "}
-          <Link href={link} className="text-blue-500">
-            {linkText}
-          </Link>
-        </Button>
+        {isLinkVisible && (
+          <Button variant="ghost" className="hover:bg-transparent gap-1">
+            You can{" "}
+            <Link href={link} className="text-blue-500">
+              {linkText}
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
