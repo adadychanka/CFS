@@ -9,20 +9,29 @@ import {
   TableRow,
 } from "@repo/ui/components/table";
 import { Button } from "@repo/ui/components/button";
-import { Ban, PauseCircle } from "lucide-react";
+import { Ban, PauseCircle, PlayCircle } from "lucide-react";
 import UsersSkeleton from "@/features/users-management/users-skeleton";
 import UsersEmpty from "@/features/users-management/users-empty";
 import type { User } from "@/types/user";
 import { FetchError } from "@/lib/errors";
 import { Badge } from "@repo/ui/components/badge";
+import { suspendUnsuspendUser } from "@/lib/actions/users";
 
 type Props = {
   usersList: User[];
   isLoading: boolean;
+  onMutate: () => void;
   error?: FetchError;
 };
 
-const UsersList = ({ usersList, isLoading, error }: Props) => {
+const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
+  const handleToggleDisable = async (user: User) => {
+    const res = await suspendUnsuspendUser(user);
+    if (res.success) {
+      onMutate();
+    }
+  };
+
   let content;
 
   if (error) {
@@ -45,16 +54,30 @@ const UsersList = ({ usersList, isLoading, error }: Props) => {
             </Badge>
           </TableCell>
           <TableCell className="text-center">
-            {!isThanos && (
-              <Button size="sm" variant="ghost">
-                <Ban /> Disable
-              </Button>
-            )}
+            {!isThanos &&
+              (user.isDisabled ? (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleToggleDisable(user)}
+                >
+                  <PlayCircle /> Activate
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleToggleDisable(user)}
+                >
+                  <PauseCircle />
+                  Suspend
+                </Button>
+              ))}
           </TableCell>
           <TableCell className="text-center">
             {!isThanos && (
               <Button size="sm" variant="ghost">
-                <PauseCircle /> Suspend
+                <Ban /> Disable
               </Button>
             )}
           </TableCell>

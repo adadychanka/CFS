@@ -5,7 +5,7 @@ import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { Search } from "lucide-react";
 import PaginationSection from "@/components/user-feedback/pagination-section";
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import { FetchError } from "@/lib/errors";
 import useSWR from "swr";
 import type { GetUsersResponse } from "@/types/http";
@@ -40,6 +40,10 @@ const UsersSection = () => {
 
   console.log(data && data);
 
+  const handleMutate = useCallback(async () => {
+    await mutate();
+  }, [mutate]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
@@ -53,6 +57,7 @@ const UsersSection = () => {
         usersList={data?.users || []}
         isLoading={isLoading}
         error={error}
+        onMutate={handleMutate}
       />
 
       {/* TODO: Need custom loader it seems */}
