@@ -5,7 +5,10 @@ import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import { useDrawChart } from "./useDrawChart";
 import { useMemo } from "react";
+import * as echarts from "echarts";
+import { useRouter, useSearchParams } from "next/navigation";
 
+// --- Fetcher fn ---
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
   const data = await res.json();
@@ -22,6 +25,7 @@ export const fetcher = async (url: string) => {
 };
 
 function useDashboardChart() {
+  // --- Data fetching ---
   const {
     data: result,
     error,
@@ -31,9 +35,14 @@ function useDashboardChart() {
     fetcher,
   );
 
+  // --- Derived data ---
   const { chartOptions, isEmpty } = useMemo(() => {
     const categories = result?.data?.map((item) => item.sentiment) ?? [];
-    const data = result?.data?.map((item) => item.count) ?? [];
+    const data =
+      result?.data?.map((item) => ({
+        value: item.count,
+        name: item.sentiment,
+      })) ?? [];
     const isEmpty = categories.length === 0 || data.length === 0;
 
     const chartOptions: EChartOption = {
@@ -59,7 +68,23 @@ function useDashboardChart() {
 
   const hasError = Boolean(error);
 
-  const { chartRef } = useDrawChart(chartOptions, { isLoading });
+  // --- Filter handling ---
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const filterHandler = (chartParams: echarts.ECElementEvent) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("sentiment", chartParams.name);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  // --- Draw chart ---
+  const { chartRef } = useDrawChart(chartOptions, {
+    isLoading,
+    handler: filterHandler,
+  });
+
+  // --- Return ---
   return {
     chartRef,
     hasError,
