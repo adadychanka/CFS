@@ -37,7 +37,7 @@ async function Page() {
   if (session?.user.token) {
     api.setToken(session.user.token);
   } else {
-    console.log("Token is not found");
+    //TODO: Sign out user
   }
 
   const response = await api.get("/api/admin/rate-limit");
