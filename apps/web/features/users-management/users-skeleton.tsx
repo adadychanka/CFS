@@ -13,6 +13,9 @@ const UsersSkeleton = () => {
       <TableCell key={index} className="px-2 py-4 h-[49px] ">
         <Skeleton className="h-full w-full rounded-md bg-gray-200" />
       </TableCell>
+      <TableCell key={index} className="px-2 py-4 h-[49px] ">
+        <Skeleton className="h-full w-full rounded-md bg-gray-200" />
+      </TableCell>
     </TableRow>
   ));
 };
