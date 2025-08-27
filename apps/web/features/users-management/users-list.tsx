@@ -9,11 +9,11 @@ import {
   TableRow,
 } from "@repo/ui/components/table";
 import React from "react";
-import { FAKE_USERS } from "@/components/users-management/fake-users";
+import { FAKE_USERS } from "@/features/users-management/fake-users";
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle } from "lucide-react";
-import UsersSkeleton from "@/components/users-management/users-skeleton";
-import UsersEmpty from "@/components/users-management/users-empty";
+import UsersSkeleton from "@/features/users-management/users-skeleton";
+import UsersEmpty from "@/features/users-management/users-empty";
 
 const UsersList = () => {
   const isEmpty = true;
