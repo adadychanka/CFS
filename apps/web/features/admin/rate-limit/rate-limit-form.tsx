@@ -24,7 +24,10 @@ import type {
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 
 const FormSchema = z.object({
-  rate: z.coerce.number().min(1, "Rate limit must not be less than 1"),
+  rate: z.coerce
+    .number()
+    .min(1, "Rate limit must not be less than 1")
+    .max(1000, "Rate limit must not be more than 1000"),
 });
 
 type Props = {
