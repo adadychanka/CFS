@@ -18,7 +18,7 @@ const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const filterOnURLQuery = searchParams.get("sentiment") || "all";
+  const filterOnURLQuery = searchParams.get("sentiment") || "";
 
   const requested = searchParams.get("tab") || "";
   const tab = USER_DASHBOARD_TABS.includes(requested) ? requested : "table";
