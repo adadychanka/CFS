@@ -22,7 +22,6 @@ type Props = {
   feedbackLimit: number;
   isFilteringEnabled?: boolean;
   error?: FetchError;
-  onRetry?: () => void;
 };
 
 function DynamicFeedbackTable({
@@ -31,7 +30,6 @@ function DynamicFeedbackTable({
   feedbackLimit,
   isFilteringEnabled,
   error,
-  onRetry,
 }: Props) {
   return (
     <Table className="min-w-[600px]">
@@ -52,7 +50,9 @@ function DynamicFeedbackTable({
             <SkeletonFeedbackItem key={i} />
           ))
         ) : error ? (
-          <NoFeedbackMessage type="error" onRetry={onRetry} />
+          <NoFeedbackMessage
+            type={error.status === 429 ? "tooManyRequests" : "error"}
+          />
         ) : feedbackList.length === 0 ? (
           <NoFeedbackMessage type="empty" />
         ) : (

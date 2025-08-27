@@ -29,7 +29,7 @@ type Props = {
 };
 
 const FeedbackTable = ({ currentPage, sentiment }: Props) => {
-  const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
+  const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
     `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
     fetcher,
     {
@@ -48,7 +48,6 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
           isFilteringEnabled={true}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error}
-          onRetry={() => mutate()}
         />
       </div>
 
