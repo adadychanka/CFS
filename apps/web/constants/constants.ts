@@ -1,9 +1,15 @@
 import { type SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
-import { HomeIcon, Plus, Settings, TriangleAlert } from "lucide-react";
+import {
+  Bell,
+  Home,
+  HomeIcon,
+  Plus,
+  PlusCircle,
+  Settings,
+  Shield,
+} from "lucide-react";
 
 // Sidebar
-export const USER_ROLE: "user" | "admin" = "user";
-
 export const USER_PAGE_LINKS = [
   {
     title: "Dashboard",
@@ -21,16 +27,26 @@ export const ADMIN_PAGE_LINKS = [
   {
     title: "Dashboard",
     url: "/",
-    icon: HomeIcon,
+    icon: Home,
+  },
+  {
+    title: "New Sentiment",
+    url: "/new-sentiment",
+    icon: PlusCircle,
+  },
+  {
+    title: "Admin Panel",
+    url: "/admin",
+    icon: Shield,
   },
   {
     title: "Alerts",
-    url: "/alerts",
-    icon: TriangleAlert,
+    url: "/admin/alerts",
+    icon: Bell,
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "/admin/settings",
     icon: Settings,
   },
 ];
