@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const api = await getServerApi();
   const session = await auth();
+
   if (session?.user.token) {
     api.setToken(session.user.token);
   } else {

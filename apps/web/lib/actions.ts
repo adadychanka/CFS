@@ -21,7 +21,7 @@ const register = async ({ email, password }: UserCredentials) => {
 
 const login = async ({ email, password }: UserCredentials) => {
   const api = await getServerApi();
-  return await api.post<AuthResponse>("/api/auth/login", {
+  return await api.post<AuthResponse>("/api/auth/login/admin", {
     email,
     password,
   });
