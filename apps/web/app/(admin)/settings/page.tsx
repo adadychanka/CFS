@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import Header from "@repo/ui/components/header";
+// import Header from "@repo/ui/components/header";
 import { METADATA } from "@/constants/metadata";
 
 export const metadata: Metadata = {
@@ -25,7 +25,8 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <Header title="Settings" />
+      {/* <Header title="Settings" /> */}
+      <section></section>
     </>
   );
 };
