@@ -13,13 +13,17 @@ export async function GET(req: NextRequest) {
 
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
-    const sentimentParam = `${req.nextUrl.searchParams.get("sentiment")}`;
-    const sentiment = FEEDBACK_FILTERS.includes(sentimentParam)
-      ? sentimentParam
-      : null;
+    const sentiment =
+      req.nextUrl.searchParams
+        .get("sentiment")
+        ?.split(",")
+        .filter((f) => FEEDBACK_FILTERS.includes(f)) || [];
+    const parsedSentiments = sentiment
+      .map((sentiment) => `sentiment=${sentiment}`)
+      .join("&");
 
     const res = await fetch(
-      `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}${sentiment ? `&sentiment=${sentiment}` : ""}`,
+      `${process.env.BACKEND_API}/api/feedback?limit=${limit}&page=${page}${parsedSentiments.length ? `&${parsedSentiments}` : ""}`,
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,

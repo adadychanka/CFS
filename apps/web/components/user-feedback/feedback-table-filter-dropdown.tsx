@@ -2,13 +2,12 @@
 
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@repo/ui/components/dropdown-menu";
 import { Button } from "@repo/ui/components/button";
-import { useEffect } from "react";
+import { useState } from "react";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FEEDBACK_FILTERS } from "@/constants/constants";
@@ -17,22 +16,28 @@ export function FeedbackTableFilterDropdown() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filterOnURLQuery = searchParams.get("sentiment") || "all";
-  const selectedFilter = FEEDBACK_FILTERS.includes(filterOnURLQuery)
-    ? filterOnURLQuery
-    : "all";
+  const filtersOnURLQuery = searchParams.get("sentiment")?.split(",") || [];
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    filtersOnURLQuery.filter((f) => FEEDBACK_FILTERS.includes(f)),
+  );
 
-  useEffect(() => {
-    if (!FEEDBACK_FILTERS.includes(filterOnURLQuery)) {
-      const params = new URLSearchParams(searchParams);
-      params.set("sentiment", "all");
-      router.replace(`?${params.toString()}`, { scroll: false });
+  const handleToggleFilter = (filter: string, checked: boolean) => {
+    let newFilters = [];
+    if (checked) {
+      newFilters = [...selectedFilters, filter];
+    } else {
+      newFilters = selectedFilters.filter((f) => f !== filter);
     }
-  }, [filterOnURLQuery, searchParams, router]);
 
-  const handleChange = (newValue: string) => {
+    setSelectedFilters(newFilters);
+
     const params = new URLSearchParams(searchParams);
-    params.set("sentiment", newValue);
+    if (newFilters.length > 0) {
+      params.set("sentiment", newFilters.join(","));
+    } else {
+      params.delete("sentiment");
+    }
+
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
@@ -45,64 +50,31 @@ export function FeedbackTableFilterDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuRadioGroup
-          value={selectedFilter}
-          onValueChange={handleChange}
+        <DropdownMenuCheckboxItem
+          checked={selectedFilters.includes("positive")}
+          onCheckedChange={(checked) => handleToggleFilter("positive", checked)}
         >
-          <DropdownMenuRadioItem value="all">all types</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="positive">
-            positive
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="neutral">neutral</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="negative">
-            negative
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="unknown">unknown</DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
+          Positive
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={selectedFilters.includes("neutral")}
+          onCheckedChange={(checked) => handleToggleFilter("neutral", checked)}
+        >
+          Neutral
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={selectedFilters.includes("negative")}
+          onCheckedChange={(checked) => handleToggleFilter("negative", checked)}
+        >
+          Negative
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={selectedFilters.includes("unknown")}
+          onCheckedChange={(checked) => handleToggleFilter("unknown", checked)}
+        >
+          Unknown
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-
-  // NOTE: In case of multi filters are allowed
-  // const [showStatusBar, setShowStatusBar] = useState(true);
-  // const [showActivityBar, setShowActivityBar] = useState(false);
-  // const [showPanel, setShowPanel] = useState(false);
-  // const [filterNegative, setFilterNegative] = useState(false);
-  //
-  // return (
-  //   <DropdownMenu>
-  //     <DropdownMenuTrigger asChild>
-  //       <Button variant="ghost" size="sm">
-  //         <Filter />
-  //         Sentiment
-  //       </Button>
-  //     </DropdownMenuTrigger>
-  //     <DropdownMenuContent>
-  //       <DropdownMenuCheckboxItem
-  //         checked={showStatusBar}
-  //         onCheckedChange={setShowStatusBar}
-  //       >
-  //         Positive
-  //       </DropdownMenuCheckboxItem>
-  //       <DropdownMenuCheckboxItem
-  //         checked={showActivityBar}
-  //         onCheckedChange={setShowActivityBar}
-  //       >
-  //         Neutral
-  //       </DropdownMenuCheckboxItem>
-  //       <DropdownMenuCheckboxItem
-  //         checked={showPanel}
-  //         onCheckedChange={setShowPanel}
-  //       >
-  //         Negative
-  //       </DropdownMenuCheckboxItem>
-  //       <DropdownMenuCheckboxItem
-  //         checked={filterNegative}
-  //         onCheckedChange={setFilterNegative}
-  //       >
-  //         Unknow
-  //       </DropdownMenuCheckboxItem>
-  //     </DropdownMenuContent>
-  //   </DropdownMenu>
-  // );
 }
