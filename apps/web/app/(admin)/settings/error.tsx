@@ -5,8 +5,6 @@ type Props = {
 };
 
 function ErrorPage({ error }: Props) {
-  console.log(error);
-
   return (
     <div className="flex items-center justify-center h-screen w-full bg-background">
       <div className="flex flex-col items-center space-y-4">

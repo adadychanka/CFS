@@ -84,7 +84,10 @@ export function RateLimitForm({ defaultValue }: Props) {
             );
           }}
         />
-        <Button type="submit">{isPending ? "Updating..." : "Update"}</Button>
+        <Button type="submit" aria-busy={isPending} disabled={isPending}>
+          {" "}
+          {isPending ? "Updating..." : "Update"}
+        </Button>
       </form>
     </Form>
   );

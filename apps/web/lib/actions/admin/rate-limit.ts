@@ -16,6 +16,6 @@ export async function submitRateLimit(rateLimit: RateLimitResponseData) {
     const data = await api.patch("/api/admin/rate-limit", rateLimit);
     return await data.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
