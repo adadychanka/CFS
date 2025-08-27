@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
 import ChartsSection from "@/components/admin/charts-section";
+import Header from "@repo/ui/components/header";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -31,7 +32,7 @@ const Page = () => {
   return (
     //TODO Add SideBar Provider Before using Header and Sidebar
     <div>
-      {/* <Header title="Admin Dashboard" /> */}
+      <Header title="Admin Dashboard" />
 
       <div className="w-full max-w-[1280px] mx-auto p-4 @container">
         <ChartsSection />

@@ -14,19 +14,18 @@ import {
 } from "@repo/ui/components/sidebar";
 import Link from "next/link";
 import SidebarLogo from "@/components/logo/sidebar-logo";
-import {
-  ADMIN_PAGE_LINKS,
-  USER_PAGE_LINKS,
-  USER_ROLE,
-} from "@/constants/constants";
+import { ADMIN_PAGE_LINKS, USER_PAGE_LINKS } from "@/constants/constants";
 import { usePathname } from "next/navigation";
 import LogoutButton from "@/components/auth/logout-button";
 
-const AppSidebar = () => {
+type Props = {
+  isAdmin: boolean;
+};
+
+const AppSidebar = ({ isAdmin }: Props) => {
   const { setOpenMobile } = useSidebar();
   const pathname = usePathname();
 
-  const isAdmin = USER_ROLE === "admin";
   const sidebarLinks = isAdmin ? ADMIN_PAGE_LINKS : USER_PAGE_LINKS;
 
   return (
@@ -41,7 +40,6 @@ const AppSidebar = () => {
               <SidebarMenu>
                 {sidebarLinks.map((item) => {
                   const Icon = item.icon;
-
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
