@@ -8,7 +8,7 @@ import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback
 
 type Props = {
   data?: SentimentAnalysisResult[];
-  isFilteringEnabled?: boolean
+  isFilteringEnabled?: boolean;
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
