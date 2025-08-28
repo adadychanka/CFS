@@ -14,6 +14,7 @@ import SkeletonFeedbackItem from "@/components/user-feedback/skeleton-feedback-i
 import NoFeedbackMessage from "@/components/user-feedback/no-feedback-message";
 import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { FetchError } from "@/lib/errors";
+import FeedbackDetailsSheet from "./feedback-details-sheet";
 
 type Props = {
   feedbackList: SentimentAnalysisResult[];
@@ -52,22 +53,24 @@ function DynamicFeedbackTable({
           <NoFeedbackMessage type="empty" />
         ) : (
           feedbackList.slice(0, feedbackLimit).map((feedback) => (
-            <TableRow key={feedback.id} className="odd:bg-muted/50">
-              <TableCell>{feedback.summary}</TableCell>
-              <TableCell className="text-center">
-                <FeedbackBadge sentiment={feedback.sentiment} />
-              </TableCell>
-              <TableCell className="text-center">
-                {feedback.confidence}%
-              </TableCell>
-              <TableCell
-                className="max-w-[300px] truncate"
-                title={feedback.content}
-              >
-                {feedback.content}
-              </TableCell>
-              <TableCell>{formatCreatedAtDate(feedback.createdAt)}</TableCell>
-            </TableRow>
+            <FeedbackDetailsSheet key={feedback.id} feedback={feedback}>
+              <TableRow className="odd:bg-muted/50 cursor-pointer hover:bg-muted transition-colors">
+                <TableCell>{feedback.summary}</TableCell>
+                <TableCell className="text-center">
+                  <FeedbackBadge sentiment={feedback.sentiment} />
+                </TableCell>
+                <TableCell className="text-center">
+                  {feedback.confidence}%
+                </TableCell>
+                <TableCell
+                  className="max-w-[300px] truncate"
+                  title={feedback.content}
+                >
+                  {feedback.content}
+                </TableCell>
+                <TableCell>{formatCreatedAtDate(feedback.createdAt)}</TableCell>
+              </TableRow>
+            </FeedbackDetailsSheet>
           ))
         )}
       </TableBody>
