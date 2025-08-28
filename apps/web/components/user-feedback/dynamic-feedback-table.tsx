@@ -28,7 +28,7 @@ function DynamicFeedbackTable({
   error,
   tableHeads,
   tableRows,
-  onRetry
+  onRetry,
 }: DynamicTableProps) {
   const content = useTableBody({
     feedbackLimit,

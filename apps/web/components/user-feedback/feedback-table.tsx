@@ -37,7 +37,7 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
   const { tableHeads, tableRows } = useFeedbackTable({
-    isFilteringEnabled:true,
+    isFilteringEnabled: true,
     data: data?.feedbacks || [],
   });
 
