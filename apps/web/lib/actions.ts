@@ -65,7 +65,7 @@ const loginOrRegister = async (
 
 export const authenticate = async (
   authType: AuthCardVariant,
-  userCredentials: UserCredentials
+  userCredentials: UserCredentials,
 ) => {
   let result: AuthResult | null = null;
 
