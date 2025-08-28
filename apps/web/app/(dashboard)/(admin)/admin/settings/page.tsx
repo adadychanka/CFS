@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-// import Header from "@repo/ui/components/header";
 import { METADATA } from "@/constants/metadata";
 import { RateLimitForm } from "@/features/admin/rate-limit/rate-limit-form";
 import { getServerApi } from "@/lib/server-api";
@@ -37,8 +36,6 @@ async function Page() {
 
   if (session?.user.token) {
     api.setToken(session.user.token);
-  } else {
-    //TODO: Sign out user
   }
 
   const response = await api.get("/api/admin/rate-limit");
