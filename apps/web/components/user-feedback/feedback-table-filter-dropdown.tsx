@@ -10,13 +10,17 @@ import { Button } from "@repo/ui/components/button";
 import { useState } from "react";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FEEDBACK_FILTERS } from "@/constants/constants";
+import {
+  FEEDBACK_FILTERS,
+  SENTIMENT_QUERY_PARAM_VALUE,
+} from "@/constants/constants";
 
 export function FeedbackTableFilterDropdown() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filtersOnURLQuery = searchParams.get("sentiment")?.split(",") || [];
+  const filtersOnURLQuery =
+    searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     filtersOnURLQuery.filter((f) => FEEDBACK_FILTERS.includes(f)),
   );
@@ -33,9 +37,9 @@ export function FeedbackTableFilterDropdown() {
 
     const params = new URLSearchParams(searchParams);
     if (newFilters.length > 0) {
-      params.set("sentiment", newFilters.join(","));
+      params.set(SENTIMENT_QUERY_PARAM_VALUE, newFilters.join(","));
     } else {
-      params.delete("sentiment");
+      params.delete(SENTIMENT_QUERY_PARAM_VALUE);
     }
 
     router.push(`?${params.toString()}`, { scroll: false });
