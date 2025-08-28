@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
 import ExportDropdown from "@/components/export/export-dropdown";
-import GroupedFeedback from "@/features/grouped-feedback/grouped-feedback";
+import GroupedFeedbackWrapper from "@/features/grouped-feedback/grouped-feedback-wrapper";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
@@ -59,7 +59,7 @@ const SwitchTableCollapsedTabs = () => {
         <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery} />
       </TabsContent>
       <TabsContent value="grouped">
-        <GroupedFeedback />
+        <GroupedFeedbackWrapper />
       </TabsContent>
     </Tabs>
   );

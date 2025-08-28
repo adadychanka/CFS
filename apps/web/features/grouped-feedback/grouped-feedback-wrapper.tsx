@@ -1,12 +1,10 @@
 import React from "react";
 import useSWR from "swr";
-import { Accordion } from "@repo/ui/components/accordion";
 import { clientApi } from "@/lib/api";
 import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
-import GroupedFeedbackFallback from "./grouped-feedback-fallback";
+import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
-import SingleGroupedSentiments from "./single-grouped-sentiments";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -32,31 +30,14 @@ function GroupedFeedback() {
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
-  if (isLoading) {
-    return <GroupedFeedbackFallback loading />;
-  }
-
-  if (error) {
-    return <GroupedFeedbackFallback error />;
-  }
-
-  if (result?.data?.length === 0) {
-    return <GroupedFeedbackFallback empty />;
-  }
-
   return (
-    <Accordion type="single" className="w-full" collapsible>
-      {result?.data.map((group) => {
-        return (
-          <SingleGroupedSentiments
-            key={group.summary}
-            data={group.items}
-            isLoading={isLoading}
-            summary={group.summary}
-          />
-        );
-      })}
-    </Accordion>
+    <>
+      <GroupedFeedbackContent
+        isLoading={isLoading}
+        error={error}
+        data={result?.data}
+      />
+    </>
   );
 }
 
