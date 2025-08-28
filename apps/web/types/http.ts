@@ -9,5 +9,5 @@ export type GetFeedbackResponse = {
 
 export type GetUsersResponse = {
   users: User[];
-  pagination: PaginationMeta;
+  pagination?: PaginationMeta;
 };
