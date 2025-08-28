@@ -3,7 +3,6 @@ import Link from "next/link";
 import DynamicFeedbackTable from "@/components/user-feedback/dynamic-feedback-table";
 import useGroupedSentimentTable from "@/hooks/useGroupedSentimentTable";
 import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
-import { capitalizeSentence } from "@/utils/capitilize";
 import {
   AccordionContent,
   AccordionItem,
@@ -23,7 +22,7 @@ function SingleGroupedSentiments({ data, summary, isLoading }: Props) {
 
   return (
     <AccordionItem key={summary} value={summary}>
-      <AccordionTrigger>{capitalizeSentence(summary)}</AccordionTrigger>
+      <AccordionTrigger className="capitalize">{summary}</AccordionTrigger>
       <AccordionContent>
         <DynamicFeedbackTable
           isLoading={isLoading}
