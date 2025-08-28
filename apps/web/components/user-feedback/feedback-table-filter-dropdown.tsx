@@ -16,6 +16,17 @@ import {
 } from "@/constants/constants";
 
 export function FeedbackTableFilterDropdown() {
+  if (
+    !SENTIMENT_QUERY_PARAM_VALUE ||
+    SENTIMENT_QUERY_PARAM_VALUE.length === 0
+  ) {
+    return "Sentiment"; // Will just return text for table header
+  }
+
+  return <FunctionalComponent />;
+}
+
+function FunctionalComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
