@@ -5,12 +5,14 @@ import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { Search } from "lucide-react";
 import PaginationSection from "@/components/user-feedback/pagination-section";
-import { Suspense, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FetchError } from "@/lib/errors";
 import useSWR from "swr";
 import type { GetUsersResponse } from "@/types/http";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -28,8 +30,29 @@ export const fetcher = async (url: string) => {
 };
 
 const UsersSection = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const searchQuery = searchParams.get("query") || "";
+
+  // --- Debounced search ---
+  const [searchInput, setSearchInput] = useState(searchQuery);
+  const debouncedSearch = useDebounce(searchInput, 1000);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (debouncedSearch) {
+      console.log("⚽️ bounce:", debouncedSearch);
+      params.set("search", debouncedSearch);
+    } else {
+      params.delete("search");
+    }
+    params.set("page", "1");
+    router.replace(`?${params.toString()}`);
+  }, [debouncedSearch, router, searchParams]);
+
   const { data, error, isLoading, mutate } = useSWR<GetUsersResponse>(
-    `/api/users?page=${1}&limit=${FEEDBACK_PAGE_LIMIT}`,
+    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -38,8 +61,6 @@ const UsersSection = () => {
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
-  console.log(data && data);
-
   const handleMutate = useCallback(async () => {
     await mutate();
   }, [mutate]);
@@ -47,7 +68,12 @@ const UsersSection = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
-        <Input type="email" placeholder="Search by email" />
+        <Input
+          type="email"
+          placeholder="Search by email"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
         <Button variant="outline">
           <Search /> Search
         </Button>
@@ -60,10 +86,7 @@ const UsersSection = () => {
         onMutate={handleMutate}
       />
 
-      {/* TODO: Need custom loader it seems */}
-      <Suspense fallback={"Loading..."}>
-        <PaginationSection limit={20} />
-      </Suspense>
+      {data && <PaginationSection limit={data.pagination.pages | 0} />}
     </div>
   );
 };
