@@ -33,7 +33,7 @@ const UsersSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const searchQuery = searchParams.get("query") || "";
+  const searchQuery = searchParams.get("search") || "";
 
   // --- Debounced search ---
   const [searchInput, setSearchInput] = useState(searchQuery);
@@ -51,8 +51,9 @@ const UsersSection = () => {
     router.replace(`?${params.toString()}`);
   }, [debouncedSearch, router, searchParams]);
 
+  console.log(debouncedSearch);
   const { data, error, isLoading, mutate } = useSWR<GetUsersResponse>(
-    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&search=${debouncedSearch}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -86,7 +87,9 @@ const UsersSection = () => {
         onMutate={handleMutate}
       />
 
-      {data && <PaginationSection limit={data.pagination.pages | 0} />}
+      {data?.pagination && (
+        <PaginationSection limit={data.pagination.pages | 0} />
+      )}
     </div>
   );
 };
