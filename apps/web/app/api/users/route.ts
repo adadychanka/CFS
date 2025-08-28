@@ -6,7 +6,6 @@ import * as process from "node:process";
 export async function GET(req: NextRequest) {
   try {
     const session = await auth();
-    console.log("session", session);
 
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -14,24 +13,29 @@ export async function GET(req: NextRequest) {
 
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
+    const search = req.nextUrl.searchParams.get("search") || "";
 
-    const res = await fetch(
-      `${process.env.BACKEND_API}/api/users?limit=${limit}&page=${page}`,
-      {
-        headers: {
-          // Authorization: `Bearer ${session.user.token}`,
-          // eslint-disable-next-line turbo/no-undeclared-env-vars
-          Authorization: `Bearer ${process.env.TEMP_ADMIN_TOKEN}`,
-        },
+    const isSearch = search.length >= 3;
+    const finalUrl = isSearch
+      ? `${process.env.BACKEND_API}/api/users/search?email=${search}`
+      : `${process.env.BACKEND_API}/api/users?limit=${limit}&page=${page}`;
+
+    const res = await fetch(finalUrl, {
+      headers: {
+        // Authorization: `Bearer ${session.user.token}`,
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
+        Authorization: `Bearer ${process.env.TEMP_ADMIN_TOKEN}`,
       },
-    );
+    });
+
+    console.log(res);
 
     if (!res.ok) {
       return NextResponse.json({}, { status: res.status });
     }
 
     const body = await res.json();
-    const data: GetUsersResponse = body.data;
+    const data: GetUsersResponse = isSearch ? { users: body.data } : body.data;
 
     return NextResponse.json(data);
   } catch (e: unknown) {
