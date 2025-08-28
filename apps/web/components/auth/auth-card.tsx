@@ -17,6 +17,7 @@ type Props = {
 
 function AuthCard({ variant }: Props) {
   const { link, linkText, title } = getCardContent(variant);
+
   return (
     <Card className="w-full max-w-md shadow-md">
       <CardHeader>

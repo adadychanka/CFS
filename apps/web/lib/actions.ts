@@ -27,17 +27,47 @@ const login = async ({ email, password }: UserCredentials) => {
   });
 };
 
-export const loginOrRegister = async (
+const adminRegister = async ({ email, password }: UserCredentials) => {
+  const api = await getServerApi();
+  return await api.post<AuthResponse>("/api/auth/register/admin", {
+    email,
+    password,
+  });
+};
+
+const adminLogin = async ({ email, password }: UserCredentials) => {
+  const api = await getServerApi();
+  return await api.post<AuthResponse>("/api/auth/login/admin", {
+    email,
+    password,
+  });
+};
+
+const loginOrRegister = async (
+  authType: AuthCardVariant,
+  userCredentials: UserCredentials,
+) => {
+  switch (authType) {
+    case "sign-in":
+      return await login(userCredentials);
+    case "sign-up":
+      return await register(userCredentials);
+    case "admin-sign-up":
+      return await adminRegister(userCredentials);
+    case "admin-sign-in":
+      return await adminLogin(userCredentials);
+    default:
+      return await login(userCredentials);
+  }
+};
+
+export const authenticate = async (
   authType: AuthCardVariant,
   userCredentials: UserCredentials,
 ) => {
   let result: AuthResult | null = null;
 
-  const response =
-    authType === "sign-in"
-      ? await login(userCredentials)
-      : await register(userCredentials);
-
+  const response = await loginOrRegister(authType, userCredentials);
   if (response.data) {
     result = response.data;
   }

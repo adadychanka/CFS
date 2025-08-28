@@ -15,7 +15,7 @@ export const usePaginationGuard = (currentPage: number, limit: number) => {
     if (currentPage < 1 || currentPage > limit) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", "1");
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   }, [currentPage, limit, router, searchParams]);
 };

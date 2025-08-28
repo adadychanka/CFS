@@ -1,4 +1,8 @@
-export type AuthCardVariant = "sign-in" | "sign-up";
+export type AuthCardVariant =
+  | "sign-in"
+  | "sign-up"
+  | "admin-sign-in"
+  | "admin-sign-up";
 
 type CardContent = {
   title: string;
@@ -18,19 +22,37 @@ const SIGN_UP_CARD_CONTENT: CardContent = {
   link: "/log-in",
 };
 
+const ADMIN_SIGN_IN_CARD_CONTENT: CardContent = {
+  title: "Admin Log in",
+  linkText: "sign up here",
+  link: "/admin/sign-up",
+};
+
+const ADMIN_SIGN_UP_CARD_CONTENT: CardContent = {
+  title: "Admin Sign up",
+  linkText: "login in here",
+  link: "/admin/log-in",
+};
+
 const AUTH_CARD_CONTENT: Record<AuthCardVariant, CardContent> = {
   "sign-in": SIGN_IN_CARD_CONTENT,
   "sign-up": SIGN_UP_CARD_CONTENT,
+  "admin-sign-in": ADMIN_SIGN_IN_CARD_CONTENT,
+  "admin-sign-up": ADMIN_SIGN_UP_CARD_CONTENT,
 };
 
 const DEFAULT_BUTTON_TEXT = {
   "sign-in": "Log in",
   "sign-up": "Sign up",
+  "admin-sign-in": "Log in",
+  "admin-sign-up": "Sign up",
 };
 
 const PENDING_BUTTON_TEXT = {
   "sign-in": "Logging in...",
   "sign-up": "Signing up...",
+  "admin-sign-in": "Logging in...",
+  "admin-sign-up": "Signing up...",
 };
 
 export function getCardContent(variant: AuthCardVariant): CardContent {

@@ -18,6 +18,7 @@ const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+  const filterOnURLQuery = searchParams.get("sentiment") || "";
 
   const requested = searchParams.get("tab") || "";
   const tab = USER_DASHBOARD_TABS.includes(requested) ? requested : "table";
@@ -31,14 +32,14 @@ const SwitchTableCollapsedTabs = () => {
     ) {
       const params = new URLSearchParams(searchParams);
       params.set("tab", "table");
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   }, [requested, searchParams, router]);
 
   const handleTabChange = (newValue: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("tab", newValue);
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -55,7 +56,7 @@ const SwitchTableCollapsedTabs = () => {
         <ExportDropdown />
       </div>
       <TabsContent value="table">
-        <FeedbackTable currentPage={currentPage} />
+        <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery} />
       </TabsContent>
       <TabsContent value="grouped">
         <GroupedFeedback />

@@ -13,23 +13,20 @@ export const fetcher = async (url: string) => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw new FetchError(
-      data.message || "Something went wrong",
-      res.status,
-      data,
-    );
+    throw new FetchError(data.message || "Something went wrong", res.status);
   }
 
-  return data;
+  return data.data;
 };
 
 type Props = {
   currentPage: number;
+  sentiment: string;
 };
 
-const FeedbackTable = ({ currentPage }: Props) => {
-  const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
-    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`,
+const FeedbackTable = ({ currentPage, sentiment }: Props) => {
+  const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
+    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -44,9 +41,9 @@ const FeedbackTable = ({ currentPage }: Props) => {
         <DynamicFeedbackTable
           isLoading={isLoading}
           feedbackList={data?.feedbacks || []}
+          isFilteringEnabled={true}
           feedbackLimit={FEEDBACK_PAGE_LIMIT}
           error={error}
-          onRetry={() => mutate()}
         />
       </div>
 
