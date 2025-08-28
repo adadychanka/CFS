@@ -3,7 +3,7 @@ import { FetchError } from "@/lib/errors";
 import ErrorTooManyRequests from "../error-messages/error-too-many-requests";
 import ErrorUnexpected from "../error-messages/error-unexpected";
 import { ErrorEmptyList } from "../error-messages/error-empty-list";
-import { GroupedFeedbackResponse } from "@/types/grouped-feedback";
+import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { Accordion } from "@repo/ui/components/accordion";
 import SingleGroupedSentiments from "./single-grouped-sentiments";
 
