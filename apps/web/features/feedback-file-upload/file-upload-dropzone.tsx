@@ -15,7 +15,7 @@ import FileUploadActions from "./file-upload-actions";
 import { cn } from "@repo/ui/lib/utils";
 import PreviewFileSection from "./preview/preview-file-section";
 import useFileUpload from "@/hooks/useFileUpload";
-import PreviewFileErrors from "./preview/preview-file-erros";
+import PreviewFileErrors from "./preview/preview-file-errors";
 
 function FileUploadDropzone() {
   const {
