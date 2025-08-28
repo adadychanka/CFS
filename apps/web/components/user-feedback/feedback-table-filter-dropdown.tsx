@@ -44,7 +44,11 @@ export function FeedbackTableFilterDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-label="Filter feedback by sentiment"
+        >
           <Filter />
           Sentiment
         </Button>
