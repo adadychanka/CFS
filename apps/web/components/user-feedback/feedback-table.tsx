@@ -13,14 +13,10 @@ export const fetcher = async (url: string) => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw new FetchError(
-      data.message || "Something went wrong",
-      res.status,
-      data,
-    );
+    throw new FetchError(data.message || "Something went wrong", res.status);
   }
 
-  return data;
+  return data.data;
 };
 
 type Props = {
