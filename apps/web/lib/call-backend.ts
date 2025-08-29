@@ -7,12 +7,11 @@ type ApiResult = {
 };
 
 /**
- * Makes an authenticated request to the backend API.
+ * Makes an authenticated request to backend API. Ment for using if server actions does not return data back
  *
- * path The path of the API endpoint to call.
- * options Optional configuration for the `fetch` request, including headers and body data.
- * successMessage A message to include in the success response upon successful API call.
- * A promise resolving to an object containing the success status, HTTP status code, and a message.
+ * @param path - path of the endpoint
+ * @param options - optional configuration for `fetch` request, headers and body
+ * @param successMessage - custom message to return on success
  */
 async function callBackend<TBody = unknown>(
   path: string,
