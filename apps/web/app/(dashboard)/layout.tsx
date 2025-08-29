@@ -4,6 +4,7 @@ import AppSidebar from "@/components/app-sidebar";
 import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
+import { withAdminAccess } from "@/components/withAdminAccess";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -28,14 +29,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const DynamicSidebar = withAdminAccess(AppSidebar);
+
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <DynamicSidebar />
       <main className="w-full pb-16">{children}</main>
     </SidebarProvider>
   );
