@@ -53,13 +53,15 @@ const useDrawChart = (
     }
   }, [chart, options]);
 
-  useEffect(() => {
+useEffect(() => {
     if (!chart || !optionalParams?.handler) return;
 
-    chart.on("click", optionalParams.handler);
+    const handleBarClick = optionalParams?.handler
+
+    chart.on("click", handleBarClick);
 
     return () => {
-      chart.off("click", optionalParams.handler);
+      chart.off("click", handleBarClick);
     };
   }, [chart, optionalParams?.handler]);
 
