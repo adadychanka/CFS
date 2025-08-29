@@ -7,6 +7,7 @@ import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
 import { disableUser, toggleUserSuspend } from "@/lib/actions/users";
 import { toast } from "sonner";
+import UserConfirmDisable from "@/features/users-management/user-confirm-disable";
 
 type Props = {
   user: User;
@@ -91,14 +92,12 @@ const UserRow = ({ user, onMutate }: Props) => {
 
       <TableCell className="text-center">
         {isButtonsShown && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={handleDisableUser}
-            aria-label="Disable user account"
+          <UserConfirmDisable
+            onConfirm={handleDisableUser}
+            ariaLabel="Disable user account"
           >
             <Ban /> Disable
-          </Button>
+          </UserConfirmDisable>
         )}
       </TableCell>
     </TableRow>
