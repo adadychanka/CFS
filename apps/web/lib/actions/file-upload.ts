@@ -57,7 +57,6 @@ export async function uploadFiles(formData: FormData) {
         }
       }
     } else {
-      console.log("else is working");
       return "No files are found";
     }
 
