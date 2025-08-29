@@ -66,7 +66,14 @@ const UsersRow = ({ user, onMutate }: Props) => {
 
       <TableCell className="text-center">
         {isButtonsShown && (
-          <Button size="sm" variant="ghost" onClick={handleToggleSuspend}>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={handleToggleSuspend}
+            aria-label={
+              user.isDisabled ? "Activate user account" : "Suspend user account"
+            }
+          >
             {user.isDisabled ? (
               <>
                 <PlayCircle /> Activate
@@ -82,7 +89,12 @@ const UsersRow = ({ user, onMutate }: Props) => {
 
       <TableCell className="text-center">
         {isButtonsShown && (
-          <Button size="sm" variant="ghost" onClick={handleDisableUser}>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={handleDisableUser}
+            aria-label="Disable user account"
+          >
             <Ban /> Disable
           </Button>
         )}
