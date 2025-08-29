@@ -13,7 +13,7 @@ type Props = {
   onMutate: () => void;
 };
 
-const UsersRow = ({ user, onMutate }: Props) => {
+const UserRow = ({ user, onMutate }: Props) => {
   const isAdmin = user.role === "ADMIN";
   const isButtonsShown = !isAdmin && typeof user.deletedAt !== "string";
 
@@ -103,4 +103,4 @@ const UsersRow = ({ user, onMutate }: Props) => {
   );
 };
 
-export default UsersRow;
+export default UserRow;
