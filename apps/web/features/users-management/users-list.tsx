@@ -10,7 +10,7 @@ import {
 import UsersSkeleton from "@/features/users-management/users-skeleton";
 import type { User } from "@/types/user";
 import { FetchError } from "@/lib/errors";
-import { suspendUnsuspendUser } from "@/lib/actions/users";
+import { toggleUserSuspend } from "@/lib/actions/users";
 import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
@@ -28,7 +28,7 @@ const COL_SPAN = 4;
 
 const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
   const handleToggleSuspend = async (user: User) => {
-    const res = await suspendUnsuspendUser(user);
+    const res = await toggleUserSuspend(user);
 
     if (res.success) {
       onMutate();
@@ -89,8 +89,8 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
           <TableRow>
             <TableHead>Email</TableHead>
             <TableHead className="w-[100px] text-center">Role</TableHead>
-            <TableHead className="w-[120px] text-center">Disable</TableHead>
             <TableHead className="w-[120px] text-center">Suspend</TableHead>
+            <TableHead className="w-[120px] text-center">Disable</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>{content}</TableBody>
