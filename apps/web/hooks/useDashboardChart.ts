@@ -7,6 +7,7 @@ import { useDrawChart } from "./useDrawChart";
 import { useMemo } from "react";
 import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
+import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
 
 // --- Fetcher fn ---
 export const fetcher = async (url: string) => {
@@ -73,8 +74,9 @@ function useDashboardChart() {
   const searchParams = useSearchParams();
 
   const filterHandler = (chartParams: echarts.ECElementEvent) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("sentiment", chartParams.name);
+    const params = updateSearchParamsWithSentiments(searchParams, [
+      chartParams.name,
+    ]);
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
