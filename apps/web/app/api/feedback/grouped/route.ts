@@ -1,8 +1,8 @@
 import { auth } from "@/auth/auth";
-import { FetchError } from "@/lib/errors";
-import { getServerApi } from "@/lib/server-api";
-import { SentimentSummaryResponse } from "@/types/sentiment-summary";
+import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { NextResponse } from "next/server";
+import { getServerApi } from "@/lib/server-api";
+import { FetchError } from "@/lib/errors";
 
 export async function GET() {
   const api = await getServerApi();
@@ -22,14 +22,13 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/feedback/sentiment-summary");
+    const response = await api.get("/api/feedback/grouped");
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
     }
 
-    const result: SentimentSummaryResponse = await response.json();
-
+    const result: GroupedFeedbackResponse = await response.json();
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof FetchError)
