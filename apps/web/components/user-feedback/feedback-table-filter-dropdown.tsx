@@ -15,13 +15,10 @@ import {
   parseSentimentsQueryParam,
   updateSearchParamsWithSentiments,
 } from "@/utils/url-helpers";
-import { SENTIMENT_QUERY_PARAM_VALUE } from "@/constants";
+import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
 export function FeedbackTableFilterDropdown() {
-  if (
-    !SENTIMENT_QUERY_PARAM_VALUE ||
-    SENTIMENT_QUERY_PARAM_VALUE.length === 0
-  ) {
+  if (!SENTIMENT_FILTER_QUERY_KEY || SENTIMENT_FILTER_QUERY_KEY.length === 0) {
     return "Sentiment"; // Will just return text for table header
   }
 
@@ -39,7 +36,7 @@ function FunctionalComponent() {
   useEffect(
     function syncFiltersWithQueryParam() {
       const filtersFromQuery =
-        searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
+        searchParams.get(SENTIMENT_FILTER_QUERY_KEY)?.split(",") || [];
       const validFilters = filtersFromQuery.filter((f) =>
         FEEDBACK_FILTERS.includes(f),
       );
