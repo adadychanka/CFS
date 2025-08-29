@@ -1,10 +1,9 @@
 "use server";
 
 import { auth } from "@/auth/auth";
-import { User } from "@/types/user";
 import process from "node:process";
 
-export async function toggleUserSuspend(user: User) {
+export async function toggleUserSuspend(userId: string) {
   const session = await auth();
   if (!session) {
     return { success: false, status: 401, message: "Unauthorized" };
@@ -12,7 +11,7 @@ export async function toggleUserSuspend(user: User) {
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API}/api/admin/disable/${user.id}`,
+      `${process.env.BACKEND_API}/api/admin/disable/${userId}`,
       {
         method: "POST",
         headers: {
