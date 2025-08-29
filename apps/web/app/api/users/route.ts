@@ -22,19 +22,16 @@ export async function GET(req: NextRequest) {
 
     const res = await fetch(finalUrl, {
       headers: {
-        // Authorization: `Bearer ${session.user.token}`,
-        // eslint-disable-next-line turbo/no-undeclared-env-vars
-        Authorization: `Bearer ${process.env.TEMP_ADMIN_TOKEN}`,
+        Authorization: `Bearer ${session.user.token}`,
       },
     });
-
-    console.log(res);
 
     if (!res.ok) {
       return NextResponse.json({}, { status: res.status });
     }
 
     const body = await res.json();
+    console.log("body", body);
     const data: GetUsersResponse = isSearch ? { users: body.data } : body.data;
 
     return NextResponse.json(data);

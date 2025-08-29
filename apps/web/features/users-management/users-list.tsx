@@ -38,6 +38,8 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
     content = <UsersEmpty type="error" />;
   } else if (isLoading) {
     content = <UsersSkeleton />;
+  } else if (usersList.length === 0) {
+    content = <UsersEmpty type="empty" />;
   } else {
     content = usersList.map((user) => {
       const isThanos = user.role === "ADMIN";

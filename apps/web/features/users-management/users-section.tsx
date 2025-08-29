@@ -5,7 +5,7 @@ import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { Search } from "lucide-react";
 import PaginationSection from "@/components/user-feedback/pagination-section";
-import { useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { FetchError } from "@/lib/errors";
 import useSWR from "swr";
 import type { GetUsersResponse } from "@/types/http";
@@ -35,25 +35,10 @@ const UsersSection = () => {
   const currentPage = Number(searchParams.get("page")) || 1;
   const searchQuery = searchParams.get("search") || "";
 
-  // --- Debounced search ---
   const [searchInput, setSearchInput] = useState(searchQuery);
-  const debouncedSearch = useDebounce(searchInput, 1000);
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (debouncedSearch) {
-      console.log("⚽️ bounce:", debouncedSearch);
-      params.set("search", debouncedSearch);
-    } else {
-      params.delete("search");
-    }
-    params.set("page", "1");
-    router.replace(`?${params.toString()}`);
-  }, [debouncedSearch, router, searchParams]);
-
-  console.log(debouncedSearch);
   const { data, error, isLoading, mutate } = useSWR<GetUsersResponse>(
-    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&search=${debouncedSearch}`,
+    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&search=${searchQuery}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -66,19 +51,37 @@ const UsersSection = () => {
     await mutate();
   }, [mutate]);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams(searchParams);
+    if (searchInput) {
+      params.set("search", searchInput);
+    } else {
+      params.delete("search");
+    }
+    params.set("page", "1");
+    router.replace(`?${params.toString()}`);
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Input
-          type="email"
-          placeholder="Search by email"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-        <Button variant="outline">
-          <Search /> Search
-        </Button>
-      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <Input
+            type="text"
+            placeholder="Search by email"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <Button variant="outline" type="submit">
+            <Search /> Search
+          </Button>
+        </div>
+
+        <p className="pl-1 text-sm text-muted-foreground">
+          Only 5 users are shown when searching
+        </p>
+      </form>
 
       <UsersList
         usersList={data?.users || []}
