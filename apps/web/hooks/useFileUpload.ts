@@ -54,7 +54,6 @@ function useFileUpload() {
     handleClearErrors();
     setServerErrors(null);
     setIsLoading(true);
-    console.log("Submitting");
     let errors: FileUploadServerError[] = [];
 
     try {
@@ -63,7 +62,6 @@ function useFileUpload() {
         formData.append("files", file);
       });
       const fileUploadResult = await uploadFiles(formData);
-      console.log(fileUploadResult);
 
       if (typeof fileUploadResult === "string") {
         setServerErrors([{ message: fileUploadResult }]);
@@ -80,8 +78,6 @@ function useFileUpload() {
           }
         });
       }
-
-      console.log(serverErrors);
 
       if (!errors.length) {
         toast.success("All files has been processed!");
