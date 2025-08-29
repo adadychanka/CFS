@@ -1,7 +1,7 @@
 export type User = {
   email: string;
   role: "USER" | "ADMIN";
-  isDisabled: boolean;
+  isSuspended: boolean;
   id: string;
   createdAt: string;
   updatedAt: string;
