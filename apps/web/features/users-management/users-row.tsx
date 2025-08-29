@@ -5,24 +5,45 @@ import { Badge } from "@repo/ui/components/badge";
 import { User } from "@/types/user";
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
-import { disableUser } from "@/lib/actions/users";
+import { disableUser, toggleUserSuspend } from "@/lib/actions/users";
 import { toast } from "sonner";
 
 type Props = {
   user: User;
-  onToggleSuspend: () => void;
+  onMutate: () => void;
 };
 
-const UsersRow = ({ user, onToggleSuspend }: Props) => {
+const UsersRow = ({ user, onMutate }: Props) => {
   const isAdmin = user.role === "ADMIN";
   const isButtonsShown = !isAdmin && typeof user.deletedAt !== "string";
 
   const handleDisableUser = async () => {
     const res = await disableUser(user.id);
     if (res.success) {
+      onMutate();
       toast.success("User account now disabled!");
     } else {
       toast.error("Failed to disable the user.");
+    }
+  };
+
+  const handleToggleSuspend = async () => {
+    const res = await toggleUserSuspend(user.id);
+
+    if (res.success) {
+      onMutate();
+
+      if (user.isDisabled) {
+        toast.success("User has been activated successfully.");
+      } else {
+        toast.success("User has been suspended successfully.");
+      }
+    } else {
+      if (user.isDisabled) {
+        toast.error("Failed to activate the user.");
+      } else {
+        toast.error("Failed to suspend the user.");
+      }
     }
   };
 
@@ -45,7 +66,7 @@ const UsersRow = ({ user, onToggleSuspend }: Props) => {
 
       <TableCell className="text-center">
         {isButtonsShown && (
-          <Button size="sm" variant="ghost" onClick={onToggleSuspend}>
+          <Button size="sm" variant="ghost" onClick={handleToggleSuspend}>
             {user.isDisabled ? (
               <>
                 <PlayCircle /> Activate

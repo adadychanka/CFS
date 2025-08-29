@@ -10,12 +10,10 @@ import {
 import UsersSkeleton from "@/features/users-management/users-skeleton";
 import type { User } from "@/types/user";
 import { FetchError } from "@/lib/errors";
-import { toggleUserSuspend } from "@/lib/actions/users";
 import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
 import UsersRow from "@/features/users-management/users-row";
-import { toast } from "sonner";
 
 type Props = {
   usersList: User[];
@@ -27,26 +25,6 @@ type Props = {
 const COL_SPAN = 4;
 
 const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
-  const handleToggleSuspend = async (user: User) => {
-    const res = await toggleUserSuspend(user);
-
-    if (res.success) {
-      onMutate();
-
-      if (user.isDisabled) {
-        toast.success("User has been activated successfully.");
-      } else {
-        toast.success("User has been suspended successfully.");
-      }
-    } else {
-      if (user.isDisabled) {
-        toast.error("Failed to activate the user.");
-      } else {
-        toast.error("Failed to suspend the user.");
-      }
-    }
-  };
-
   let content;
 
   if (isLoading) content = <UsersSkeleton />;
@@ -74,11 +52,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
     );
   } else {
     content = usersList.map((user) => (
-      <UsersRow
-        key={user.id}
-        user={user}
-        onToggleSuspend={() => handleToggleSuspend(user)}
-      />
+      <UsersRow key={user.id} user={user} onMutate={onMutate} />
     ));
   }
 
