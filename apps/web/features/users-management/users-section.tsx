@@ -72,13 +72,14 @@ const UsersSection = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <Button variant="outline" type="submit">
+          <Button variant="outline" type="submit" aria-label="Search users">
             <Search /> Search
           </Button>
         </div>
 
         <p className="pl-1 text-sm text-muted-foreground">
-          Only 5 users are shown when searching
+          Only 5 users are shown when searching. Enter at least 3 characters to
+          make search work
         </p>
       </form>
 
