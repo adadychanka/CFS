@@ -1,7 +1,7 @@
 import z from "zod";
 
 const RateLimitResponseDataSchema = z.object({
-  target: z.string(),
+  target: z.enum(["API"]),
   limit: z.number(),
 });
 export const RateLimitResponseSchema = z.object({
