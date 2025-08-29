@@ -54,6 +54,23 @@ export class ApiClient {
 
     return response.json();
   }
+
+  async patch(endpoint: string, body: unknown) {
+    try {
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: "PATCH",
+        headers: this.getHeaders(),
+        body: JSON.stringify(body),
+      });
+
+      return res;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
+
+      return NextResponse.json({ message }, { status: 500 });
+    }
+  }
 }
 
 const clientApi = new ApiClient();
