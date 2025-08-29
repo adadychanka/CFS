@@ -16,9 +16,7 @@ export async function suspendUnsuspendUser(user: User) {
       {
         method: "POST",
         headers: {
-          // Authorization: `Bearer ${session.user.token}`,
-          // eslint-disable-next-line turbo/no-undeclared-env-vars
-          Authorization: `Bearer ${process.env.TEMP_ADMIN_TOKEN}`,
+          Authorization: `Bearer ${session.user.token}`,
         },
       },
     );
