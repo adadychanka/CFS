@@ -1,1 +1,1 @@
-export const SENTIMENT_QUERY_PARAM_VALUE = "sentiment";
+export const SENTIMENT_FILTER_QUERY_KEY = "sentiment";
