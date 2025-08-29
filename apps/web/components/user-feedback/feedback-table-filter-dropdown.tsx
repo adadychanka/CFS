@@ -14,6 +14,10 @@ import {
   FEEDBACK_FILTERS,
   SENTIMENT_QUERY_PARAM_VALUE,
 } from "@/constants/constants";
+import {
+  parseSentimentsQueryParam,
+  updateSearchParamsWithSentiments,
+} from "@/utils/url-helpers";
 
 export function FeedbackTableFilterDropdown() {
   if (
@@ -30,10 +34,8 @@ function FunctionalComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filtersOnURLQuery =
-    searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
-    filtersOnURLQuery.filter((f) => FEEDBACK_FILTERS.includes(f)),
+    parseSentimentsQueryParam(searchParams),
   );
 
   // Keep sync if a query param changes from somewhere else e.g.: charts
@@ -57,13 +59,7 @@ function FunctionalComponent() {
 
     setSelectedFilters(newFilters);
 
-    const params = new URLSearchParams(searchParams);
-    if (newFilters.length > 0) {
-      params.set(SENTIMENT_QUERY_PARAM_VALUE, newFilters.join(","));
-    } else {
-      params.delete(SENTIMENT_QUERY_PARAM_VALUE);
-    }
-
+    const params = updateSearchParamsWithSentiments(searchParams, newFilters);
     router.push(`?${params.toString()}`, { scroll: false });
   };
 

@@ -26,3 +26,16 @@ export const transformSentimentsIntoSearchParams = (
   sentiments.forEach((s) => params.append("sentiment", s));
   return params;
 };
+
+export function updateSearchParamsWithSentiments(
+  baseParams: URLSearchParams,
+  sentiments: string[],
+): URLSearchParams {
+  const params = new URLSearchParams(baseParams);
+  if (sentiments.length > 0) {
+    params.set("sentiment", sentiments.join(","));
+  } else {
+    params.delete("sentiment");
+  }
+  return params;
+}
