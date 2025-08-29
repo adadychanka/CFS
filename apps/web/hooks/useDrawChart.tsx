@@ -8,7 +8,7 @@ import type { EChartOption } from "@/types/charts";
  * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
  *
  * @example
- * const { chartRef } = useDrawChart(options, isLoading);
+ * const { chartRef } = useDrawChart(options, { isLoading });
  * return <div ref={chartRef} className="w-full h-full" />;
  */
 const useDrawChart = (
