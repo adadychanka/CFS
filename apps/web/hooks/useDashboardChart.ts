@@ -8,6 +8,7 @@ import { useCallback, useMemo } from "react";
 import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
+import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 
 // --- Fetcher fn ---
 export const fetcher = async (url: string) => {
@@ -38,12 +39,7 @@ function useDashboardChart() {
 
   // --- Derived data ---
   const { chartOptions, isEmpty } = useMemo(() => {
-    const categories = result?.data?.map((item) => item.sentiment) ?? [];
-    const data =
-      result?.data?.map((item) => ({
-        value: item.count,
-        name: item.sentiment,
-      })) ?? [];
+    const { categories, data } = transformSentimentSummaryResult(result);
     const isEmpty = categories.length === 0 || data.length === 0;
 
     const chartOptions: EChartOption = {
@@ -86,7 +82,7 @@ function useDashboardChart() {
   // --- Draw chart ---
   const { chartRef } = useDrawChart(chartOptions, {
     isLoading,
-    handler: filterHandler,
+    onClick: filterHandler,
   });
 
   // --- Return ---
