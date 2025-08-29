@@ -33,13 +33,13 @@ const UserRow = ({ user, onMutate }: Props) => {
     if (res.success) {
       onMutate();
 
-      if (user.isDisabled) {
+      if (user.isSuspended) {
         toast.success("User has been activated successfully.");
       } else {
         toast.success("User has been suspended successfully.");
       }
     } else {
-      if (user.isDisabled) {
+      if (user.isSuspended) {
         toast.error("Failed to activate the user.");
       } else {
         toast.error("Failed to suspend the user.");
@@ -51,7 +51,7 @@ const UserRow = ({ user, onMutate }: Props) => {
     <TableRow>
       <TableCell>{user.email}</TableCell>
 
-      <TableCell className="text-center py-3">
+      <TableCell className="text-center py-[14px]">
         <Badge
           className={`w-[80px] text-center capitalize ${
             isAdmin
@@ -71,10 +71,12 @@ const UserRow = ({ user, onMutate }: Props) => {
             variant="ghost"
             onClick={handleToggleSuspend}
             aria-label={
-              user.isDisabled ? "Activate user account" : "Suspend user account"
+              user.isSuspended
+                ? "Activate user account"
+                : "Suspend user account"
             }
           >
-            {user.isDisabled ? (
+            {user.isSuspended ? (
               <>
                 <PlayCircle /> Activate
               </>
