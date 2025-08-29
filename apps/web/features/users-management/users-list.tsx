@@ -11,11 +11,12 @@ import {
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
 import UsersSkeleton from "@/features/users-management/users-skeleton";
-import UsersEmpty from "@/features/users-management/users-empty";
 import type { User } from "@/types/user";
 import { FetchError } from "@/lib/errors";
 import { Badge } from "@repo/ui/components/badge";
 import { suspendUnsuspendUser } from "@/lib/actions/users";
+import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
+import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 
 type Props = {
   usersList: User[];
@@ -35,11 +36,22 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
   let content;
 
   if (error) {
-    content = <UsersEmpty type="error" />;
+    content = (
+      <TableErrorUnexpected
+        description="We couldn’t load the users. Please try again later."
+        colSpan={4}
+      />
+    );
   } else if (isLoading) {
     content = <UsersSkeleton />;
   } else if (usersList.length === 0) {
-    content = <UsersEmpty type="empty" />;
+    content = (
+      <TableErrorEmptyList
+        title="No users found"
+        description="No users have been added yet. Once new users join, they’ll appear here."
+        colSpan={4}
+      />
+    );
   } else {
     content = usersList.map((user) => {
       const isThanos = user.role === "ADMIN";

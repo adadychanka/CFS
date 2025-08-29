@@ -12,7 +12,6 @@ import type { GetUsersResponse } from "@/types/http";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDebounce } from "@/hooks/useDebounce";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
