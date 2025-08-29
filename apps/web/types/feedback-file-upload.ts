@@ -42,9 +42,9 @@ export type FeedbackFileUploadResponseErrors = NonNullable<
 >;
 
 export type FileUploadResponse = {
-  fileName: string;
+  fileName?: string;
   errors: string | null;
-  data: FeedbackFileUploadResponse["data"];
+  data?: FeedbackFileUploadResponse["data"];
   status: number;
 };
 
