@@ -8,10 +8,9 @@ export default function Home() {
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
-        <DashboardChartWrapper />
-
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
+          <DashboardChartWrapper />
           <SwitchTableCollapsedTabs />
         </Suspense>
       </div>

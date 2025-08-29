@@ -7,33 +7,27 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/dropdown-menu";
 import { Button } from "@repo/ui/components/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  FEEDBACK_FILTERS,
-  SENTIMENT_QUERY_PARAM_VALUE,
-} from "@/constants/constants";
+  parseSentimentsQueryParam,
+  updateSearchParamsWithSentiments,
+} from "@/utils/url-helpers";
 
 export function FeedbackTableFilterDropdown() {
-  if (
-    !SENTIMENT_QUERY_PARAM_VALUE ||
-    SENTIMENT_QUERY_PARAM_VALUE.length === 0
-  ) {
-    return "Sentiment"; // Will just return text for table header
-  }
-
-  return <FunctionalComponent />;
-}
-
-function FunctionalComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filtersOnURLQuery =
-    searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
-    filtersOnURLQuery.filter((f) => FEEDBACK_FILTERS.includes(f)),
+    parseSentimentsQueryParam(searchParams),
+  );
+
+  useEffect(
+    function syncFiltersWithQueryParam() {
+      setSelectedFilters(parseSentimentsQueryParam(searchParams));
+    },
+    [searchParams],
   );
 
   const handleToggleFilter = (filter: string, checked: boolean) => {
@@ -46,13 +40,7 @@ function FunctionalComponent() {
 
     setSelectedFilters(newFilters);
 
-    const params = new URLSearchParams(searchParams);
-    if (newFilters.length > 0) {
-      params.set(SENTIMENT_QUERY_PARAM_VALUE, newFilters.join(","));
-    } else {
-      params.delete(SENTIMENT_QUERY_PARAM_VALUE);
-    }
-
+    const params = updateSearchParamsWithSentiments(searchParams, newFilters);
     router.push(`?${params.toString()}`, { scroll: false });
   };
 

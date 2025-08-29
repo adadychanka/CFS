@@ -8,10 +8,16 @@ import type { EChartOption } from "@/types/charts";
  * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
  *
  * @example
- * const { chartRef } = useDrawChart(options, isLoading);
+ * const { chartRef } = useDrawChart(options, { isLoading });
  * return <div ref={chartRef} className="w-full h-full" />;
  */
-const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
+const useDrawChart = (
+  chartOption: EChartOption,
+  options?: {
+    onClick?: (params: echarts.ECElementEvent) => void;
+    isLoading?: boolean;
+  },
+) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chart, setChart] = useState<echarts.ECharts | null>(null);
 
@@ -39,24 +45,36 @@ const useDrawChart = (options: EChartOption, isLoading?: boolean) => {
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [isLoading]);
+  }, [options?.isLoading]);
 
   useEffect(() => {
     if (chart) {
-      chart.setOption(options);
+      chart.setOption(chartOption);
     }
-  }, [chart, options]);
+  }, [chart, chartOption]);
+
+  useEffect(() => {
+    if (!chart || !options?.onClick) return;
+
+    const handleBarClick = options?.onClick;
+
+    chart.on("click", handleBarClick);
+
+    return () => {
+      chart.off("click", handleBarClick);
+    };
+  }, [chart, options?.onClick]);
 
   useEffect(() => {
     if (!chart) {
       return;
     }
-    if (isLoading) {
+    if (options?.isLoading) {
       chart.showLoading();
       return;
     }
     chart.hideLoading();
-  }, [chart, isLoading]);
+  }, [chart, options?.isLoading]);
 
   return {
     chartRef,

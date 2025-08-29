@@ -13,12 +13,13 @@ import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
 import ExportDropdown from "@/components/export/export-dropdown";
 import GroupedFeedbackWrapper from "@/features/grouped-feedback/grouped-feedback-wrapper";
+import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
 const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const filterOnURLQuery = searchParams.get("sentiment") || "";
+  const filterOnURLQuery = searchParams.get(SENTIMENT_FILTER_QUERY_KEY) || "";
 
   const requested = searchParams.get("tab") || "";
   const tab = USER_DASHBOARD_TABS.includes(requested) ? requested : "table";
