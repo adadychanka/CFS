@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react";
  * - 403 - redirects user to /suspended
  */
 export const clientAuthGuard = (statusCode: number) => {
-  if (statusCode === 403 || statusCode === 429) {
+  if (statusCode === 403) {
     redirect("/suspended");
   } else if (statusCode === 401) {
     signOut({ redirectTo: "/log-in" });
