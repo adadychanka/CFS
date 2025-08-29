@@ -1,5 +1,6 @@
 import { FEEDBACK_FILTERS } from "@/constants/constants";
 import { type NextRequest } from "next/server";
+import { SENTIMENT_QUERY_PARAM_VALUE } from "@/constants";
 
 export function getPaginationParamsFromNextRequest(req: NextRequest) {
   const search = req.nextUrl.searchParams;
@@ -13,7 +14,7 @@ export const parseSentimentsQueryParam = (
 ): string[] => {
   return (
     searchParams
-      .get("sentiment")
+      .get(SENTIMENT_QUERY_PARAM_VALUE)
       ?.split(",")
       .filter((f) => FEEDBACK_FILTERS.includes(f)) || []
   );
@@ -23,7 +24,7 @@ export const transformSentimentsIntoSearchParams = (
   sentiments: string[],
 ): URLSearchParams => {
   const params = new URLSearchParams();
-  sentiments.forEach((s) => params.append("sentiment", s));
+  sentiments.forEach((s) => params.append(SENTIMENT_QUERY_PARAM_VALUE, s));
   return params;
 };
 
@@ -33,9 +34,9 @@ export function updateSearchParamsWithSentiments(
 ): URLSearchParams {
   const params = new URLSearchParams(baseParams);
   if (sentiments.length > 0) {
-    params.set("sentiment", sentiments.join(","));
+    params.set(SENTIMENT_QUERY_PARAM_VALUE, sentiments.join(","));
   } else {
-    params.delete("sentiment");
+    params.delete(SENTIMENT_QUERY_PARAM_VALUE);
   }
   return params;
 }

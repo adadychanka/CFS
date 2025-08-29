@@ -4,7 +4,7 @@ import type { EChartOption } from "@/types/charts";
 import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import { useDrawChart } from "./useDrawChart";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
@@ -73,12 +73,15 @@ function useDashboardChart() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filterHandler = (chartParams: echarts.ECElementEvent) => {
-    const params = updateSearchParamsWithSentiments(searchParams, [
-      chartParams.name,
-    ]);
-    router.push(`?${params.toString()}`, { scroll: false });
-  };
+  const filterHandler = useCallback(
+    (chartParams: echarts.ECElementEvent) => {
+      const params = updateSearchParamsWithSentiments(searchParams, [
+        chartParams.name,
+      ]);
+      router.push(`?${params.toString()}`, { scroll: false });
+    },
+    [router, searchParams],
+  );
 
   // --- Draw chart ---
   const { chartRef } = useDrawChart(chartOptions, {
