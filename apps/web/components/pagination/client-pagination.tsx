@@ -8,7 +8,7 @@ import {
 import {
   PaginationNextWithLink,
   PaginationPreviousWithLink,
-} from "@/components/user-feedback/pagination-with-link";
+} from "@/components/pagination/pagination-with-link";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { usePaginationNumbers } from "@/hooks/usePaginationNumbers";
@@ -25,7 +25,7 @@ type Props = {
  * @param limit
  * @constructor
  */
-const PaginationSection = ({ limit }: Props) => {
+const ClientPagination = ({ limit }: Props) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -76,4 +76,4 @@ const PaginationSection = ({ limit }: Props) => {
   );
 };
 
-export default PaginationSection;
+export default ClientPagination;
