@@ -4,7 +4,7 @@ import { auth } from "@/auth/auth";
 import { User } from "@/types/user";
 import process from "node:process";
 
-export async function suspendUnsuspendUser(user: User) {
+export async function toggleUserSuspend(user: User) {
   const session = await auth();
   if (!session) {
     return { success: false, status: 401, message: "Unauthorized" };

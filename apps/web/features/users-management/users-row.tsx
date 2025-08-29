@@ -15,6 +15,7 @@ type Props = {
 
 const UsersRow = ({ user, onToggleSuspend }: Props) => {
   const isAdmin = user.role === "ADMIN";
+  const isButtonsShown = !isAdmin && typeof user.deletedAt !== "string";
 
   const handleDisableUser = async () => {
     const res = await disableUser(user.id);
@@ -43,7 +44,7 @@ const UsersRow = ({ user, onToggleSuspend }: Props) => {
       </TableCell>
 
       <TableCell className="text-center">
-        {!isAdmin && (
+        {isButtonsShown && (
           <Button size="sm" variant="ghost" onClick={onToggleSuspend}>
             {user.isDisabled ? (
               <>
@@ -59,7 +60,7 @@ const UsersRow = ({ user, onToggleSuspend }: Props) => {
       </TableCell>
 
       <TableCell className="text-center">
-        {!isAdmin && (
+        {isButtonsShown && (
           <Button size="sm" variant="ghost" onClick={handleDisableUser}>
             <Ban /> Disable
           </Button>
