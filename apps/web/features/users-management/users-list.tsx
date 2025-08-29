@@ -13,7 +13,7 @@ import { FetchError } from "@/lib/errors";
 import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
-import UsersRow from "@/features/users-management/users-row";
+import UserRow from "@/features/users-management/user-row";
 
 type Props = {
   usersList: User[];
@@ -52,7 +52,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
     );
   } else {
     content = usersList.map((user) => (
-      <UsersRow key={user.id} user={user} onMutate={onMutate} />
+      <UserRow key={user.id} user={user} onMutate={onMutate} />
     ));
   }
 
