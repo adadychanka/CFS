@@ -30,34 +30,42 @@ export async function uploadFiles(formData: FormData) {
   try {
     const files = formData.getAll("files") as File[] | null;
 
-    if (files) {
-      for (const file of files) {
-        const response: FeedbackFileUploadResponse = await uploadFile(file);
+    if (!files) {
+      fileStatuses = [
+        ...fileStatuses,
+        {
+          errors: "No files are found",
+          status: 400,
+        },
+      ];
+      return fileStatuses;
+    }
 
-        if (response.statusCode !== 201) {
-          fileStatuses = [
-            ...fileStatuses,
-            {
-              fileName: file.name,
-              errors: response.message,
-              status: response.statusCode,
-              data: response.data,
-            },
-          ];
+    if (files) {
+      const results = await Promise.allSettled(
+        files.map(async (file) => {
+          const response: FeedbackFileUploadResponse = await uploadFile(file);
+
+          return {
+            fileName: file.name,
+            errors: response.statusCode !== 201 ? response.message : null,
+            status: response.statusCode,
+            data: response.data,
+          };
+        }),
+      );
+
+      fileStatuses = results.map((result) => {
+        if (result.status === "fulfilled") {
+          return result.value;
         } else {
-          fileStatuses = [
-            ...fileStatuses,
-            {
-              fileName: file.name,
-              errors: null,
-              status: 201,
-              data: response.data,
-            },
-          ];
+          return {
+            fileName: "Unknown",
+            errors: result.reason?.toString() ?? "Upload failed",
+            status: 500,
+          };
         }
-      }
-    } else {
-      return "No files are found";
+      });
     }
 
     return fileStatuses;

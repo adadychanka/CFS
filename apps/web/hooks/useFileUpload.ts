@@ -62,10 +62,6 @@ function useFileUpload() {
         formData.append("files", file);
       });
       const fileUploadResult = await uploadFiles(formData);
-
-      if (typeof fileUploadResult === "string") {
-        setServerErrors([{ message: fileUploadResult }]);
-      }
       if (fileUploadResult instanceof Array) {
         (fileUploadResult as FileUploadResponse[]).forEach((result) => {
           if (result.errors) {
