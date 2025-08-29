@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GetUsersResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 import * as process from "node:process";
+import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
 
 export async function GET(req: NextRequest) {
   try {
@@ -11,16 +12,22 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
-    const limit = parseInt(req.nextUrl.searchParams.get("limit") || "20", 10);
+    const { page, limit } = getPaginationParamsFromNextRequest(req);
     const search = req.nextUrl.searchParams.get("search") || "";
-
     const isSearch = search.length >= 3;
-    const finalUrl = isSearch
-      ? `${process.env.BACKEND_API}/api/users/search?email=${search}`
-      : `${process.env.BACKEND_API}/api/users?limit=${limit}&page=${page}`;
 
-    const res = await fetch(finalUrl, {
+    const requestUrl = isSearch
+      ? new URL("/api/users/search", process.env.BACKEND_API)
+      : new URL("/api/users", process.env.BACKEND_API);
+
+    if (isSearch) {
+      requestUrl.searchParams.set("email", search);
+    } else {
+      requestUrl.searchParams.set("page", page.toString());
+      requestUrl.searchParams.set("limit", limit.toString());
+    }
+
+    const res = await fetch(requestUrl.toString(), {
       headers: {
         Authorization: `Bearer ${session.user.token}`,
       },
