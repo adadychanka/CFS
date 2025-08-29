@@ -9,7 +9,7 @@ type Props = {
 async function AdminLayoutWrapper({ children }: Props) {
   const session = await auth();
   if (session?.user.role !== "ADMIN") {
-    redirect("/admin/log-in");
+    redirect("/");
   }
 
   return <>{children}</>;
