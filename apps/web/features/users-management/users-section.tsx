@@ -12,6 +12,8 @@ import type { GetUsersResponse } from "@/types/http";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { useRouter, useSearchParams } from "next/navigation";
+import { updateSearchParams } from "@/utils/url-helpers";
+import { USERS_SEARCH_QUERY_KEY } from "@/constants";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -25,7 +27,7 @@ export const fetcher = async (url: string) => {
     );
   }
 
-  return data;
+  return data.data;
 };
 
 const UsersSection = () => {
@@ -52,14 +54,12 @@ const UsersSection = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams);
-    if (searchInput) {
-      params.set("search", searchInput);
-    } else {
-      params.delete("search");
-    }
-    params.set("page", "1");
-    router.replace(`?${params.toString()}`);
+    const updatedParams = updateSearchParams(
+      searchParams,
+      USERS_SEARCH_QUERY_KEY,
+      searchInput,
+    );
+    router.replace(`?${updatedParams.toString()}`, { scroll: false });
   };
 
   return (
