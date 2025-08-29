@@ -4,7 +4,7 @@ import UsersList from "@/features/users-management/users-list";
 import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
 import { Search } from "lucide-react";
-import PaginationSection from "@/components/user-feedback/pagination-section";
+import ClientPagination from "@/components/pagination/client-pagination";
 import { FormEvent, useCallback, useState } from "react";
 import { FetchError } from "@/lib/errors";
 import useSWR from "swr";
@@ -91,7 +91,7 @@ const UsersSection = () => {
       />
 
       {data?.pagination && (
-        <PaginationSection limit={data.pagination.pages | 0} />
+        <ClientPagination limit={data.pagination.pages | 0} />
       )}
     </div>
   );
