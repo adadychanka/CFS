@@ -15,6 +15,7 @@ import TableErrorEmptyList from "@/features/error-messages/table-error-states/ta
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
 import UsersRow from "@/features/users-management/users-row";
+import { toast } from "sonner";
 
 type Props = {
   usersList: User[];
@@ -28,37 +29,57 @@ const COL_SPAN = 4;
 const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
   const handleToggleSuspend = async (user: User) => {
     const res = await suspendUnsuspendUser(user);
-    if (res.success) onMutate();
+
+    if (res.success) {
+      onMutate();
+
+      if (user.isDisabled) {
+        toast.success("User has been activated successfully.");
+      } else {
+        toast.success("User has been suspended successfully.");
+      }
+    } else {
+      if (user.isDisabled) {
+        toast.error("Failed to activate the user.");
+      } else {
+        toast.error("Failed to suspend the user.");
+      }
+    }
   };
 
-  if (error?.status === 429) {
-    return (
+  let content;
+
+  if (isLoading) content = <UsersSkeleton />;
+  else if (error?.status === 429) {
+    content = (
       <TableErrorTooManyRequests
         description="You’ve made too many requests in a short time. Please wait before trying again."
         colSpan={COL_SPAN}
       />
     );
-  }
-
-  if (error) {
-    return (
+  } else if (error) {
+    content = (
       <TableErrorUnexpected
         description="We couldn’t load the users. Please try again later."
         colSpan={COL_SPAN}
       />
     );
-  }
-
-  if (isLoading) return <UsersSkeleton />;
-
-  if (usersList.length === 0) {
-    return (
+  } else if (usersList.length === 0) {
+    content = (
       <TableErrorEmptyList
         title="No users found"
         description="No users have been added yet. Once new users join, they’ll appear here."
         colSpan={COL_SPAN}
       />
     );
+  } else {
+    content = usersList.map((user) => (
+      <UsersRow
+        key={user.id}
+        user={user}
+        onToggleSuspend={() => handleToggleSuspend(user)}
+      />
+    ));
   }
 
   return (
@@ -72,15 +93,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
             <TableHead className="w-[120px] text-center">Suspend</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {usersList.map((user) => (
-            <UsersRow
-              key={user.id}
-              user={user}
-              onToggleSuspend={() => handleToggleSuspend(user)}
-            />
-          ))}
-        </TableBody>
+        <TableBody>{content}</TableBody>
       </Table>
     </div>
   );

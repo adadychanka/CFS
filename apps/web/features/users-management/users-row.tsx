@@ -1,8 +1,12 @@
+"use client";
+
 import { TableCell, TableRow } from "@repo/ui/components/table";
 import { Badge } from "@repo/ui/components/badge";
 import { User } from "@/types/user";
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
+import { disableUser } from "@/lib/actions/users";
+import { toast } from "sonner";
 
 type Props = {
   user: User;
@@ -11,6 +15,15 @@ type Props = {
 
 const UsersRow = ({ user, onToggleSuspend }: Props) => {
   const isAdmin = user.role === "ADMIN";
+
+  const handleDisableUser = async () => {
+    const res = await disableUser(user.id);
+    if (res.success) {
+      toast.success("User account now disabled!");
+    } else {
+      toast.error("Failed to disable the user.");
+    }
+  };
 
   return (
     <TableRow>
@@ -47,7 +60,7 @@ const UsersRow = ({ user, onToggleSuspend }: Props) => {
 
       <TableCell className="text-center">
         {!isAdmin && (
-          <Button size="sm" variant="ghost">
+          <Button size="sm" variant="ghost" onClick={handleDisableUser}>
             <Ban /> Disable
           </Button>
         )}
