@@ -36,16 +36,18 @@ function FunctionalComponent() {
     parseSentimentsQueryParam(searchParams),
   );
 
-  // Keep sync if a query param changes from somewhere else e.g.: charts
-  useEffect(() => {
-    const filtersFromQuery =
-      searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
-    const validFilters = filtersFromQuery.filter((f) =>
-      FEEDBACK_FILTERS.includes(f),
-    );
+  useEffect(
+    function syncFiltersWithQueryParam() {
+      const filtersFromQuery =
+        searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
+      const validFilters = filtersFromQuery.filter((f) =>
+        FEEDBACK_FILTERS.includes(f),
+      );
 
-    setSelectedFilters(validFilters);
-  }, [searchParams]);
+      setSelectedFilters(validFilters);
+    },
+    [searchParams],
+  );
 
   const handleToggleFilter = (filter: string, checked: boolean) => {
     let newFilters = [];

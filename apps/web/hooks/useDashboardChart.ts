@@ -10,7 +10,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
 import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 
-// --- Fetcher fn ---
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
   const data = await res.json();
@@ -27,7 +26,6 @@ export const fetcher = async (url: string) => {
 };
 
 function useDashboardChart() {
-  // --- Data fetching ---
   const {
     data: result,
     error,
@@ -37,39 +35,40 @@ function useDashboardChart() {
     fetcher,
   );
 
-  // --- Derived data ---
-  const { chartOptions, isEmpty } = useMemo(() => {
-    const { categories, data } = transformSentimentSummaryResult(result);
-    const isEmpty = categories.length === 0 || data.length === 0;
+  const { chartOptions, isEmpty } = useMemo(
+    function deriveChartOptions() {
+      const { categories, data } = transformSentimentSummaryResult(result);
+      const isEmpty = categories.length === 0 || data.length === 0;
 
-    const chartOptions: EChartOption = {
-      title: {
-        text: "Proportions of Sentiment Types",
-      },
-      tooltip: {},
-      color: "#393E46",
-      xAxis: {
-        data: categories,
-      },
-      yAxis: {},
-      series: [
-        {
-          type: "bar",
-          data: data,
+      const chartOptions: EChartOption = {
+        title: {
+          text: "Proportions of Sentiment Types",
         },
-      ],
-    };
+        tooltip: {},
+        color: "#393E46",
+        xAxis: {
+          data: categories,
+        },
+        yAxis: {},
+        series: [
+          {
+            type: "bar",
+            data: data,
+          },
+        ],
+      };
 
-    return { chartOptions, isEmpty };
-  }, [result]);
+      return { chartOptions, isEmpty };
+    },
+    [result],
+  );
 
   const hasError = Boolean(error);
 
-  // --- Filter handling ---
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const filterHandler = useCallback(
+  const handleFilterChange = useCallback(
     (chartParams: echarts.ECElementEvent) => {
       const params = updateSearchParamsWithSentiments(searchParams, [
         chartParams.name,
@@ -79,13 +78,11 @@ function useDashboardChart() {
     [router, searchParams],
   );
 
-  // --- Draw chart ---
   const { chartRef } = useDrawChart(chartOptions, {
     isLoading,
-    onClick: filterHandler,
+    onClick: handleFilterChange,
   });
 
-  // --- Return ---
   return {
     chartRef,
     hasError,
