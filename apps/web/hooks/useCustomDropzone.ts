@@ -38,7 +38,10 @@ export const useCustomDropzone = () => {
     setError(null);
   }, []);
 
-  const handleDeleteSingleFile = useCallback((fileName: string) => {
+  const handleDeleteSingleFile = useCallback((fileName?: string) => {
+    if (!fileName) {
+      return;
+    }
     setFiles((prevFiles) => {
       return prevFiles.filter((file) => file.name !== fileName);
     });
