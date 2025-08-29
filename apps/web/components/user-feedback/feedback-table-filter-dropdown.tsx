@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/dropdown-menu";
 import { Button } from "@repo/ui/components/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -35,6 +35,17 @@ function FunctionalComponent() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     filtersOnURLQuery.filter((f) => FEEDBACK_FILTERS.includes(f)),
   );
+
+  // Keep sync if a query param changes from somewhere else e.g.: charts
+  useEffect(() => {
+    const filtersFromQuery =
+      searchParams.get(SENTIMENT_QUERY_PARAM_VALUE)?.split(",") || [];
+    const validFilters = filtersFromQuery.filter((f) =>
+      FEEDBACK_FILTERS.includes(f),
+    );
+
+    setSelectedFilters(validFilters);
+  }, [searchParams]);
 
   const handleToggleFilter = (filter: string, checked: boolean) => {
     let newFilters = [];
