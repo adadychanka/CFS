@@ -10,22 +10,12 @@ import { Button } from "@repo/ui/components/button";
 import { useEffect, useState } from "react";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FEEDBACK_FILTERS } from "@/constants/constants";
 import {
   parseSentimentsQueryParam,
   updateSearchParamsWithSentiments,
 } from "@/utils/url-helpers";
-import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
 export function FeedbackTableFilterDropdown() {
-  if (!SENTIMENT_FILTER_QUERY_KEY || SENTIMENT_FILTER_QUERY_KEY.length === 0) {
-    return "Sentiment"; // Will just return text for table header
-  }
-
-  return <FunctionalComponent />;
-}
-
-function FunctionalComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -35,13 +25,7 @@ function FunctionalComponent() {
 
   useEffect(
     function syncFiltersWithQueryParam() {
-      const filtersFromQuery =
-        searchParams.get(SENTIMENT_FILTER_QUERY_KEY)?.split(",") || [];
-      const validFilters = filtersFromQuery.filter((f) =>
-        FEEDBACK_FILTERS.includes(f),
-      );
-
-      setSelectedFilters(validFilters);
+      setSelectedFilters(parseSentimentsQueryParam(searchParams));
     },
     [searchParams],
   );
