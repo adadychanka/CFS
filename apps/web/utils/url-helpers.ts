@@ -28,15 +28,49 @@ export const transformSentimentsIntoSearchParams = (
   return params;
 };
 
-export function updateSearchParamsWithSentiments(
+/**
+ * Updates a query parameter in a URLSearchParams object.
+ * - If `value` is a string, sets the param if non-empty, otherwise deletes it.
+ * - If `value` is an array of strings, sets the param as a comma-separated string if non-empty, otherwise deletes it.
+ *
+ * @param baseParams - The current URLSearchParams object to update.
+ * @param key - The query parameter key to update or delete.
+ * @param value - The value to set. Can be a string or an array of strings.
+ * @returns A new URLSearchParams object with the updated parameter.
+ *
+ * @example
+ * // Update search param
+ * const params = updateSearchParams(searchParams, "search", "hello");
+ *
+ * @example
+ * // Update sentiments param with multiple values
+ * const params = updateSearchParams(searchParams, "sentiments", ["positive", "neutral"]);
+ *
+ * @example
+ * // Delete param by passing empty string or empty array
+ * const params = updateSearchParams(searchParams, "search", "");
+ * const params2 = updateSearchParams(searchParams, "sentiments", []);
+ */
+export function updateSearchParams(
   baseParams: URLSearchParams,
-  sentiments: string[],
+  key: string,
+  value: string | string[],
 ): URLSearchParams {
   const params = new URLSearchParams(baseParams);
-  if (sentiments.length > 0) {
-    params.set(SENTIMENT_FILTER_QUERY_KEY, sentiments.join(","));
+
+  if (Array.isArray(value)) {
+    if (value.length > 0) {
+      params.set(key, value.join(","));
+    } else {
+      params.delete(key);
+    }
   } else {
-    params.delete(SENTIMENT_FILTER_QUERY_KEY);
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
   }
+
   return params;
 }

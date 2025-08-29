@@ -7,8 +7,9 @@ import { useDrawChart } from "./useDrawChart";
 import { useCallback, useMemo } from "react";
 import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
-import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
 import { transformSentimentSummaryResult } from "@/utils/charts-helper";
+import { updateSearchParams } from "@/utils/url-helpers";
+import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -70,9 +71,11 @@ function useDashboardChart() {
 
   const handleFilterChange = useCallback(
     (chartParams: echarts.ECElementEvent) => {
-      const params = updateSearchParamsWithSentiments(searchParams, [
-        chartParams.name,
-      ]);
+      const params = updateSearchParams(
+        searchParams,
+        SENTIMENT_FILTER_QUERY_KEY,
+        [chartParams.name],
+      );
       router.push(`?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
