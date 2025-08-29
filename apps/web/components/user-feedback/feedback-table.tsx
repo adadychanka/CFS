@@ -3,7 +3,7 @@
 import useSWR from "swr";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import DynamicFeedbackTable from "./dynamic-feedback-table";
-import PaginationSection from "@/components/user-feedback/pagination-section";
+import ClientPagination from "@/components/pagination/client-pagination";
 import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
@@ -54,7 +54,7 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
         />
       </div>
 
-      {data && <PaginationSection limit={data.pagination.pages | 0} />}
+      {data && <ClientPagination limit={data.pagination.pages | 0} />}
     </div>
   );
 };
