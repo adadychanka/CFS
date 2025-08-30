@@ -34,6 +34,7 @@ const PreviewFileListItem = ({ index, file, onDeleteSingleFile }: Props) => {
           size="sm"
           variant="ghost"
           onClick={() => onDeleteSingleFile(file.name)}
+          aria-label="Delete current file"
         >
           <Trash2 className="w-4 h-4 mr-1" /> Delete
         </Button>
