@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -45,12 +45,12 @@ function useFileUpload() {
     form.setValue("files", files);
   }, [files, form]);
 
-  function handleClearData() {
+  const handleClearData = useCallback(() => {
     handleClear();
     setServerErrors(null);
-  }
+  }, [handleClear]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     handleClearErrors();
     setServerErrors(null);
     setIsLoading(true);
@@ -63,7 +63,7 @@ function useFileUpload() {
       });
       const fileUploadResult = await uploadFiles(formData);
       if (fileUploadResult instanceof Array) {
-        (fileUploadResult as FileUploadResponse[]).forEach((result) => {
+        fileUploadResult.forEach((result) => {
           if (result.errors) {
             errors = [
               ...errors,
@@ -91,7 +91,7 @@ function useFileUpload() {
     }
     setServerErrors([...errors]);
     setIsLoading(false);
-  };
+  }, [files, handleClearErrors, handleDeleteSingleFile]);
 
   return {
     files,

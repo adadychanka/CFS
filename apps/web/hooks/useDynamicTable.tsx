@@ -1,4 +1,4 @@
-import { ReactNode, JSX } from "react";
+import { ReactNode, JSX, useMemo } from "react";
 
 type UseDynamicTableProps<T> = {
   data: T[];
@@ -18,11 +18,14 @@ export function useDynamicTable<T>({
   heads,
   renderRow,
 }: UseDynamicTableProps<T>): UseDynamicTableData {
-  const tableHeads = <>{heads}</>;
+  const { tableHeads, tableRows } = useMemo(() => {
+    const tableHeads = <>{heads}</>;
 
-  const tableRows = data
-    .slice(0, limit)
-    .map((item, index) => renderRow(item, index));
+    const tableRows = data
+      .slice(0, limit)
+      .map((item, index) => renderRow(item, index));
+    return { tableHeads, tableRows };
+  }, [heads, data, limit, renderRow]);
 
   return { tableHeads, tableRows };
 }
