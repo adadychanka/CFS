@@ -13,7 +13,7 @@ import { getServerApi } from "./server-api";
 //TODO: Change types for Post method in API call
 const register = async ({ email, password }: UserCredentials) => {
   const api = await getServerApi();
-  return await api.post<AuthResponse>("/api/auth/register", {
+  return await api.post("/api/auth/register", {
     email,
     password,
   });
@@ -21,7 +21,7 @@ const register = async ({ email, password }: UserCredentials) => {
 
 const login = async ({ email, password }: UserCredentials) => {
   const api = await getServerApi();
-  return await api.post<AuthResponse>("/api/auth/login", {
+  return await api.post("/api/auth/login", {
     email,
     password,
   });
@@ -29,7 +29,7 @@ const login = async ({ email, password }: UserCredentials) => {
 
 const adminRegister = async ({ email, password }: UserCredentials) => {
   const api = await getServerApi();
-  return await api.post<AuthResponse>("/api/auth/register/admin", {
+  return await api.post("/api/auth/register/admin", {
     email,
     password,
   });
@@ -37,7 +37,7 @@ const adminRegister = async ({ email, password }: UserCredentials) => {
 
 const adminLogin = async ({ email, password }: UserCredentials) => {
   const api = await getServerApi();
-  return await api.post<AuthResponse>("/api/auth/login/admin", {
+  return await api.post("/api/auth/login/admin", {
     email,
     password,
   });
@@ -67,7 +67,8 @@ export const authenticate = async (
 ) => {
   let result: AuthResult | null = null;
 
-  const response = await loginOrRegister(authType, userCredentials);
+  const httpResponse = await loginOrRegister(authType, userCredentials);
+  const response: AuthResponse = await httpResponse.json();
   if (response.data) {
     result = response.data;
   }

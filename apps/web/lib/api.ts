@@ -39,20 +39,41 @@ export class ApiClient {
     }
   }
 
-  async post<T>(endpoint: string, body: unknown): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: "POST",
-      headers: this.getHeaders(),
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
+  async post(endpoint: string, body: unknown): Promise<Response> {
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: "POST",
+        headers: this.getHeaders(),
+        body: JSON.stringify(body),
+      });
+      return response;
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
       throw new Error(
-        `POST ${endpoint} failed: ${response.status}: ${response.statusText}`,
+        message || "Unexpected error occurred. Please try again.",
       );
     }
+  }
 
-    return response.json();
+  async upload(endpoint: string, formData: FormData): Promise<Response> {
+    try {
+      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
+      throw new Error(
+        message || "Unexpected error occurred. Please try again.",
+      );
+    }
   }
 
   async patch(endpoint: string, body: unknown) {
