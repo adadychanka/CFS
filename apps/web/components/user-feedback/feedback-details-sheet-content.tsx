@@ -19,7 +19,11 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-export default function FeedbackDetailsSheetContent({ id }: { id: string }) {
+export default function FeedbackDetailsSheetContent({
+  id,
+}: {
+  id: string | null;
+}) {
   const {
     data: feedback,
     error,

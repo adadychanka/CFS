@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
@@ -12,6 +12,13 @@ type Props = {
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
+  const [selectedFeedback, setSelectedFeedback] =
+    useState<SentimentAnalysisResult | null>(null);
+
+  const unselectFeedback = useCallback(() => {
+    setSelectedFeedback(null);
+  }, []);
+
   const heads = useMemo(() => {
     return [
       <TableHead key="summary" className="w-[300px]">
@@ -34,7 +41,11 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
 
   const renderRow = useCallback(
     (sentiment: SentimentAnalysisResult) => (
-      <TableRow key={sentiment.id} className="odd:bg-muted/50">
+      <TableRow
+        key={sentiment.id}
+        onClick={() => setSelectedFeedback(sentiment)}
+        className="odd:bg-muted/50 cursor-pointer hover:bg-muted transition-colors"
+      >
         <TableCell>{sentiment.summary}</TableCell>
         <TableCell className="text-center">
           <FeedbackBadge sentiment={sentiment.sentiment} />
@@ -58,6 +69,8 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
   return {
     tableHeads,
     tableRows,
+    selectedItemId: selectedFeedback?.id,
+    onUnselectItem: unselectFeedback,
   };
 }
 
