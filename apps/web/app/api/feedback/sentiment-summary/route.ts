@@ -3,6 +3,7 @@ import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
 import { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import { NextRequest, NextResponse } from "next/server";
+import { getIsSampleMode } from "@/utils/url-helpers";
 
 export async function GET(req: NextRequest) {
   const api = await getServerApi();
@@ -23,8 +24,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const isSampleMode =
-      req.nextUrl.searchParams.get("isSampleMode") === "true";
+    const isSampleMode = getIsSampleMode(req);
     const requestUrl = isSampleMode
       ? "/api/sample/feedback/sentiment-summary"
       : "/api/feedback/sentiment-summary";
