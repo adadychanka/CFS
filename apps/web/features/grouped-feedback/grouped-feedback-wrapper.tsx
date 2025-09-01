@@ -21,12 +21,19 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-function GroupedFeedback() {
+type Props = {
+  isSampleMode: boolean;
+};
+
+function GroupedFeedback({ isSampleMode }: Props) {
   const {
     data: result,
     error,
     isLoading,
-  } = useSWR<GroupedFeedbackResponse>("/api/feedback/grouped", fetcher);
+  } = useSWR<GroupedFeedbackResponse>(
+    `/api/feedback/grouped?isSampleMode=${isSampleMode}`,
+    fetcher,
+  );
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 

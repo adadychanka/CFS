@@ -68,7 +68,7 @@ const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
         />
       </TabsContent>
       <TabsContent value="grouped">
-        <GroupedFeedbackWrapper />
+        <GroupedFeedbackWrapper isSampleMode={isSampleMode} />
       </TabsContent>
     </Tabs>
   );
