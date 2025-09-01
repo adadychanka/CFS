@@ -43,7 +43,7 @@ export default function Home() {
 
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
-          <DashboardChartWrapper />
+          <DashboardChartWrapper isSampleMode={isSampleMode} />
           <FeedbackPanel />
           <SwitchTableCollapsedTabs isSampleMode={isSampleMode} />
         </Suspense>

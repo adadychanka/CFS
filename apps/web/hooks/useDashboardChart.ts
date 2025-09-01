@@ -26,13 +26,13 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-function useDashboardChart() {
+function useDashboardChart(isSampleMode: boolean) {
   const {
     data: result,
     error,
     isLoading,
   } = useSWR<SentimentSummaryResponse, FetchError>(
-    "/api/feedback/sentiment-summary",
+    `/api/feedback/sentiment-summary?isSampleMode=${isSampleMode}`,
     fetcher,
   );
 
