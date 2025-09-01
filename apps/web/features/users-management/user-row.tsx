@@ -1,13 +1,13 @@
 "use client";
 
 import { TableCell, TableRow } from "@repo/ui/components/table";
-import { Badge } from "@repo/ui/components/badge";
 import { User } from "@/types/user";
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
 import { disableUser, toggleUserSuspend } from "@/lib/actions/users";
 import { toast } from "sonner";
 import UserConfirmDisable from "@/features/users-management/user-confirm-disable";
+import UserBadge from "@/features/users-management/user-badge";
 
 type Props = {
   user: User;
@@ -54,31 +54,18 @@ const UserRow = ({ user, onMutate }: Props) => {
       <TableCell>{user.email}</TableCell>
 
       <TableCell className="text-center py-[14px]">
-        <Badge
-          className={`px-3 min-w-[90px] text-center capitalize ${
-            isAdmin
-              ? "bg-purple-200 text-purple-800"
-              : "bg-cyan-200 text-cyan-800"
-          }`}
-          variant="secondary"
-        >
-          {user.role.toLowerCase()}
-        </Badge>
+        <UserBadge
+          type={user.role.toLowerCase() === "admin" ? "admin" : "user"}
+        />
       </TableCell>
 
       <TableCell className="text-center">
         {isDeleted ? (
-          <Badge className="px-3 min-w-[90px] bg-red-200 text-red-800">
-            Disabled
-          </Badge>
+          <UserBadge type="disabled" />
         ) : user.isSuspended ? (
-          <Badge className="px-3 min-w-[90px] bg-yellow-200 text-yellow-800">
-            Suspended
-          </Badge>
+          <UserBadge type="suspended" />
         ) : (
-          <Badge className="px-3 min-w-[90px] bg-green-200 text-green-800">
-            Active
-          </Badge>
+          <UserBadge type="active" />
         )}
       </TableCell>
 
