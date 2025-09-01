@@ -5,7 +5,7 @@ import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
 import { withAdminAccess } from "@/components/withAdminAccess";
-import { SampleModeProvider } from "@/context/use-sample-mode";
+import { SampleModeProvider } from "@/providers/sample-mode-provider";
 
 export const metadata: Metadata = {
   title: "Dashboard",

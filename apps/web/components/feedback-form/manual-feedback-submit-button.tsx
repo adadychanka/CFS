@@ -7,7 +7,7 @@ import { uploadManualFeedback } from "@/lib/actions/feedback";
 import { useState } from "react";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { toast } from "sonner";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 import { redirect } from "next/navigation";
 
 type Props = {

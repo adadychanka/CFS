@@ -2,7 +2,7 @@
 
 import { Button } from "@repo/ui/components/button";
 import { FlaskConical, LogOut } from "lucide-react";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export default function SampleModeToggle() {
   const { isSampleMode, toggleSampleMode } = useSampleMode();

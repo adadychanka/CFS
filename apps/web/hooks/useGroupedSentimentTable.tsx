@@ -5,7 +5,7 @@ import type { Sentiment } from "@/types/sentiment-analysis-result";
 import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { Badge } from "@repo/ui/components/badge";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 type Props = {
   data: GroupedFeedbackDataItems[];

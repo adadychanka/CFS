@@ -15,7 +15,7 @@ import { downloadReport } from "@/lib/actions/feedback";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { base64ToBlobConverter } from "@/utils/base64-to-blob-converter";
 import { browserFileDownloader } from "@/utils/browser-file-downloader";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 const handleDownload = async (
   type: "summary" | "detailed",

@@ -9,7 +9,7 @@ import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { updateSearchParamsWithSentiments } from "@/utils/url-helpers";
 import { transformSentimentSummaryResult } from "@/utils/charts-helper";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);

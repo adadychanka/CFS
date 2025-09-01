@@ -8,7 +8,7 @@ import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useFeedbackTable from "@/hooks/useFeedbackTable";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
