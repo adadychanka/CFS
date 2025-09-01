@@ -5,7 +5,7 @@ import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 import { Badge } from "@repo/ui/components/badge";
 import { Button } from "@repo/ui/components/button";
 import { Ellipsis } from "lucide-react";
