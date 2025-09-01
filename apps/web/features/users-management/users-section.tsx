@@ -1,21 +1,24 @@
 "use client";
 
+import { FormEvent, useEffect, useState } from "react";
+import useSWR from "swr";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Search } from "lucide-react";
+
 import UsersList from "@/features/users-management/users-list";
+import ClientPagination from "@/components/pagination/client-pagination";
 import { Input } from "@repo/ui/components/input";
 import { Button } from "@repo/ui/components/button";
-import { Search } from "lucide-react";
-import ClientPagination from "@/components/pagination/client-pagination";
-import { FormEvent, useCallback, useState } from "react";
+
 import { FetchError } from "@/lib/errors";
-import useSWR from "swr";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { updateSearchParams } from "@/utils/url-helpers";
+
 import type { GetUsersResponse } from "@/types/http";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
-import { clientAuthGuard } from "@/utils/client-auth-guard";
-import { useRouter, useSearchParams } from "next/navigation";
-import { updateSearchParams } from "@/utils/url-helpers";
 import { USERS_SEARCH_QUERY_KEY } from "@/constants";
 
-export const fetcher = async (url: string) => {
+const fetcher = async (url: string) => {
   const res = await fetch(url);
   const data = await res.json();
 
@@ -33,6 +36,7 @@ export const fetcher = async (url: string) => {
 const UsersSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const currentPage = Number(searchParams.get("page")) || 1;
   const searchQuery = searchParams.get(USERS_SEARCH_QUERY_KEY) || "";
 
@@ -41,19 +45,18 @@ const UsersSection = () => {
   const { data, error, isLoading, mutate } = useSWR<GetUsersResponse>(
     `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&${USERS_SEARCH_QUERY_KEY}=${searchQuery}`,
     fetcher,
-    {
-      keepPreviousData: true,
-    },
+    { keepPreviousData: true },
   );
 
-  if (error instanceof FetchError) clientAuthGuard(error.status);
-
-  const handleMutate = useCallback(async () => {
-    await mutate();
-  }, [mutate]);
+  useEffect(() => {
+    if (error instanceof FetchError) {
+      clientAuthGuard(error.status);
+    }
+  }, [error]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (searchInput.length > 0 && searchInput.length < 3) return;
     const updatedParams = updateSearchParams(
       searchParams,
       USERS_SEARCH_QUERY_KEY,
@@ -76,7 +79,6 @@ const UsersSection = () => {
             <Search /> Search
           </Button>
         </div>
-
         <p className="pl-1 text-sm text-muted-foreground">
           Only 5 users are shown when searching. Enter at least 3 characters to
           make search work
@@ -87,11 +89,11 @@ const UsersSection = () => {
         usersList={data?.users || []}
         isLoading={isLoading}
         error={error}
-        onMutate={handleMutate}
+        onMutate={mutate}
       />
 
       {data?.pagination && (
-        <ClientPagination limit={data.pagination.pages | 0} />
+        <ClientPagination limit={data.pagination.pages ?? 0} />
       )}
     </div>
   );

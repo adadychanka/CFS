@@ -8,6 +8,7 @@ import { disableUser, toggleUserSuspend } from "@/lib/actions/users";
 import { toast } from "sonner";
 import UserConfirmDisable from "@/features/users-management/user-confirm-disable";
 import UserBadge from "@/features/users-management/user-badge";
+import { useCallback, useMemo } from "react";
 
 type Props = {
   user: User;
@@ -19,7 +20,12 @@ const UserRow = ({ user, onMutate }: Props) => {
   const isDeleted = typeof user.deletedAt === "string";
   const isButtonsShown = !isAdmin && !isDeleted;
 
-  const handleDisableUser = async () => {
+  const status: "disabled" | "suspended" | "active" = useMemo(
+    () => (isDeleted ? "disabled" : user.isSuspended ? "suspended" : "active"),
+    [isDeleted, user.isSuspended],
+  );
+
+  const handleDisableUser = useCallback(async () => {
     const res = await disableUser(user.id);
     if (res.success) {
       onMutate();
@@ -27,46 +33,38 @@ const UserRow = ({ user, onMutate }: Props) => {
     } else {
       toast.error("Failed to disable the user.");
     }
-  };
+  }, [user.id, onMutate]);
 
-  const handleToggleSuspend = async () => {
+  const handleToggleSuspend = useCallback(async () => {
     const res = await toggleUserSuspend(user.id);
 
-    if (res.success) {
-      onMutate();
-
-      if (user.isSuspended) {
-        toast.success("User has been activated successfully.");
-      } else {
-        toast.success("User has been suspended successfully.");
-      }
-    } else {
-      if (user.isSuspended) {
-        toast.error("Failed to activate the user.");
-      } else {
-        toast.error("Failed to suspend the user.");
-      }
+    if (!res.success) {
+      toast.error(
+        user.isSuspended
+          ? "Failed to activate the user."
+          : "Failed to suspend the user.",
+      );
+      return;
     }
-  };
+
+    onMutate();
+    toast.success(
+      user.isSuspended
+        ? "User has been activated successfully."
+        : "User has been suspended successfully.",
+    );
+  }, [user.id, user.isSuspended, onMutate]);
 
   return (
     <TableRow>
       <TableCell>{user.email}</TableCell>
 
       <TableCell className="text-center py-[14px]">
-        <UserBadge
-          type={user.role.toLowerCase() === "admin" ? "admin" : "user"}
-        />
+        <UserBadge type={user.role} />
       </TableCell>
 
       <TableCell className="text-center">
-        {isDeleted ? (
-          <UserBadge type="disabled" />
-        ) : user.isSuspended ? (
-          <UserBadge type="suspended" />
-        ) : (
-          <UserBadge type="active" />
-        )}
+        <UserBadge type={status} />
       </TableCell>
 
       <TableCell className="text-center">
