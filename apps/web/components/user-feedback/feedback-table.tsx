@@ -27,15 +27,9 @@ type Props = {
 };
 
 const FeedbackTable = ({ currentPage, sentiment, isSampleMode }: Props) => {
-  const fetchURL = isSampleMode
-    ? `/api/feedback/sample?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`
-    : `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}`;
-  const { data, error, isLoading, mutate } = useSWR<GetFeedbackResponse>(
-    fetchURL,
+  const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
+    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}&isSampleMode=${isSampleMode}`,
     fetcher,
-    {
-      keepPreviousData: true,
-    },
   );
 
   if (error instanceof FetchError) clientAuthGuard(error.status);

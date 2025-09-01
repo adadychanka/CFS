@@ -22,9 +22,14 @@ export async function GET(req: NextRequest) {
     const { page, limit } = getPaginationParamsFromNextRequest(req);
     const sentiments = parseSentimentsQueryParam(req.nextUrl.searchParams);
     const parsedSentiments = transformSentimentsIntoSearchParams(sentiments);
+    const isSampleMode =
+      req.nextUrl.searchParams.get("isSampleMode") === "true";
 
     // Building URL
-    const requestUrl = new URL("/api/feedback", process.env.BACKEND_API);
+    const requestUrl = new URL(
+      isSampleMode ? "/api/sample/feedback/filtered" : "/api/feedback",
+      process.env.BACKEND_API,
+    );
 
     requestUrl.searchParams.set("page", page.toString());
     requestUrl.searchParams.set("limit", limit.toString());
@@ -52,6 +57,8 @@ export async function GET(req: NextRequest) {
 
     const body = await res.json();
     const data: GetFeedbackResponse = body.data;
+
+    console.log("data", data);
 
     return NextResponse.json({
       success: true,
