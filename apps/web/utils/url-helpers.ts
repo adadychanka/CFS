@@ -40,3 +40,7 @@ export function updateSearchParamsWithSentiments(
   }
   return params;
 }
+
+export function getIsSampleMode(req: NextRequest): boolean {
+  return req.nextUrl.searchParams.get("isSampleMode") === "true";
+}
