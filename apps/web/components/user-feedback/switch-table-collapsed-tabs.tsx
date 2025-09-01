@@ -15,11 +15,7 @@ import ExportDropdown from "@/components/export/export-dropdown";
 import GroupedFeedbackWrapper from "@/features/grouped-feedback/grouped-feedback-wrapper";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
-type Props = {
-  isSampleMode: boolean;
-};
-
-const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
+const SwitchTableCollapsedTabs = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -58,17 +54,13 @@ const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
             <GalleryVertical /> Grouped
           </TabsTrigger>
         </TabsList>
-        <ExportDropdown isSampleMode={isSampleMode} />
+        <ExportDropdown />
       </div>
       <TabsContent value="table">
-        <FeedbackTable
-          currentPage={currentPage}
-          sentiment={filterOnURLQuery}
-          isSampleMode={isSampleMode}
-        />
+        <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery} />
       </TabsContent>
       <TabsContent value="grouped">
-        <GroupedFeedbackWrapper isSampleMode={isSampleMode} />
+        <GroupedFeedbackWrapper />
       </TabsContent>
     </Tabs>
   );

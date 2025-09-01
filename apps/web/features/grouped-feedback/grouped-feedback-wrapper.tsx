@@ -5,6 +5,7 @@ import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { useSampleMode } from "@/context/use-sample-mode";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -21,11 +22,9 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-type Props = {
-  isSampleMode: boolean;
-};
+function GroupedFeedback() {
+  const { isSampleMode } = useSampleMode();
 
-function GroupedFeedback({ isSampleMode }: Props) {
   const {
     data: result,
     error,

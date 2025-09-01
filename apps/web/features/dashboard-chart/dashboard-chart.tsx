@@ -5,13 +5,8 @@ import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useDashboardChart from "@/hooks/useDashboardChart";
 
-type Props = {
-  isSampleMode: boolean;
-};
-
-function DashboardChart({ isSampleMode }: Props) {
-  const { chartRef, hasError, error, isLoading, isEmpty } =
-    useDashboardChart(isSampleMode);
+function DashboardChart() {
+  const { chartRef, hasError, error, isLoading, isEmpty } = useDashboardChart();
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
