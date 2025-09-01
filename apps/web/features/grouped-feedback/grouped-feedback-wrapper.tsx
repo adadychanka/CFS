@@ -5,7 +5,7 @@ import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
-import { useSampleMode } from "@/context/use-sample-mode";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
