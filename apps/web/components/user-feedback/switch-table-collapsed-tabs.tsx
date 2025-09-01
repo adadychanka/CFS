@@ -58,7 +58,7 @@ const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
             <GalleryVertical /> Grouped
           </TabsTrigger>
         </TabsList>
-        <ExportDropdown />
+        <ExportDropdown isSampleMode={isSampleMode} />
       </div>
       <TabsContent value="table">
         <FeedbackTable

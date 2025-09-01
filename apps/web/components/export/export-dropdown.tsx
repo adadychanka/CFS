@@ -48,10 +48,14 @@ const handleDownload = async (
   }
 };
 
-const ExportDropdown = () => {
+type Props = {
+  isSampleMode: boolean;
+};
+
+const ExportDropdown = ({ isSampleMode }: Props) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild disabled={isSampleMode}>
         <Button variant="outline" size="sm" aria-label="Export options">
           <Download />
           Export
