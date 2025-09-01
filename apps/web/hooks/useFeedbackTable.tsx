@@ -5,6 +5,8 @@ import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
+import { useSampleMode } from "@/context/use-sample-mode";
+import { Badge } from "@repo/ui/components/badge";
 import { Button } from "@repo/ui/components/button";
 import { Ellipsis } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,6 +18,8 @@ type Props = {
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
+  const { isSampleMode } = useSampleMode();
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -53,11 +57,15 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
 
   const renderRow = useCallback(
     (sentiment: SentimentAnalysisResult) => (
-      <TableRow
-        key={sentiment.id}
-        className="odd:bg-muted/50 hover:bg-muted transition-colors"
-      >
-        <TableCell>{sentiment.summary}</TableCell>
+      <TableRow key={sentiment.id} className="odd:bg-muted/50  hover:bg-muted transition-colors">
+        <TableCell className="flex items-center gap-2">
+          <span>{sentiment.summary}</span>
+          {isSampleMode && (
+            <Badge variant="outline" className="text-xs text-muted-foreground">
+              Sample
+            </Badge>
+          )}
+        </TableCell>
         <TableCell className="text-center">
           <FeedbackBadge sentiment={sentiment.sentiment} />
         </TableCell>
@@ -79,7 +87,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
         </TableCell>
       </TableRow>
     ),
-    [handleViewDetails],
+    [handleViewDetails, isSampleMode],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
