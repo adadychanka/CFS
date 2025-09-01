@@ -16,7 +16,8 @@ type Props = {
 
 const UserRow = ({ user, onMutate }: Props) => {
   const isAdmin = user.role === "ADMIN";
-  const isButtonsShown = !isAdmin && typeof user.deletedAt !== "string";
+  const isDeleted = typeof user.deletedAt === "string";
+  const isButtonsShown = !isAdmin && !isDeleted;
 
   const handleDisableUser = async () => {
     const res = await disableUser(user.id);
@@ -54,7 +55,7 @@ const UserRow = ({ user, onMutate }: Props) => {
 
       <TableCell className="text-center py-[14px]">
         <Badge
-          className={`w-[80px] text-center capitalize ${
+          className={`px-3 min-w-[90px] text-center capitalize ${
             isAdmin
               ? "bg-purple-200 text-purple-800"
               : "bg-cyan-200 text-cyan-800"
@@ -63,6 +64,22 @@ const UserRow = ({ user, onMutate }: Props) => {
         >
           {user.role.toLowerCase()}
         </Badge>
+      </TableCell>
+
+      <TableCell className="text-center">
+        {isDeleted ? (
+          <Badge className="px-3 min-w-[90px] bg-red-200 text-red-800">
+            Disabled
+          </Badge>
+        ) : user.isSuspended ? (
+          <Badge className="px-3 min-w-[90px] bg-yellow-200 text-yellow-800">
+            Suspended
+          </Badge>
+        ) : (
+          <Badge className="px-3 min-w-[90px] bg-green-200 text-green-800">
+            Active
+          </Badge>
+        )}
       </TableCell>
 
       <TableCell className="text-center">

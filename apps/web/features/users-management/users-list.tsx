@@ -63,6 +63,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
           <TableRow>
             <TableHead>Email</TableHead>
             <TableHead className="w-[100px] text-center">Role</TableHead>
+            <TableHead className="w-[120px] text-center">Status</TableHead>
             <TableHead className="w-[120px] text-center">Suspend</TableHead>
             <TableHead className="w-[120px] text-center">Disable</TableHead>
           </TableRow>
