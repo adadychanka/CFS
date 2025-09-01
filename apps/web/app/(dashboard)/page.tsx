@@ -2,15 +2,16 @@
 
 import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Button } from "@repo/ui/components/button";
 import { FlaskConical, LogOut } from "lucide-react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
+import { useSampleMode } from "@/context/use-sample-mode";
 
 // TODO: We can create separate component
 export default function Home() {
-  const [isSampleMode, setIsSampleMode] = useState(false);
+  const { isSampleMode, toggleSampleMode } = useSampleMode();
 
   return (
     <>
@@ -27,7 +28,7 @@ export default function Home() {
             size="sm"
             variant="outline"
             aria-label="Toggle sample mode for user dashboard"
-            onClick={() => setIsSampleMode((prev) => !prev)}
+            onClick={toggleSampleMode}
           >
             {isSampleMode ? (
               <>
@@ -43,9 +44,9 @@ export default function Home() {
 
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
-          <DashboardChartWrapper isSampleMode={isSampleMode} />
+          <DashboardChartWrapper />
           <FeedbackPanel />
-          <SwitchTableCollapsedTabs isSampleMode={isSampleMode} />
+          <SwitchTableCollapsedTabs />
         </Suspense>
       </div>
     </>
