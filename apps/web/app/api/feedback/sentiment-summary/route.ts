@@ -25,18 +25,11 @@ export async function GET(req: NextRequest) {
   try {
     const isSampleMode =
       req.nextUrl.searchParams.get("isSampleMode") === "true";
-    const requestUrl = new URL(
-      isSampleMode
-        ? "/api/sample/feedback/sentiment-summary"
-        : "/api/feedback/sentiment-summary",
-      process.env.BACKEND_API,
-    );
-    console.log("url", requestUrl.toString());
+    const requestUrl = isSampleMode
+      ? "/api/sample/feedback/sentiment-summary"
+      : "/api/feedback/sentiment-summary";
 
-    // const response = await api.get(requestUrl.toString());
-    const response = await api.get("/api/feedback/sentiment-summary");
-
-    console.log(response);
+    const response = await api.get(requestUrl);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });

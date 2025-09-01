@@ -1,10 +1,10 @@
 import { auth } from "@/auth/auth";
 import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerApi } from "@/lib/server-api";
 import { FetchError } from "@/lib/errors";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const api = await getServerApi();
   const session = await auth();
   if (session?.user.token) {
@@ -22,7 +22,13 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/feedback/grouped");
+    const isSampleMode =
+      req.nextUrl.searchParams.get("isSampleMode") === "true";
+    const requestUrl = isSampleMode
+      ? "/api/sample/feedback/grouped"
+      : "/api/feedback/grouped";
+
+    const response = await api.get(requestUrl);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
