@@ -11,12 +11,18 @@ import {
 type SampleModeContextValue = {
   isSampleMode: boolean;
   toggleSampleMode: () => void;
+  setSampleMode: (newValue: boolean) => void;
 };
 
 const SampleModeContext = createContext<SampleModeContextValue | null>(null);
 
 export const SampleModeProvider = ({ children }: { children: ReactNode }) => {
   const [isSampleMode, setIsSampleMode] = useState(false);
+
+  const setSampleMode = useCallback(
+    (newValue: boolean) => setIsSampleMode(newValue),
+    [],
+  );
 
   const toggleSampleMode = useCallback(
     () => setIsSampleMode((prev) => !prev),
@@ -26,6 +32,7 @@ export const SampleModeProvider = ({ children }: { children: ReactNode }) => {
   const contextValue = {
     isSampleMode,
     toggleSampleMode,
+    setSampleMode,
   };
 
   return (
