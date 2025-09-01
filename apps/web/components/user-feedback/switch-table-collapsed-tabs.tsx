@@ -61,7 +61,11 @@ const SwitchTableCollapsedTabs = ({ isSampleMode }: Props) => {
         <ExportDropdown />
       </div>
       <TabsContent value="table">
-        <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery}  isSampleMode={isSampleMode} />
+        <FeedbackTable
+          currentPage={currentPage}
+          sentiment={filterOnURLQuery}
+          isSampleMode={isSampleMode}
+        />
       </TabsContent>
       <TabsContent value="grouped">
         <GroupedFeedbackWrapper />
