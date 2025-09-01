@@ -43,7 +43,7 @@ function useGroupedSentimentTable({ data }: Props) {
         </TableCell>
       </TableRow>
     ),
-    [],
+    [isSampleMode],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
