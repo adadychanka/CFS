@@ -58,8 +58,6 @@ export async function GET(req: NextRequest) {
     const body = await res.json();
     const data: GetFeedbackResponse = body.data;
 
-    console.log("data", data);
-
     return NextResponse.json({
       success: true,
       status: 200,
