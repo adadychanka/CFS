@@ -34,12 +34,12 @@ const UsersSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const searchQuery = searchParams.get("search") || "";
+  const searchQuery = searchParams.get(USERS_SEARCH_QUERY_KEY) || "";
 
   const [searchInput, setSearchInput] = useState(searchQuery);
 
   const { data, error, isLoading, mutate } = useSWR<GetUsersResponse>(
-    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&search=${searchQuery}`,
+    `/api/users?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&${USERS_SEARCH_QUERY_KEY}=${searchQuery}`,
     fetcher,
     {
       keepPreviousData: true,
