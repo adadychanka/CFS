@@ -59,23 +59,24 @@ function SavedFiles() {
   return (
     <section className="mt-4">
       <h1 className="text-lg">Saved Files</h1>
-
-      <DynamicFeedbackTable
-        feedbackList={result?.data?.files || []}
-        tableHeads={tableHeads}
-        tableRows={[
-          <AnimatePresence
-            key="saved-files"
-            initial={false}
-            onExitComplete={handleCancelDelete}
-          >
-            {tableRows}
-          </AnimatePresence>,
-        ]}
-        feedbackLimit={SAVED_FILES_PAGE_LIMIT}
-        error={error}
-        isLoading={isLoading}
-      />
+      <div className="overflow-x-auto rounded-md border">
+        <DynamicFeedbackTable
+          feedbackList={result?.data?.files || []}
+          tableHeads={tableHeads}
+          tableRows={[
+            <AnimatePresence
+              key="saved-files"
+              initial={false}
+              onExitComplete={handleCancelDelete}
+            >
+              {tableRows}
+            </AnimatePresence>,
+          ]}
+          feedbackLimit={SAVED_FILES_PAGE_LIMIT}
+          error={error}
+          isLoading={isLoading}
+        />
+      </div>
       {result?.data && (
         <FeedbackTablePagination limit={result.data.pagination.pages | 0} />
       )}

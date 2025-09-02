@@ -24,13 +24,15 @@ function SingleGroupedSentiments({ data, summary, isLoading }: Props) {
     <AccordionItem key={summary} value={summary}>
       <AccordionTrigger className="capitalize">{summary}</AccordionTrigger>
       <AccordionContent>
-        <DynamicFeedbackTable
-          isLoading={isLoading}
-          feedbackList={data}
-          feedbackLimit={FEEDBACK_LIMIT}
-          tableHeads={tableHeads}
-          tableRows={tableRows}
-        />
+        <div className="overflow-x-auto rounded-md border">
+          <DynamicFeedbackTable
+            isLoading={isLoading}
+            feedbackList={data}
+            feedbackLimit={FEEDBACK_LIMIT}
+            tableHeads={tableHeads}
+            tableRows={tableRows}
+          />
+        </div>
         {data.length >= FEEDBACK_LIMIT && (
           <Link
             href={`/grouped/${summary}`}
