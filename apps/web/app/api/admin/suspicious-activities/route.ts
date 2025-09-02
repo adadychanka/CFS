@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
-import { GetSuspiciousActivitiesResponse } from "@/types/http";
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
+import { paginate } from "@/utils/pagination";
+import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const session = await auth();
 
@@ -13,7 +14,6 @@ export async function GET() {
       );
     }
 
-    // Building URL
     const requestUrl = new URL(
       "/api/admin/suspicious-activities",
       process.env.BACKEND_API,
@@ -37,14 +37,16 @@ export async function GET() {
     }
 
     const body = await res.json();
-    const data: GetSuspiciousActivitiesResponse = {
-      suspiciousActivities: body.data,
-    };
+    const { page, limit } = getPaginationParamsFromNextRequest(req);
+    const { items, pagination } = paginate(body.data, page, limit);
 
     return NextResponse.json({
       success: true,
       status: 200,
-      data,
+      data: {
+        suspiciousActivities: items,
+        pagination,
+      },
     });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Internal Server Error";
