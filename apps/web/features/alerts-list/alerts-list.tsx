@@ -17,6 +17,12 @@ import FeedbackTablePagination from "@/components/user-feedback/feedback-table-p
 import { useSearchParams } from "next/navigation";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { useEffect } from "react";
+import AlertsSkeleton from "@/features/alerts-list/alerts-skeleton";
+import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
+import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
+import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
+
+const COL_SPAN = 4;
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -52,6 +58,54 @@ const AlertsList = () => {
     if (error instanceof FetchError) clientAuthGuard(error.status);
   }, [error]);
 
+  let content;
+
+  if (isLoading) content = <AlertsSkeleton />;
+  else if (error?.status === 429) {
+    content = (
+      <TableErrorTooManyRequests
+        description="You’ve made too many requests in a short time. Please wait before trying again."
+        colSpan={COL_SPAN}
+      />
+    );
+  } else if (error) {
+    content = (
+      <TableErrorUnexpected
+        description="We couldn’t load the alerts. Please try again later."
+        colSpan={COL_SPAN}
+      />
+    );
+  } else if (data?.suspiciousActivities.length === 0) {
+    content = (
+      <TableErrorEmptyList
+        title="No alerts found"
+        description="No suspicious activities have been detected yet. When new alerts are generated, they’ll appear here."
+        colSpan={COL_SPAN}
+      />
+    );
+  } else {
+    content =
+      data &&
+      data.suspiciousActivities.map((alert, idx) => (
+        <TableRow key={idx}>
+          <TableCell className="max-w-[240px] truncate">
+            {alert.email || "unknown user"}
+          </TableCell>
+          <TableCell className="text-center">
+            <Badge
+              className={`w-[80px] capitalize ${actionColors[alert.action]}`}
+            >
+              {alert.action.toLowerCase()}
+            </Badge>
+          </TableCell>
+          <TableCell className="truncate max-w-[400px]">
+            {alert.details}
+          </TableCell>
+          <TableCell>{formatCreatedAtDate(alert.createdAt)}</TableCell>
+        </TableRow>
+      ));
+  }
+
   return (
     <div>
       <div className="rounded-xl border">
@@ -59,35 +113,16 @@ const AlertsList = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[260px]">Email</TableHead>
-              <TableHead className="w-[120px] text-center">Action</TableHead>
-              <TableHead>Details</TableHead>
-              <TableHead className="w-[120px]">Created At</TableHead>
+              <TableHead className="w-[120px] text-center">Activity</TableHead>
+              <TableHead>Alert Details</TableHead>
+              <TableHead className="w-[120px]">Detected At</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {data &&
-              data.suspiciousActivities.map((alert, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className="max-w-[240px] truncate">
-                    {alert.email || "unknown user"}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge
-                      className={`w-[80px] capitalize ${actionColors[alert.action]}`}
-                    >
-                      {alert.action.toLowerCase()}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="truncate max-w-[400px]">
-                    {alert.details}
-                  </TableCell>
-                  <TableCell>{formatCreatedAtDate(alert.createdAt)}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
+          <TableBody>{content}</TableBody>
         </Table>
       </div>
-      {data && <FeedbackTablePagination limit={data.pagination.pages ?? 1} />}
+
+      <FeedbackTablePagination limit={data?.pagination.pages ?? 1} />
     </div>
   );
 };
