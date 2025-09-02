@@ -11,6 +11,7 @@ export type GetFeedbackResponse = {
 
 export type GetSuspiciousActivitiesResponse = {
   suspiciousActivities: SuspiciousActivity[];
+  pagination: PaginationMeta;
 };
 
 export type GetUsersResponse = {
