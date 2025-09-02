@@ -15,7 +15,7 @@
     "@repo/ui": "workspace:*",
     "date-fns": "4.1.0",
     "echarts": "6.0.0",
-    "framer-motion": "^12.23.12",
+    "framer-motion": "12.23.12",
     "lucide-react": "^0.475.0",
     "next": "^15.4.2",
     "next-auth": "5.0.0-beta.29",
