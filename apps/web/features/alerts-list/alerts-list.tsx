@@ -14,11 +14,9 @@ import FeedbackTablePagination from "@/components/user-feedback/feedback-table-p
 import { useSearchParams } from "next/navigation";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { useEffect } from "react";
-import AlertsSkeleton from "@/features/alerts-list/alerts-skeleton";
-import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
-import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
-import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
-import AlertRow from "./alert-row";
+import AlertRow from "@/features/alerts-list/alert-row";
+import TableStateHandler from "@/features/error-messages/table-error-states/table-state-handler";
+import TableSkeleton from "@/features/error-messages/table-error-states/table-skeleton";
 
 const COL_SPAN = 4;
 
@@ -46,37 +44,6 @@ const AlertsList = () => {
     if (error instanceof FetchError) clientAuthGuard(error.status);
   }, [error]);
 
-  let content;
-  if (isLoading) {
-    content = <AlertsSkeleton />;
-  } else if (error?.status === 429) {
-    content = (
-      <TableErrorTooManyRequests
-        description="You’ve made too many requests in a short time. Please wait before trying again."
-        colSpan={COL_SPAN}
-      />
-    );
-  } else if (error) {
-    content = (
-      <TableErrorUnexpected
-        description="We couldn’t load the alerts. Please try again later."
-        colSpan={COL_SPAN}
-      />
-    );
-  } else if (data?.suspiciousActivities.length === 0) {
-    content = (
-      <TableErrorEmptyList
-        title="No alerts found"
-        description="No suspicious activities have been detected yet. When new alerts are generated, they’ll appear here."
-        colSpan={COL_SPAN}
-      />
-    );
-  } else {
-    content = data?.suspiciousActivities.map((alert, idx) => (
-      <AlertRow key={idx} alert={alert} />
-    ));
-  }
-
   return (
     <div>
       <div className="rounded-xl border">
@@ -89,7 +56,29 @@ const AlertsList = () => {
               <TableHead className="w-[120px]">Detected At</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>{content}</TableBody>
+          <TableBody>
+            <TableStateHandler
+              isLoading={isLoading}
+              error={error}
+              data={data?.suspiciousActivities}
+              colSpan={COL_SPAN}
+              skeleton={
+                <TableSkeleton
+                  rows={20}
+                  columns={COL_SPAN}
+                  cellClassName="px-2 py-3 h-[39px]"
+                />
+              }
+              emptyState={{
+                title: "No alerts found",
+                description:
+                  "No suspicious activities have been detected yet. When new alerts are generated, they’ll appear here.",
+              }}
+              renderRows={(rows) =>
+                rows.map((alert, idx) => <AlertRow key={idx} alert={alert} />)
+              }
+            />
+          </TableBody>
         </Table>
       </div>
 
