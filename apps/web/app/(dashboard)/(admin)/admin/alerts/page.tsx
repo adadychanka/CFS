@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
 import Header from "@repo/ui/components/header";
+import AlertsSection from "@/features/alerts-list/alerts-section";
 
 export const metadata: Metadata = {
   title: "Alerts",
@@ -27,7 +28,7 @@ const Page = () => {
   return (
     <>
       <Header title="Alerts" />
-      <h2 className="text-lg">Alerts Page</h2>
+      <AlertsSection />
     </>
   );
 };
