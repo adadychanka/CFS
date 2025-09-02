@@ -23,11 +23,7 @@ const fetcher = async (url: string) => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw new FetchError(
-      data.message || "Something went wrong",
-      res.status,
-      data,
-    );
+    throw new FetchError(data.message || "Something went wrong", res.status);
   }
 
   return data.data;
@@ -93,7 +89,7 @@ const UsersSection = () => {
       />
 
       {data?.pagination && (
-        <ClientPagination limit={data.pagination.pages ?? 0} />
+        <ClientPagination limit={data.pagination.pages ?? 1} />
       )}
     </div>
   );
