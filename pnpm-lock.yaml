@@ -36,7 +36,7 @@ importers:
         specifier: 6.0.0
         version: 6.0.0
       framer-motion:
-        specifier: ^12.23.12
+        specifier: 12.23.12
         version: 12.23.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lucide-react:
         specifier: ^0.475.0
