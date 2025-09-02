@@ -16,7 +16,7 @@ const UserBadge = ({ type }: { type: UserBadgeType }) => {
       className={`w-[80px] text-center ${badgeColors[type]} capitalize`}
       variant="secondary"
     >
-      {type}
+      {type.toLowerCase()}
     </Badge>
   );
 };
