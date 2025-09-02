@@ -58,27 +58,29 @@ const AlertsList = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Email</TableHead>
-              <TableHead className="width-[120px] text-center">
-                Action
-              </TableHead>
+              <TableHead className="w-[260px]">Email</TableHead>
+              <TableHead className="w-[120px] text-center">Action</TableHead>
               <TableHead>Details</TableHead>
-              <TableHead>Created At</TableHead>
+              <TableHead className="w-[120px]">Created At</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data &&
               data.suspiciousActivities.map((alert, idx) => (
                 <TableRow key={idx}>
-                  <TableCell>{alert.email || "unknown user"}</TableCell>
+                  <TableCell className="max-w-[240px] truncate">
+                    {alert.email || "unknown user"}
+                  </TableCell>
                   <TableCell className="text-center">
                     <Badge
-                      className={`w-[100px] capitalize ${actionColors[alert.action]}`}
+                      className={`w-[80px] capitalize ${actionColors[alert.action]}`}
                     >
                       {alert.action.toLowerCase()}
                     </Badge>
                   </TableCell>
-                  <TableCell>{alert.details}</TableCell>
+                  <TableCell className="truncate max-w-[400px]">
+                    {alert.details}
+                  </TableCell>
                   <TableCell>{formatCreatedAtDate(alert.createdAt)}</TableCell>
                 </TableRow>
               ))}
