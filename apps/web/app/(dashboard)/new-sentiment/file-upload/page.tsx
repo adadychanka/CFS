@@ -1,7 +1,9 @@
-import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
+import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
+import SavedFiles from "@/features/saved-files/saved-files";
+import SpinnerLoader from "@/components/loaders/spinner-loader";
 
 export const metadata: Metadata = {
   title: "CSV File Upload",
@@ -28,7 +30,11 @@ export const metadata: Metadata = {
 function Page() {
   return (
     <div>
-      <FileUploadForm />
+      {/*Bot FileUploadForm and SavedFiles includes useSearchParams*/}
+      <Suspense fallback={<SpinnerLoader />}>
+        <FileUploadForm />
+        <SavedFiles />
+      </Suspense>
     </div>
   );
 }
