@@ -4,13 +4,18 @@ import { toast } from "sonner";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { MAX_FILES_PER_UPLOAD } from "@/constants/constants";
+import {
+  MAX_FILES_PER_UPLOAD,
+  SAVED_FILES_PAGE_LIMIT,
+} from "@/constants/constants";
 import type {
   FileUploadResponse,
   FileUploadServerError,
 } from "@/types/feedback-file-upload";
 import { uploadFiles } from "@/lib/actions/file-upload";
 import { useCustomDropzone } from "./useCustomDropzone";
+import { useSearchParams } from "next/navigation";
+import { mutate } from "swr";
 
 const fileUploadSchema = z.object({
   files: z.array(z.instanceof(File)),
@@ -23,6 +28,8 @@ function useFileUpload() {
     FileUploadServerError[] | null
   >(null);
   const [isLoading, setIsLoading] = useState(false);
+  const params = useSearchParams();
+  const currentPage = params.get("page") || 1;
   const form = useForm<FileUploadFormData>({
     resolver: zodResolver(fileUploadSchema),
     defaultValues: {
@@ -77,6 +84,9 @@ function useFileUpload() {
 
       if (!errors.length) {
         toast.success("All files has been processed!");
+        mutate(
+          `/api/files?page=${currentPage}&limit=${SAVED_FILES_PAGE_LIMIT}`,
+        );
       } else {
         if (
           (fileUploadResult as FileUploadResponse[]).some(
@@ -91,7 +101,7 @@ function useFileUpload() {
     }
     setServerErrors([...errors]);
     setIsLoading(false);
-  }, [files, handleClearErrors, handleDeleteSingleFile]);
+  }, [files, handleClearErrors, handleDeleteSingleFile, currentPage]);
 
   return {
     files,
