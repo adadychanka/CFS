@@ -9,9 +9,13 @@ import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackDataItems } from "@/types/grouped-feedback";
 import { UseDynamicTableData } from "@/hooks/useDynamicTableHeadsAndRows";
 import useTableBody from "@/hooks/useTableBody";
+import type { SavedFile } from "@/types/saved-files";
 
 export type DynamicTableProps = {
-  feedbackList: SentimentAnalysisResult[] | GroupedFeedbackDataItems[];
+  feedbackList:
+    | SentimentAnalysisResult[]
+    | GroupedFeedbackDataItems[]
+    | SavedFile[];
   isLoading: boolean;
   feedbackLimit: number;
   isFilteringEnabled?: boolean;

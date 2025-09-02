@@ -59,6 +59,7 @@ export const PAGINATION_EDGE_LIMIT = 5; // shows the number of pages at the edge
 // Analyzed sentiment table
 export const FEEDBACK_FILTERS = ["positive", "neutral", "negative", "unknown"];
 export const FEEDBACK_PAGE_LIMIT = 20;
+export const SAVED_FILES_PAGE_LIMIT = 10;
 export const FAKE_PROCESSED_FEEDBACK: SentimentAnalysisResult[] = [
   {
     id: "fbk_001",
