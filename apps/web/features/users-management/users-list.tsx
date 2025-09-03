@@ -28,7 +28,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[80px]">
+            <TableHead className="w-[88px]">
               <div className="flex items-center gap-1">Role</div>
             </TableHead>
             <TableHead>
@@ -57,7 +57,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
             skeleton={
               <TableSkeleton
                 rows={20}
-                columns={5}
+                columns={4}
                 cellClassName="px-2 py-4 h-[49px]"
               />
             }

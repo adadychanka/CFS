@@ -57,7 +57,7 @@ const UserRow = ({ user, onMutate }: Props) => {
 
   return (
     <TableRow>
-      <TableCell className="py-[14px]">
+      <TableCell className="pl-2 py-[14px]">
         {/*<UserBadge type={user.role} />*/}
         {user.role.toLowerCase()}
       </TableCell>
