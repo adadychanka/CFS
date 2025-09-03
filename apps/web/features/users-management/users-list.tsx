@@ -28,11 +28,24 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Email</TableHead>
-            <TableHead className="w-[100px] text-center">Role</TableHead>
-            <TableHead className="w-[120px] text-center">Status</TableHead>
-            <TableHead className="w-[120px] text-center">Suspend</TableHead>
-            <TableHead className="w-[120px] text-center">Disable</TableHead>
+            <TableHead className="w-[80px]">
+              <div className="flex items-center gap-1">Role</div>
+            </TableHead>
+            <TableHead>
+              <div className="flex items-center gap-1">Email</div>
+            </TableHead>
+
+            <TableHead className="w-[120px] text-center">
+              <div className="flex items-center justify-center gap-1">
+                Status
+              </div>
+            </TableHead>
+
+            <TableHead className="w-[180px] text-center">
+              <div className="flex items-center justify-center gap-1">
+                Actions
+              </div>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

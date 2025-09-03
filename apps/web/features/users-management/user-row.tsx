@@ -57,11 +57,12 @@ const UserRow = ({ user, onMutate }: Props) => {
 
   return (
     <TableRow>
-      <TableCell>{user.email}</TableCell>
-
-      <TableCell className="text-center py-[14px]">
-        <UserBadge type={user.role} />
+      <TableCell className="py-[14px]">
+        {/*<UserBadge type={user.role} />*/}
+        {user.role.toLowerCase()}
       </TableCell>
+
+      <TableCell>{user.email}</TableCell>
 
       <TableCell className="text-center">
         <UserBadge type={status} />
@@ -69,37 +70,35 @@ const UserRow = ({ user, onMutate }: Props) => {
 
       <TableCell className="text-center">
         {isButtonsShown && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={handleToggleSuspend}
-            aria-label={
-              user.isSuspended
-                ? "Activate user account"
-                : "Suspend user account"
-            }
-          >
-            {user.isSuspended ? (
-              <>
-                <PlayCircle /> Activate
-              </>
-            ) : (
-              <>
-                <PauseCircle /> Suspend
-              </>
-            )}
-          </Button>
-        )}
-      </TableCell>
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={handleToggleSuspend}
+              aria-label={
+                user.isSuspended
+                  ? "Activate user account"
+                  : "Suspend user account"
+              }
+            >
+              {user.isSuspended ? (
+                <>
+                  <PlayCircle size={14} /> Activate
+                </>
+              ) : (
+                <>
+                  <PauseCircle size={14} /> Suspend
+                </>
+              )}
+            </Button>
 
-      <TableCell className="text-center">
-        {isButtonsShown && (
-          <UserConfirmDisable
-            onConfirm={handleDisableUser}
-            ariaLabel="Disable user account"
-          >
-            <Ban /> Disable
-          </UserConfirmDisable>
+            <UserConfirmDisable
+              onConfirm={handleDisableUser}
+              ariaLabel="Disable user account"
+            >
+              <Ban size={14} /> Disable
+            </UserConfirmDisable>
+          </div>
         )}
       </TableCell>
     </TableRow>
