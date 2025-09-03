@@ -16,6 +16,7 @@ const useDrawChart = (
   options?: {
     onClick?: (params: echarts.ECElementEvent) => void;
     isLoading?: boolean;
+    isEmpty?: boolean;
   },
 ) => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,7 @@ const useDrawChart = (
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [options?.isLoading]);
+  }, [options?.isLoading, options?.isEmpty]);
 
   useEffect(() => {
     if (chart) {
