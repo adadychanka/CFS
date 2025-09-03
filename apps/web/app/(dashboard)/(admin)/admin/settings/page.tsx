@@ -49,7 +49,7 @@ async function Page() {
   return (
     <>
       <Header title="Settings" />
-      <section className="pl-4 pt-4">
+      <section className="w-full max-w-[1280px] mx-auto p-4 pt-10 @container">
         <RateLimitForm defaultValue={defaultLimit} />
       </section>
     </>
