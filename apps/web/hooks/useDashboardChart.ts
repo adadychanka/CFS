@@ -85,6 +85,7 @@ function useDashboardChart() {
 
   const { chartRef } = useDrawChart(chartOptions, {
     isLoading,
+    isEmpty,
     onClick: handleFilterChange,
   });
 
