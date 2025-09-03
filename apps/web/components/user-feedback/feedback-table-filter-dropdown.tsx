@@ -12,8 +12,9 @@ import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   parseSentimentsQueryParam,
-  updateSearchParamsWithSentiments,
+  updateSearchParams,
 } from "@/utils/url-helpers";
+import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
 export function FeedbackTableFilterDropdown() {
   const router = useRouter();
@@ -40,7 +41,11 @@ export function FeedbackTableFilterDropdown() {
 
     setSelectedFilters(newFilters);
 
-    const params = updateSearchParamsWithSentiments(searchParams, newFilters);
+    const params = updateSearchParams(
+      searchParams,
+      SENTIMENT_FILTER_QUERY_KEY,
+      newFilters,
+    );
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
