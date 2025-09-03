@@ -8,6 +8,7 @@ import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useFeedbackTable from "@/hooks/useFeedbackTable";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -26,12 +27,11 @@ type Props = {
 };
 
 const FeedbackTable = ({ currentPage, sentiment }: Props) => {
+  const { isSampleMode } = useSampleMode();
+
   const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
-    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
+    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}&isSampleMode=${isSampleMode}`,
     fetcher,
-    {
-      keepPreviousData: true,
-    },
   );
 
   if (error instanceof FetchError) clientAuthGuard(error.status);

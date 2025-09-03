@@ -5,6 +5,7 @@ import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -22,11 +23,16 @@ export const fetcher = async (url: string) => {
 };
 
 function GroupedFeedback() {
+  const { isSampleMode } = useSampleMode();
+
   const {
     data: result,
     error,
     isLoading,
-  } = useSWR<GroupedFeedbackResponse>("/api/feedback/grouped", fetcher);
+  } = useSWR<GroupedFeedbackResponse>(
+    `/api/feedback/grouped?isSampleMode=${isSampleMode}`,
+    fetcher,
+  );
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 

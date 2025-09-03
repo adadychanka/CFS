@@ -15,6 +15,7 @@ import { downloadReport } from "@/lib/actions/feedback";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { base64ToBlobConverter } from "@/utils/base64-to-blob-converter";
 import { browserFileDownloader } from "@/utils/browser-file-downloader";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 const handleDownload = async (
   type: "summarized" | "detailed",
@@ -49,9 +50,11 @@ const handleDownload = async (
 };
 
 const ExportDropdown = () => {
+  const { isSampleMode } = useSampleMode();
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild disabled={isSampleMode}>
         <Button variant="outline" size="sm" aria-label="Export options">
           <Download />
           Export

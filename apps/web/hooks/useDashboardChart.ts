@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 import { updateSearchParams } from "@/utils/url-helpers";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -27,12 +28,13 @@ export const fetcher = async (url: string) => {
 };
 
 function useDashboardChart() {
+  const { isSampleMode } = useSampleMode();
   const {
     data: result,
     error,
     isLoading,
   } = useSWR<SentimentSummaryResponse, FetchError>(
-    "/api/feedback/sentiment-summary",
+    `/api/feedback/sentiment-summary?isSampleMode=${isSampleMode}`,
     fetcher,
   );
 

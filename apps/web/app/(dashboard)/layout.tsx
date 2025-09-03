@@ -5,6 +5,7 @@ import React from "react";
 
 import { SidebarProvider } from "@repo/ui/components/sidebar";
 import { withAdminAccess } from "@/components/withAdminAccess";
+import { SampleModeProvider } from "@/providers/sample-mode-provider";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -39,7 +40,9 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DynamicSidebar />
-      <main className="w-full pb-16">{children}</main>
+      <main className="w-full pb-16">
+        <SampleModeProvider>{children}</SampleModeProvider>
+      </main>
     </SidebarProvider>
   );
 }

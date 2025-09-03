@@ -2,9 +2,10 @@ import { auth } from "@/auth/auth";
 import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
 import { SentimentSummaryResponse } from "@/types/sentiment-summary";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getIsSampleMode } from "@/utils/url-helpers";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const api = await getServerApi();
   const session = await auth();
 
@@ -23,7 +24,12 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/feedback/sentiment-summary");
+    const isSampleMode = getIsSampleMode(req);
+    const requestUrl = isSampleMode
+      ? "/api/sample/feedback/sentiment-summary"
+      : "/api/feedback/sentiment-summary";
+
+    const response = await api.get(requestUrl);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
