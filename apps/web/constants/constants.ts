@@ -1,6 +1,5 @@
 import { type SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import {
-  Bell,
   Home,
   HomeIcon,
   Plus,
@@ -39,11 +38,11 @@ export const ADMIN_PAGE_LINKS = [
     url: "/admin",
     icon: Shield,
   },
-  {
-    title: "Alerts",
-    url: "/admin/alerts",
-    icon: Bell,
-  },
+  // {
+  //   title: "Alerts",
+  //   url: "/admin/alerts",
+  //   icon: Bell,
+  // },
   {
     title: "Settings",
     url: "/admin/settings",
