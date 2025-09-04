@@ -23,6 +23,7 @@ import type {
 } from "@/types/rate-limit";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
+import { Settings } from "lucide-react";
 
 const FormSchema = z.object({
   rate: z.coerce
@@ -98,7 +99,7 @@ export function RateLimitForm({ defaultValue }: Props) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
+          className="w-2/3 space-y-4"
         >
           <FormField
             control={form.control}
@@ -106,7 +107,7 @@ export function RateLimitForm({ defaultValue }: Props) {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <div className="flex gap-1">
+                  <div className="flex gap-2">
                     <TooltipWrapper text="Controls how often site users can call the API per hour.">
                       <FormLabel className="words-wrap">
                         Rate limit per hour:
@@ -127,7 +128,7 @@ export function RateLimitForm({ defaultValue }: Props) {
             }}
           />
           <Button type="submit" aria-busy={isLoading} disabled={isLoading}>
-            {" "}
+            <Settings />
             {isLoading ? "Updating..." : "Update"}
           </Button>
         </form>

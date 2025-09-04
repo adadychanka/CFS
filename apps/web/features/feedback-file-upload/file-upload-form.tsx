@@ -3,10 +3,10 @@ import FileUploadDropzone from "./file-upload-dropzone";
 
 function FileUploadForm() {
   return (
-    <>
-      <h2>Upload CSV file</h2>
+    <section className="pb-4">
+      <h2 className="font-medium mb-2">Upload CSV file</h2>
       <FileUploadDropzone />
-    </>
+    </section>
   );
 }
 

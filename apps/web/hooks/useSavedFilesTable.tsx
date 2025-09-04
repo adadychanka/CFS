@@ -78,7 +78,7 @@ function useSavedFilesTable({ data, reFetch }: Props) {
         className="odd:bg-muted/50"
       >
         <TableCell
-          className=" max-w-[400px] flex items-center gap-2"
+          className="max-w-[400px] flex items-center gap-2"
           title={file.name}
         >
           <span>

@@ -63,7 +63,7 @@ const UsersSection = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-1 mb-2">
         <div className="flex items-center gap-2">
           <Input
             type="text"

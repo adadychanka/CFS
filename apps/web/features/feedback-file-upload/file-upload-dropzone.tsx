@@ -5,11 +5,11 @@ import { FileUpIcon } from "lucide-react";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "@repo/ui/components/form";
 import FileUploadActions from "./file-upload-actions";
 import { cn } from "@repo/ui/lib/utils";
@@ -33,7 +33,7 @@ function FileUploadDropzone() {
   } = useFileUpload();
 
   const className = cn(
-    "p-16 flex items-center justify-center flex-col gap-2  mt-1 border border-neutral-200",
+    'p-16 flex items-center justify-center flex-col gap-4  mt-1 border border-neutral-200 overflow-x-auto rounded-md border"',
     { "bg-gray-100": isDragActive },
   );
 
@@ -52,8 +52,10 @@ function FileUploadDropzone() {
               <FormControl>
                 <div {...getRootProps({ className })}>
                   <input {...getInputProps()} id="file" />
-                  {<FileUpIcon width={"50px"} height={"50px"} />}
-                  <label htmlFor="file">Upload or drag and drop</label>
+                  {<FileUpIcon className="h-16 w-16 text-neutral-300" />}
+                  <label className="text-sm text-neutral-600" htmlFor="file">
+                    Upload or drag and drop
+                  </label>
                 </div>
               </FormControl>
               <FormMessage />

@@ -35,9 +35,12 @@ const Page = () => {
     <div>
       <Header title="Admin Dashboard" />
 
-      <div className="w-full max-w-[1280px] mx-auto p-4 pt-10 @container">
+      <div className="w-full max-w-[1280px] mx-auto p-4">
         {/* TODO: Need custom loader it seems */}
         <Suspense fallback={"Loading..."}>
+          <div className="mb-4">
+            <h2 className="font-medium">User Management</h2>
+          </div>
           <UsersSection />
         </Suspense>
       </div>

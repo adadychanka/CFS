@@ -49,7 +49,14 @@ async function Page() {
   return (
     <>
       <Header title="Settings" />
-      <section className="w-full max-w-[1280px] mx-auto p-4 pt-10 @container">
+      <section className="w-full max-w-[1280px] mx-auto p-4 @container">
+        <div className="mb-4">
+          <h2 className="font-medium">API Rate Limit</h2>
+          <p className="text-sm text-muted-foreground">
+            Define how many requests a user can make per hour. This setting
+            applies globally.
+          </p>
+        </div>
         <RateLimitForm defaultValue={defaultLimit} />
       </section>
     </>

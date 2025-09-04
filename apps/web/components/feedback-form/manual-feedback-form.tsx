@@ -48,13 +48,14 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
 
   return (
     <Form {...form}>
+      <h2 className="font-medium mb-2">Paste large amount of feedback</h2>
       <form className="space-y-4 mb-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="feedback"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Feedback</FormLabel>
+              <FormLabel className="sr-only">Feedback</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Paste your feedback here. Each line is considered a separate item."

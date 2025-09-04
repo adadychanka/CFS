@@ -56,7 +56,7 @@ const UserRow = ({ user, onMutate }: Props) => {
   }, [user.id, user.isSuspended, onMutate]);
 
   return (
-    <TableRow>
+    <TableRow className="odd:bg-muted/50">
       <TableCell className="pl-2 py-[14px]">
         {/*<UserBadge type={user.role} />*/}
         {user.role.toLowerCase()}
