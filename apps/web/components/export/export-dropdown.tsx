@@ -18,7 +18,7 @@ import { browserFileDownloader } from "@/utils/browser-file-downloader";
 import { useSampleMode } from "@/providers/sample-mode-provider";
 
 const handleDownload = async (
-  type: "summarized" | "detailed",
+  type: "summary" | "detailed",
   format: "csv" | "pdf",
 ) => {
   try {
@@ -71,7 +71,7 @@ const ExportDropdown = () => {
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized CSV file"
-            onClick={() => handleDownload("summarized", "csv")}
+            onClick={() => handleDownload("summary", "csv")}
           >
             <FileSpreadsheet className="text-neutral-800" />
             Summarized (CSV)
@@ -85,7 +85,7 @@ const ExportDropdown = () => {
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized PDF file"
-            onClick={() => handleDownload("summarized", "pdf")}
+            onClick={() => handleDownload("summary", "pdf")}
           >
             <FileText className="text-neutral-800" />
             Summarized (PDF)

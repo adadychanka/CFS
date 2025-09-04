@@ -21,7 +21,10 @@ export async function uploadManualFeedback(feedback: PreviewFeedback[]) {
   );
 }
 
-export async function downloadReport(type: string, format: string) {
+export async function downloadReport(
+  type: "summary" | "detailed",
+  format: "csv" | "pdf",
+) {
   try {
     const session = await auth();
 
