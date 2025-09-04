@@ -31,7 +31,7 @@ function useSavedFilesTable({ data, reFetch }: Props) {
         Number of Feedback
       </TableHead>,
       <TableHead key={"created-at"} className="w-[100px] text-center">
-        Created at
+        Uploaded at
       </TableHead>,
       <TableHead key={"actions"} className="w-[100px] text-center">
         Actions
