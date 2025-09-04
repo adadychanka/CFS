@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-// import Header from "@repo/ui/components/header";
 import { METADATA } from "@/constants/metadata";
 import { RateLimitForm } from "@/features/admin/rate-limit/rate-limit-form";
 import { getServerApi } from "@/lib/server-api";
@@ -8,6 +7,7 @@ import type {
   RateLimitResponse,
   RateLimitResponseData,
 } from "@/types/rate-limit";
+import Header from "@repo/ui/components/header";
 
 export const metadata: Metadata = {
   title: "Settings",
@@ -36,8 +36,6 @@ async function Page() {
 
   if (session?.user.token) {
     api.setToken(session.user.token);
-  } else {
-    //TODO: Sign out user
   }
 
   const response = await api.get("/api/admin/rate-limit");
@@ -50,6 +48,7 @@ async function Page() {
 
   return (
     <>
+      <Header title="Settings" />
       <section className="pl-4 pt-4">
         <RateLimitForm defaultValue={defaultLimit} />
       </section>

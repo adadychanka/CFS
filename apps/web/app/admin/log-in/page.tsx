@@ -1,7 +1,6 @@
 import React from "react";
-
-import { AuthCard } from "@/components/auth/auth-card";
 import AuthCardWrapper from "@/components/auth/auth-card-wrapper";
+import { AuthCard } from "@/components/auth/auth-card";
 
 async function Page() {
   return (
