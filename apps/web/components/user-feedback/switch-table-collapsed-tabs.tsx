@@ -45,8 +45,8 @@ const SwitchTableCollapsedTabs = () => {
 
   return (
     <Tabs value={tab} onValueChange={handleTabChange}>
-      <div className="flex items-center justify-between">
-        <TabsList className="mb-4">
+      <div className="mb-4 flex items-center justify-between">
+        <TabsList>
           <TabsTrigger value="table">
             <Table2 /> Table
           </TabsTrigger>

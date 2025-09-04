@@ -8,9 +8,9 @@ export default function SampleModeToggle() {
   const { isSampleMode, toggleSampleMode } = useSampleMode();
 
   return (
-    <div className="pb-8 flex items-center justify-between gap-2">
+    <div className="pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
       <span
-        className={`text-sm px-3 py-1 rounded-md ${
+        className={`text-sm px-3 py-1 rounded-md break-words max-w-full sm:max-w-[70%] ${
           isSampleMode
             ? "bg-amber-100 text-amber-800 font-medium"
             : "text-neutral-600"
@@ -31,6 +31,7 @@ export default function SampleModeToggle() {
             : "Enter sample mode and view demo data"
         }
         onClick={toggleSampleMode}
+        className="whitespace-nowrap"
       >
         {isSampleMode ? (
           <>
