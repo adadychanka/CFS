@@ -14,7 +14,7 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
         setValue(JSON.parse(stored));
       }
     } catch (err) {
-      console.error("Failed to read sessionStorage", err);
+      console.error("Failed to read sessionStorage.", err);
     } finally {
       setHydrated(true);
     }
