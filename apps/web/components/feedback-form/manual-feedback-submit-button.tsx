@@ -42,19 +42,26 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
   };
 
   return (
-    <div className="pt-4 flex gap-8">
+    <div className="pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8">
       <p className="flex-1 text-red-600 mb-2">{errorMessage && errorMessage}</p>
-      <div className="flex gap-4">
+
+      <div className="flex justify-end flex-wrap gap-2 sm:gap-4">
         <Button
           variant="outline"
           onClick={handleSwitchSampleMode}
           disabled={isLoading}
+          className="whitespace-nowrap shrink-0"
         >
-          <FlaskConical />
+          <FlaskConical className="mr-1" />
           Try with sample mode
         </Button>
-        <Button onClick={handleUploadFeedback} disabled={isLoading}>
-          <Sparkles />
+
+        <Button
+          onClick={handleUploadFeedback}
+          disabled={isLoading}
+          className="whitespace-nowrap shrink-0"
+        >
+          <Sparkles className="mr-1" />
           {isLoading ? "Analyzing..." : "Analyze feedback"}
         </Button>
       </div>
