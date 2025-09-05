@@ -28,11 +28,10 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-[88px]">Role</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead className="w-[100px] text-center">Role</TableHead>
             <TableHead className="w-[120px] text-center">Status</TableHead>
-            <TableHead className="w-[120px] text-center">Suspend</TableHead>
-            <TableHead className="w-[120px] text-center">Disable</TableHead>
+            <TableHead className="w-[180px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,7 +43,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
             skeleton={
               <TableSkeleton
                 rows={20}
-                columns={5}
+                columns={4}
                 cellClassName="px-2 py-4 h-[49px]"
               />
             }
