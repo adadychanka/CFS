@@ -8,7 +8,7 @@ export default function SampleModeToggle() {
   const { isSampleMode, toggleSampleMode } = useSampleMode();
 
   return (
-    <div className="pb-8 flex items-center justify-between gap-2">
+    <div className="pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
       <span
         className={`text-sm px-3 py-1 rounded-md ${
           isSampleMode
