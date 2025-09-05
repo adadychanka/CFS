@@ -62,7 +62,9 @@ const UsersSection = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4">
+      <h2 className="font-medium">User Management</h2>
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <Input
@@ -91,7 +93,7 @@ const UsersSection = () => {
       {data?.pagination && (
         <ClientPagination limit={data.pagination.pages ?? 1} />
       )}
-    </div>
+    </section>
   );
 };
 
