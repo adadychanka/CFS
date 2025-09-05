@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -41,7 +41,7 @@ function useFileUpload() {
     handleClearErrors,
   } = useCustomDropzone();
 
-  React.useEffect(() => {
+  useEffect(() => {
     form.setValue("files", files);
   }, [files, form]);
 
