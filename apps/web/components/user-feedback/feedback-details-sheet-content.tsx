@@ -51,12 +51,32 @@ export default function FeedbackDetailsSheetContent({
 
   if (isLoading) {
     return (
-      <div className="space-y-4 px-5">
-        <Skeleton className="h-6 w-full shadow-xs bg-gray-200" />
-        <Skeleton className="h-5 w-10/12 shadow-xs bg-gray-200" />
-        <Skeleton className="h-5 w-8/12 shadow-xs bg-gray-200" />
-        <Skeleton className="h-5 w-10/12 shadow-xs bg-gray-200" />
-        <Skeleton className="h-6 w-full shadow-xs bg-gray-200" />
+      <div className="mx-6 space-y-6">
+        <div className="space-y-1">
+          <Skeleton className="h-4 w-20 bg-gray-200" />
+          <Skeleton className="h-5 w-3/4 bg-gray-200" />
+        </div>
+
+        <div className="space-y-1">
+          <Skeleton className="h-4 w-20 bg-gray-200" />
+          <Skeleton className="h-6 w-16 rounded-full bg-gray-200" />
+        </div>
+
+        <div className="space-y-1">
+          <Skeleton className="h-4 w-20 bg-gray-200" />
+          <Skeleton className="h-5 w-12 bg-gray-200" />
+        </div>
+
+        <div className="space-y-1">
+          <Skeleton className="h-4 w-20 bg-gray-200" />
+          <Skeleton className="h-5 w-full bg-gray-200" />
+          <Skeleton className="h-5 w-10/12 bg-gray-200" />
+        </div>
+
+        <div className="space-y-1">
+          <Skeleton className="h-4 w-20 bg-gray-200" />
+          <Skeleton className="h-5 w-32 bg-gray-200" />
+        </div>
       </div>
     );
   }
