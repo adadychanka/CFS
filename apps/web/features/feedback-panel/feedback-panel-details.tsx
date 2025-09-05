@@ -27,34 +27,32 @@ export default function FeedbackDetailsSheetContent({
     );
   }
 
-  if (feedback) {
-    return (
-      <div className="space-y-4 px-4">
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Summary</p>
-          <p className="font-medium">{feedback.summary}</p>
-        </div>
-
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Sentiment</p>
-          <FeedbackBadge sentiment={feedback.sentiment} />
-        </div>
-
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Confidence</p>
-          <p className="font-medium">{feedback.confidence}%</p>
-        </div>
-
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Content</p>
-          <p className="text-base">{feedback.content}</p>
-        </div>
-
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Created At</p>
-          <p className="font-base">{formatCreatedAtDate(feedback.createdAt)}</p>
-        </div>
+  return (
+    <div className="space-y-4 px-4">
+      <div className="space-y-1">
+        <p className="text-sm text-muted-foreground">Summary</p>
+        <p className="font-medium">{feedback.summary}</p>
       </div>
-    );
-  }
+
+      <div className="space-y-1">
+        <p className="text-sm text-muted-foreground">Sentiment</p>
+        <FeedbackBadge sentiment={feedback.sentiment} />
+      </div>
+
+      <div className="space-y-1">
+        <p className="text-sm text-muted-foreground">Confidence</p>
+        <p className="font-medium">{feedback.confidence}%</p>
+      </div>
+
+      <div className="space-y-1">
+        <p className="text-sm text-muted-foreground">Content</p>
+        <p className="text-base">{feedback.content}</p>
+      </div>
+
+      <div className="space-y-1">
+        <p className="text-sm text-muted-foreground">Created At</p>
+        <p className="font-base">{formatCreatedAtDate(feedback.createdAt)}</p>
+      </div>
+    </div>
+  );
 }
