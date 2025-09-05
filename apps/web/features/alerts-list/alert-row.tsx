@@ -4,6 +4,7 @@ import { TableCell, TableRow } from "@repo/ui/components/table";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import AlertBadge from "./alert-badge";
 import type { SuspiciousActivity } from "@/types/suspicious-activity";
+import { normilizeIp } from "@/utils/alerts-helpers";
 
 type AlertRowProps = {
   alert: SuspiciousActivity;
@@ -15,6 +16,7 @@ const AlertRow = ({ alert }: AlertRowProps) => {
       <TableCell className="max-w-[240px] truncate">
         {alert.email || "unknown user"}
       </TableCell>
+      <TableCell>{normilizeIp(alert.ip)}</TableCell>
       <TableCell className="text-center">
         <AlertBadge action={alert.action} />
       </TableCell>

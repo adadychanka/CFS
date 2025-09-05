@@ -18,7 +18,7 @@ import AlertRow from "@/features/alerts-list/alert-row";
 import TableStateHandler from "@/features/error-messages/table-error-states/table-state-handler";
 import TableSkeleton from "@/features/error-messages/table-error-states/table-skeleton";
 
-const COL_SPAN = 4;
+const COL_SPAN = 5;
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -51,7 +51,8 @@ const AlertsList = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[260px]">Email</TableHead>
-              <TableHead className="w-[120px] text-center">Activity</TableHead>
+              <TableHead className="w-[140px]">IP address</TableHead>
+              <TableHead className="w-[120px] text-center">Action</TableHead>
               <TableHead>Alert Details</TableHead>
               <TableHead className="w-[120px]">Detected At</TableHead>
             </TableRow>
