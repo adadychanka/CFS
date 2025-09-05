@@ -2,13 +2,12 @@
 
 import useSWR from "swr";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
-import DynamicFeedbackTable from "./dynamic-feedback-table";
+import DynamicFeedbackTable from "../../components/user-feedback/dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useFeedbackTable from "@/hooks/useFeedbackTable";
-import FeedbackDetailsSheetContent from "./feedback-details-sheet-content";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -37,12 +36,7 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 
-  const {
-    tableHeads,
-    tableRows,
-    selectedItemId = null,
-    onUnselectItem,
-  } = useFeedbackTable({
+  const { tableHeads, tableRows } = useFeedbackTable({
     isFilteringEnabled: true,
     data: data?.feedbacks || [],
   });
@@ -57,15 +51,6 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
           error={error}
           tableHeads={tableHeads}
           tableRows={tableRows}
-          sheet={{
-            isOpen: !!selectedItemId,
-            onClose: onUnselectItem,
-            title: "Feedback Details",
-            description: "Full details of the selected user feedback.",
-            content: selectedItemId ? (
-              <FeedbackDetailsSheetContent id={selectedItemId} />
-            ) : null,
-          }}
         />
       </div>
 

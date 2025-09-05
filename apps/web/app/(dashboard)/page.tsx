@@ -2,6 +2,7 @@ import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
 import { Suspense } from "react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
+import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
           <DashboardChartWrapper />
+          <FeedbackPanel />
           <SwitchTableCollapsedTabs />
         </Suspense>
       </div>

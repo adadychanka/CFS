@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
@@ -7,6 +7,8 @@ import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
 import { Button } from "@repo/ui/components/button";
 import { Ellipsis } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FEEDBACK_PANEL_QUERY_KEY } from "@/constants";
 
 type Props = {
   data?: SentimentAnalysisResult[];
@@ -14,12 +16,8 @@ type Props = {
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
-  const [selectedFeedback, setSelectedFeedback] =
-    useState<SentimentAnalysisResult | null>(null);
-
-  const unselectFeedback = useCallback(() => {
-    setSelectedFeedback(null);
-  }, []);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const heads = useMemo(() => {
     return [
@@ -64,7 +62,11 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
             className="size-8"
             size="icon"
             variant="outline"
-            onClick={() => setSelectedFeedback(sentiment)}
+            onClick={() => {
+              const params = new URLSearchParams(searchParams.toString());
+              params.set(FEEDBACK_PANEL_QUERY_KEY, sentiment.id);
+              router.replace(`?${params.toString()}`, { scroll: false });
+            }}
             aria-label={`View details for feedback`}
           >
             <Ellipsis aria-hidden="true" />
@@ -72,7 +74,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
         </TableCell>
       </TableRow>
     ),
-    [],
+    [router, searchParams],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
@@ -81,12 +83,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
     renderRow,
   });
 
-  return {
-    tableHeads,
-    tableRows,
-    selectedItemId: selectedFeedback?.id,
-    onUnselectItem: unselectFeedback,
-  };
+  return { tableHeads, tableRows };
 }
 
 export default useFeedbackTable;
