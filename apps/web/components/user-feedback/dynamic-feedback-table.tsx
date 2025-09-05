@@ -73,7 +73,7 @@ function DynamicFeedbackTable({
           open={sheet.isOpen}
           onOpenChange={(val) => !val && sheet.onClose()}
         >
-          <SheetContent className="w-11/12 sm:w-[500px] gap-0">
+          <SheetContent className="w-11/12 sm:w-[500px]">
             <SheetHeader>
               <SheetTitle className="text-xl font-semibold">
                 {sheet.title}

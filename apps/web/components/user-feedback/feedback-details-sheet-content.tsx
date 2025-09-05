@@ -5,8 +5,8 @@ import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import useSWR from "swr";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
-import { Skeleton } from "@repo/ui/components/skeleton";
-import { AlertTriangle } from "lucide-react";
+import ErrorUnexpected from "@/features/error-messages/error-unexpected";
+import FeedbackSheetSkeleton from "@/components/user-feedback/feedback-sheet-skeleton";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -16,7 +16,7 @@ export const fetcher = async (url: string) => {
     throw new FetchError(data.message, res.status, data);
   }
 
-  return data;
+  return data.data;
 };
 
 export default function FeedbackDetailsSheetContent({
@@ -36,54 +36,19 @@ export default function FeedbackDetailsSheetContent({
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center space-y-3 px-5 py-4 text-center">
-        <AlertTriangle className="h-10 w-10 text-red-500" />
-        <p className="text-lg font-semibold text-red-600">
-          Something went wrong
-        </p>
-        <p className="text-sm text-gray-500">
-          {error?.message ||
-            "We couldn’t load the content. Please try again later."}
-        </p>
+      <div className="px-8">
+        <ErrorUnexpected description="Could not load the feedback details. Please try again later." />
       </div>
     );
   }
 
   if (isLoading) {
-    return (
-      <div className="mx-6 space-y-6">
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-20 bg-gray-200" />
-          <Skeleton className="h-5 w-3/4 bg-gray-200" />
-        </div>
-
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-20 bg-gray-200" />
-          <Skeleton className="h-6 w-16 rounded-full bg-gray-200" />
-        </div>
-
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-20 bg-gray-200" />
-          <Skeleton className="h-5 w-12 bg-gray-200" />
-        </div>
-
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-20 bg-gray-200" />
-          <Skeleton className="h-5 w-full bg-gray-200" />
-          <Skeleton className="h-5 w-10/12 bg-gray-200" />
-        </div>
-
-        <div className="space-y-1">
-          <Skeleton className="h-4 w-20 bg-gray-200" />
-          <Skeleton className="h-5 w-32 bg-gray-200" />
-        </div>
-      </div>
-    );
+    return <FeedbackSheetSkeleton />;
   }
 
   if (feedback) {
     return (
-      <div className="mx-6 space-y-6">
+      <div className="space-y-4 px-4">
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground">Summary</p>
           <p className="font-medium">{feedback.summary}</p>
