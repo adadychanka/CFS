@@ -41,14 +41,12 @@ function DynamicFeedbackTable({
   });
 
   return (
-    <>
-      <Table className="min-w-[600px]">
-        <TableHeader>
-          <TableRow>{tableHeads}</TableRow>
-        </TableHeader>
-        <TableBody>{content}</TableBody>
-      </Table>
-    </>
+    <Table className="min-w-[600px]">
+      <TableHeader>
+        <TableRow>{tableHeads}</TableRow>
+      </TableHeader>
+      <TableBody>{content}</TableBody>
+    </Table>
   );
 }
 

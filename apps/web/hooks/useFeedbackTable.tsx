@@ -19,6 +19,15 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const handleViewDetails = useCallback(
+    (id: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(FEEDBACK_PANEL_QUERY_KEY, id);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [router, searchParams],
+  );
+
   const heads = useMemo(() => {
     return [
       <TableHead key="summary" className="w-[300px]">
@@ -62,19 +71,15 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
             className="size-8"
             size="icon"
             variant="outline"
-            onClick={() => {
-              const params = new URLSearchParams(searchParams.toString());
-              params.set(FEEDBACK_PANEL_QUERY_KEY, sentiment.id);
-              router.replace(`?${params.toString()}`, { scroll: false });
-            }}
-            aria-label={`View details for feedback`}
+            onClick={() => handleViewDetails(sentiment.id)}
+            aria-label="View details for feedback"
           >
             <Ellipsis aria-hidden="true" />
           </Button>
         </TableCell>
       </TableRow>
     ),
-    [router, searchParams],
+    [handleViewDetails],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({

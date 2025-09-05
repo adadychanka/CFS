@@ -1,6 +1,6 @@
 import { Skeleton } from "@repo/ui/components/skeleton";
 
-const FeedbackSheetSkeleton = () => {
+const FeedbackPanelSkeleton = () => {
   return (
     <div className="mx-6 space-y-4">
       <div className="space-y-1">
@@ -32,4 +32,4 @@ const FeedbackSheetSkeleton = () => {
   );
 };
 
-export default FeedbackSheetSkeleton;
+export default FeedbackPanelSkeleton;

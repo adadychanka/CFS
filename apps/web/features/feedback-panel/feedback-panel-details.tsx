@@ -2,7 +2,7 @@ import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import FeedbackBadge from "@/components/user-feedback/feedback-badge";
 import ErrorUnexpected from "@/features/error-messages/error-unexpected";
-import FeedbackSheetSkeleton from "@/components/user-feedback/feedback-sheet-skeleton";
+import FeedbackPanelSkeleton from "@/features/feedback-panel/feedback-panel-skeleton";
 
 type Props = {
   feedback?: SentimentAnalysisResult;
@@ -16,7 +16,7 @@ export default function FeedbackDetailsSheetContent({
   error,
 }: Props) {
   if (isLoading) {
-    return <FeedbackSheetSkeleton />;
+    return <FeedbackPanelSkeleton />;
   }
 
   if (error || !feedback) {

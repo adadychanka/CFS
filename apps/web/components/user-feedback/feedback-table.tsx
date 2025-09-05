@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
-import DynamicFeedbackTable from "../../components/user-feedback/dynamic-feedback-table";
+import DynamicFeedbackTable from "./dynamic-feedback-table";
 import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
