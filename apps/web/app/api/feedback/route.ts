@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 import {
+  getIsSampleMode,
   getPaginationParamsFromNextRequest,
   parseSentimentsQueryParam,
   transformSentimentsIntoSearchParams,
@@ -22,9 +23,13 @@ export async function GET(req: NextRequest) {
     const { page, limit } = getPaginationParamsFromNextRequest(req);
     const sentiments = parseSentimentsQueryParam(req.nextUrl.searchParams);
     const parsedSentiments = transformSentimentsIntoSearchParams(sentiments);
+    const isSampleMode = getIsSampleMode(req);
 
     // Building URL
-    const requestUrl = new URL("/api/feedback", process.env.BACKEND_API);
+    const requestUrl = new URL(
+      isSampleMode ? "/api/sample/feedback/filtered" : "/api/feedback",
+      process.env.BACKEND_API,
+    );
 
     requestUrl.searchParams.set("page", page.toString());
     requestUrl.searchParams.set("limit", limit.toString());

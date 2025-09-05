@@ -5,6 +5,8 @@ import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
+import { useSampleMode } from "@/providers/sample-mode-provider";
+import { Badge } from "@repo/ui/components/badge";
 
 type Props = {
   data?: SentimentAnalysisResult[];
@@ -12,6 +14,8 @@ type Props = {
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
+  const { isSampleMode } = useSampleMode();
+
   const heads = useMemo(() => {
     return [
       <TableHead key="summary" className="w-[300px]">
@@ -35,7 +39,14 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
   const renderRow = useCallback(
     (sentiment: SentimentAnalysisResult) => (
       <TableRow key={sentiment.id} className="odd:bg-muted/50">
-        <TableCell>{sentiment.summary}</TableCell>
+        <TableCell className="flex items-center gap-2">
+          <span>{sentiment.summary}</span>
+          {isSampleMode && (
+            <Badge variant="outline" className="text-xs text-muted-foreground">
+              Sample
+            </Badge>
+          )}
+        </TableCell>
         <TableCell className="text-center">
           <FeedbackBadge sentiment={sentiment.sentiment} />
         </TableCell>
@@ -46,7 +57,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
         <TableCell>{formatCreatedAtDate(sentiment.createdAt)}</TableCell>
       </TableRow>
     ),
-    [],
+    [isSampleMode],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
