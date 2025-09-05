@@ -49,8 +49,7 @@ const AppSidebar = ({ isAdmin }: Props) => {
                         isActive={
                           item.url === "/"
                             ? pathname === "/"
-                            : pathname.startsWith(item.url + "/") ||
-                              pathname === item.url
+                            : pathname === item.url
                         }
                         asChild
                       >
