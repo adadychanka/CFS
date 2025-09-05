@@ -5,6 +5,8 @@ import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
+import { Button } from "@repo/ui/components/button";
+import { Ellipsis } from "lucide-react";
 
 type Props = {
   data?: SentimentAnalysisResult[];
@@ -33,8 +35,11 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
       <TableHead key="content" className="min-w-[200px]">
         Content
       </TableHead>,
-      <TableHead key="createdAt" className="w-[120px]">
+      <TableHead key="createdAt" className="w-[100px]">
         Created At
+      </TableHead>,
+      <TableHead key="see details" className="w-[56px]">
+        <span className="sr-only">View details for feedback</span>
       </TableHead>,
     ];
   }, [isFilteringEnabled]);
@@ -43,8 +48,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
     (sentiment: SentimentAnalysisResult) => (
       <TableRow
         key={sentiment.id}
-        onClick={() => setSelectedFeedback(sentiment)}
-        className="odd:bg-muted/50 cursor-pointer hover:bg-muted transition-colors"
+        className="odd:bg-muted/50 hover:bg-muted transition-colors"
       >
         <TableCell>{sentiment.summary}</TableCell>
         <TableCell className="text-center">
@@ -55,6 +59,17 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
           {sentiment.content}
         </TableCell>
         <TableCell>{formatCreatedAtDate(sentiment.createdAt)}</TableCell>
+        <TableCell className="flex justify-center pr-2">
+          <Button
+            className="size-8"
+            size="icon"
+            variant="outline"
+            onClick={() => setSelectedFeedback(sentiment)}
+            aria-label={`View details for feedback`}
+          >
+            <Ellipsis aria-hidden="true" />
+          </Button>
+        </TableCell>
       </TableRow>
     ),
     [],
