@@ -7,7 +7,7 @@ import {
   TabsTrigger,
 } from "@repo/ui/components/tabs";
 import { GalleryVertical, Table2 } from "lucide-react";
-import FeedbackTable from "@/features/feedback-panel/feedback-table";
+import FeedbackTable from "@/components/user-feedback/feedback-table";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USER_DASHBOARD_TABS } from "@/constants/constants";
 import { useEffect } from "react";
