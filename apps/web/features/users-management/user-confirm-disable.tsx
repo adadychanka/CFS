@@ -30,7 +30,7 @@ const UserConfirmDisable = ({ onConfirm, children, ariaLabel }: Props) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Disable User?</DialogTitle>
+          <DialogTitle>Disable User</DialogTitle>
         </DialogHeader>
         <p>
           Are you sure you want to disable this user account? This action can be
