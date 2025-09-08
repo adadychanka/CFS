@@ -18,3 +18,11 @@ export interface SuspiciousActivity {
   updatedAt: string;
   deletedAt: string | null;
 }
+
+export interface SuspiciousActivityAlert {
+  action: SuspiciousActivityAction;
+  error: SuspiciousActivityError;
+  details: string;
+  ip: string;
+  timestamp: string;
+}
