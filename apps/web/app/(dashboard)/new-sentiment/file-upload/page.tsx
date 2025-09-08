@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
 import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
 import SavedFiles from "@/features/saved-files/saved-files";
-import SpinnerLoader from "@/components/loaders/spinner-loader";
+import SpinnerLoader from "@repo/ui/custom-components/spinner-loader";
 
 export const metadata: Metadata = {
   title: "CSV File Upload",

@@ -10,6 +10,8 @@ import { Button } from "@repo/ui/components/button";
 import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { clientApi } from "@/lib/api";
 
+const MotionRow = motion.create(TableRow);
+
 type Props = {
   data?: SavedFile[];
   reFetch: () => void;
@@ -39,12 +41,12 @@ function useSavedFilesTable({ data, reFetch }: Props) {
     ];
   }, []);
 
-  function handleClickDeleteButton(id: string) {
+  const handleClickDeleteButton = useCallback((id: string) => {
     setIsDialogOpen(true);
     setSelectedId(id);
-  }
+  }, []);
 
-  async function handleConfirmDelete() {
+  const handleConfirmDelete = useCallback(async () => {
     try {
       const response = await clientApi.delete(`/api/files/${selectedId}`);
 
@@ -59,14 +61,12 @@ function useSavedFilesTable({ data, reFetch }: Props) {
       toast.error("An error occurred");
     }
     setIsDialogOpen(false);
-  }
+  }, [reFetch, selectedId]);
 
-  function handleCancelDelete() {
+  const handleCancelDelete = useCallback(() => {
     setIsDialogOpen(false);
     setSelectedId(null);
-  }
-
-  const MotionRow = motion.create(TableRow);
+  }, []);
 
   const renderRow = useCallback(
     (file: SavedFile) => (
@@ -101,7 +101,7 @@ function useSavedFilesTable({ data, reFetch }: Props) {
         </TableCell>
       </MotionRow>
     ),
-    [MotionRow, selectedId],
+    [selectedId, handleClickDeleteButton],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({

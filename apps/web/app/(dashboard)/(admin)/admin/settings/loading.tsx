@@ -1,4 +1,4 @@
-import SpinnerLoader from "@/components/loaders/spinner-loader";
+import SpinnerLoader from "@repo/ui/custom-components/spinner-loader";
 import React from "react";
 
 const Loader = () => {

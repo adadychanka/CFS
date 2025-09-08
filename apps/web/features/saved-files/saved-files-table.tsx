@@ -1,91 +1,62 @@
-"use client";
-
-import React from "react";
-import useSWR from "swr";
-import { useSearchParams } from "next/navigation";
-
-import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
-import DynamicFeedbackTable from "@/components/user-feedback/dynamic-feedback-table";
-import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
-import { SAVED_FILES_PAGE_LIMIT } from "@/constants/constants";
-import useSavedFilesTable from "@/hooks/useSavedFilesTable";
-import { clientApi } from "@/lib/api";
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableRow,
+} from "@repo/ui/components/table";
 import { FetchError } from "@/lib/errors";
-import type { SavedFilesResponse } from "@/types/saved-files";
+import { UseDynamicTableData } from "@/hooks/useDynamicTableHeadsAndRows";
+import type { SavedFile } from "@/types/saved-files";
+import useFilesTableBody from "@/hooks/useFilesTableBody";
 import { AnimatePresence } from "framer-motion";
 
-const fetcher = async (url: string) => {
-  const res = await clientApi.get(url);
-  const data: SavedFilesResponse = await res.json();
-
-  if (!res.ok) {
-    throw new FetchError(
-      data.message || "Something went wrong",
-      res.status,
-      data,
-    );
-  }
-
-  return data;
+export type SavedFilesTable = {
+  files: SavedFile[];
+  isLoading: boolean;
+  filesLimit: number;
+  isFilteringEnabled?: boolean;
+  error?: FetchError;
+  onRetry?: () => void;
+  tableHeads: UseDynamicTableData["tableHeads"];
+  tableRows: UseDynamicTableData["tableRows"];
+  handleCancelDelete?: () => void;
 };
 
-function SavedFilesTable() {
-  const params = useSearchParams();
-  const currentPage = params.get("page") || 1;
-
-  const {
-    data: result,
-    error,
+function SavedFilesTable({
+  files,
+  isLoading,
+  filesLimit,
+  error,
+  tableHeads,
+  tableRows,
+  onRetry,
+  handleCancelDelete,
+}: SavedFilesTable) {
+  const content = useFilesTableBody({
+    filesLimit,
+    files,
     isLoading,
-    mutate,
-  } = useSWR(
-    `/api/files?page=${currentPage}&limit=${SAVED_FILES_PAGE_LIMIT}`,
-    fetcher,
-  );
-  console.log(result?.data);
-
-  function handleRefetch() {
-    mutate();
-  }
-
-  const {
-    tableHeads,
     tableRows,
-    isDialogOpen,
-    handleCancelDelete,
-    handleConfirmDelete,
-  } = useSavedFilesTable({ data: result?.data?.files, reFetch: handleRefetch });
+    tableHeads,
+    error,
+    onRetry,
+  });
+
   return (
-    <>
-      <div className="overflow-x-auto rounded-md border">
-        <DynamicFeedbackTable
-          feedbackList={result?.data?.files || []}
-          tableHeads={tableHeads}
-          tableRows={[
-            <AnimatePresence
-              key="saved-files"
-              initial={false}
-              onExitComplete={handleCancelDelete}
-            >
-              {tableRows}
-            </AnimatePresence>,
-          ]}
-          feedbackLimit={SAVED_FILES_PAGE_LIMIT}
-          error={error}
-          isLoading={isLoading}
-        />
-      </div>
-      {result?.data && (
-        <FeedbackTablePagination limit={result.data.pagination.pages | 0} />
-      )}
-      <ConfirmationDialog
-        isOpen={isDialogOpen}
-        onConfirm={handleConfirmDelete}
-        onCancel={handleCancelDelete}
-        description="This action cannot be undone. The file and all associated analyzed feedback will be permanently removed."
-        question="Are you sure you want to delete this file?"
-      />
-    </>
+    <Table className="min-w-[600px]">
+      <TableHeader>
+        <TableRow>{tableHeads}</TableRow>
+      </TableHeader>
+      <TableBody>
+        <AnimatePresence
+          key="saved-files"
+          initial={false}
+          onExitComplete={handleCancelDelete}
+        >
+          {content}
+        </AnimatePresence>
+      </TableBody>
+    </Table>
   );
 }
 

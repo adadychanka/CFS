@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth/auth";
-import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
 import type { SavedFilesResponse } from "@/types/saved-files";
+import { getErrorMessage } from "@/lib/get-error-message";
+import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
 
 export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ fileId: string }> },
 ) {
   const { fileId } = await params;
-
   if (!fileId) {
     return NextResponse.json(
       {
@@ -40,36 +40,22 @@ export async function DELETE(
     const response = await api.delete(`/api/files/${fileId}`);
 
     if (!response.ok) {
-      return NextResponse.json({}, { status: response.status });
+      let errorMessage = `Request failed with status ${response.status}`;
+      errorMessage = (await getErrorMessage(response)) || "Unexpected error.";
+
+      return NextResponse.json(
+        { error: errorMessage },
+        { status: response.status },
+      );
     }
 
     const result: SavedFilesResponse = await response.json();
-
     return NextResponse.json(result);
   } catch (error) {
-    if (error instanceof FetchError)
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        {
-          status: error.status,
-        },
-      );
-
-    if (error instanceof Error)
-      return NextResponse.json(
-        {
-          message: error.message,
-        },
-        { status: 500 },
-      );
-
+    const errorResponse = await getUnknownErrorMessage(error);
     return NextResponse.json(
-      {
-        message: "Something went wrong",
-      },
-      { status: 500 },
+      { error: errorResponse.error },
+      { status: errorResponse.status },
     );
   }
 }
