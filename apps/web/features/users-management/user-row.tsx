@@ -1,7 +1,7 @@
 "use client";
 
 import { TableCell, TableRow } from "@repo/ui/components/table";
-import { User } from "@/types/user";
+import { User, UserAccountStatus } from "@/types/user";
 import { Button } from "@repo/ui/components/button";
 import { Ban, PauseCircle, PlayCircle } from "lucide-react";
 import { disableUser, toggleUserSuspend } from "@/lib/actions/users";
@@ -12,15 +12,15 @@ import { useCallback, useMemo } from "react";
 
 type Props = {
   user: User;
-  onMutate: () => void;
+  onUserChange: () => void;
 };
 
-const UserRow = ({ user, onMutate }: Props) => {
+const UserRow = ({ user, onUserChange }: Props) => {
   const isAdmin = user.role === "ADMIN";
-  const isDeleted = typeof user.deletedAt === "string";
+  const isDeleted = !!user.deletedAt;
   const isButtonsShown = !isAdmin && !isDeleted;
 
-  const status: "disabled" | "suspended" | "active" = useMemo(
+  const status: UserAccountStatus = useMemo(
     () => (isDeleted ? "disabled" : user.isSuspended ? "suspended" : "active"),
     [isDeleted, user.isSuspended],
   );
@@ -28,12 +28,12 @@ const UserRow = ({ user, onMutate }: Props) => {
   const handleDisableUser = useCallback(async () => {
     const res = await disableUser(user.id);
     if (res.success) {
-      onMutate();
+      onUserChange();
       toast.success("User account now disabled!");
     } else {
       toast.error("Failed to disable the user.");
     }
-  }, [user.id, onMutate]);
+  }, [user.id, onUserChange]);
 
   const handleToggleSuspend = useCallback(async () => {
     const res = await toggleUserSuspend(user.id);
@@ -47,13 +47,13 @@ const UserRow = ({ user, onMutate }: Props) => {
       return;
     }
 
-    onMutate();
+    onUserChange();
     toast.success(
       user.isSuspended
         ? "User has been activated successfully."
         : "User has been suspended successfully.",
     );
-  }, [user.id, user.isSuspended, onMutate]);
+  }, [user.id, user.isSuspended, onUserChange]);
 
   return (
     <TableRow className="odd:bg-muted/50">
@@ -92,7 +92,7 @@ const UserRow = ({ user, onMutate }: Props) => {
             </Button>
             <UserConfirmDisable
               onConfirm={handleDisableUser}
-              ariaLabel="Disable user account"
+              triggerButtonAriaLabel="Disable user account"
             >
               <Ban size={14} /> Disable
             </UserConfirmDisable>

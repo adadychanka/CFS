@@ -14,16 +14,20 @@ import { type ReactNode, useState } from "react";
 type Props = {
   onConfirm: () => void;
   children: ReactNode;
-  ariaLabel?: string;
+  triggerButtonAriaLabel?: string;
 };
 
-const UserConfirmDisable = ({ onConfirm, children, ariaLabel }: Props) => {
+const UserConfirmDisable = ({
+  onConfirm,
+  children,
+  triggerButtonAriaLabel,
+}: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="ghost" aria-label={ariaLabel}>
+        <Button size="sm" variant="ghost" aria-label={triggerButtonAriaLabel}>
           {children}
         </Button>
       </DialogTrigger>

@@ -32,13 +32,11 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    //TODO Add SideBar Provider Before using Header and Sidebar
     <div>
       <Header title="Admin Dashboard" />
-
       <div className="w-full max-w-[1280px] mx-auto p-4 @container">
-        {/* TODO: Need custom loader it seems */}
-        <Suspense fallback={"Loading..."}>
+        {/* TODO: Need a custom loader */}
+        <Suspense fallback={null}>
           <ChartsSection />
           <UsersSection />
         </Suspense>

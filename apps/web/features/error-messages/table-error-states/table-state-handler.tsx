@@ -1,5 +1,3 @@
-"use client";
-
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 import TableErrorEmptyList from "@/features/error-messages/table-error-states/table-error-empty-list";
@@ -22,15 +20,6 @@ type TableStateHandlerProps<T> = {
 /**
  * TableStateHandler is a utility component to handle the different states of a table, such as loading, error, empty,
  * or displaying rows when data is successfully fetched.
- *
- * @param isLoading
- * @param error
- * @param data
- * @param colSpan
- * @param renderRows
- * @param skeleton
- * @param emptyState
- * @constructor
  */
 const TableStateHandler = <T,>({
   isLoading,

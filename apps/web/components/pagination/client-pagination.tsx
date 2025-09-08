@@ -21,9 +21,6 @@ type Props = {
 
 /**
  * A pagination component works with a client URL query
- *
- * @param limit
- * @constructor
  */
 const ClientPagination = ({ limit }: Props) => {
   const searchParams = useSearchParams();

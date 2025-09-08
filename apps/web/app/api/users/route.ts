@@ -4,6 +4,7 @@ import { auth } from "@/auth/auth";
 import * as process from "node:process";
 import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
 import { USERS_SEARCH_QUERY_KEY } from "@/constants";
+import { USERS_SEARCH_MIN_LENGTH } from "@/constants/search";
 
 export async function GET(req: NextRequest) {
   try {
@@ -18,7 +19,7 @@ export async function GET(req: NextRequest) {
 
     const { page, limit } = getPaginationParamsFromNextRequest(req);
     const search = req.nextUrl.searchParams.get(USERS_SEARCH_QUERY_KEY) || "";
-    const isSearch = search.length >= 3;
+    const isSearch = search.length >= USERS_SEARCH_MIN_LENGTH;
 
     const requestUrl = isSearch
       ? new URL("/api/users/search", process.env.BACKEND_API)
