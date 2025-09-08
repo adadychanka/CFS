@@ -21,7 +21,9 @@ const SocketProvider = ({ children }: Props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    if (!data?.user?.token || data.user.role === "USER") {
+    const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL;
+
+    if (!socketURL || !data?.user?.token || data.user.role === "USER") {
       socket?.disconnect();
       setSocket(null);
       return;
