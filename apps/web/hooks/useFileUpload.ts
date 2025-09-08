@@ -16,6 +16,7 @@ import { uploadFiles } from "@/lib/actions/file-upload";
 import { useCustomDropzone } from "./useCustomDropzone";
 import { useSearchParams } from "next/navigation";
 import { mutate } from "swr";
+import { SAVED_FILES_PAGE_QUERY_KEY } from "@/constants";
 
 const fileUploadSchema = z.object({
   files: z.array(z.instanceof(File)),
@@ -29,7 +30,7 @@ function useFileUpload() {
   >(null);
   const [isLoading, setIsLoading] = useState(false);
   const params = useSearchParams();
-  const currentPage = params.get("page") || 1;
+  const currentPage = params.get(SAVED_FILES_PAGE_QUERY_KEY) || 1;
   const form = useForm<FileUploadFormData>({
     resolver: zodResolver(fileUploadSchema),
     defaultValues: {

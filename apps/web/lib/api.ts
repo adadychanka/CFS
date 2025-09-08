@@ -57,8 +57,6 @@ export class ApiClient {
   }
 
   async delete(endpoint: string) {
-    console.log(endpoint);
-
     try {
       const res = await fetch(`${this.baseUrl}${endpoint}`, {
         method: "DELETE",
