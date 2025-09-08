@@ -17,6 +17,7 @@ import { updateSearchParams } from "@/utils/url-helpers";
 import type { GetUsersResponse } from "@/types/http";
 import { FEEDBACK_PAGE_LIMIT } from "@/constants/constants";
 import { USERS_SEARCH_QUERY_KEY } from "@/constants";
+import { USERS_SEARCH_MIN_LENGTH } from "@/constants/search";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -52,7 +53,8 @@ const UsersSection = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (searchInput.length > 0 && searchInput.length < 3) return;
+    if (searchInput.length > 0 && searchInput.length < USERS_SEARCH_MIN_LENGTH)
+      return;
     const updatedParams = updateSearchParams(
       searchParams,
       USERS_SEARCH_QUERY_KEY,
@@ -84,10 +86,10 @@ const UsersSection = () => {
       </form>
 
       <UsersList
-        usersList={data?.users || []}
+        usersList={data?.users}
         isLoading={isLoading}
         error={error}
-        onMutate={mutate}
+        onUserChange={mutate}
       />
 
       {data?.pagination && (

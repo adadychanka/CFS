@@ -12,17 +12,26 @@ import { FetchError } from "@/lib/errors";
 import UserRow from "@/features/users-management/user-row";
 import TableStateHandler from "@/features/error-messages/table-error-states/table-state-handler";
 import TableSkeleton from "@/features/error-messages/table-error-states/table-skeleton";
+import { useCallback } from "react";
 
 type Props = {
-  usersList: User[];
+  usersList: User[] | undefined;
   isLoading: boolean;
-  onMutate: () => void;
-  error?: FetchError;
+  onUserChange: () => void;
+  error: FetchError | undefined;
 };
 
-const COL_SPAN = 5;
+const COL_SPAN = 4;
 
-const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
+const UsersList = ({ usersList, isLoading, onUserChange, error }: Props) => {
+  const renderRows = useCallback(
+    (rows: User[]) =>
+      rows.map((user) => (
+        <UserRow key={user.id} user={user} onUserChange={onUserChange} />
+      )),
+    [onUserChange],
+  );
+
   return (
     <div className="overflow-x-auto rounded-md border">
       <Table>
@@ -31,7 +40,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
             <TableHead className="w-[88px]">Role</TableHead>
             <TableHead>Email</TableHead>
             <TableHead className="w-[120px] text-center">Status</TableHead>
-            <TableHead className="w-[180px] text-center">Actions</TableHead>
+            <TableHead className="w-[220px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -52,11 +61,7 @@ const UsersList = ({ usersList, isLoading, onMutate, error }: Props) => {
               description:
                 "No users have been added yet. Once new users join, they’ll appear here.",
             }}
-            renderRows={(rows) =>
-              rows.map((user) => (
-                <UserRow key={user.id} user={user} onMutate={onMutate} />
-              ))
-            }
+            renderRows={renderRows}
           />
         </TableBody>
       </Table>

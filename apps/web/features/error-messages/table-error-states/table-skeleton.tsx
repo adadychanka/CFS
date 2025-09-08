@@ -1,5 +1,3 @@
-"use client";
-
 import { TableCell, TableRow } from "@repo/ui/components/table";
 import { Skeleton } from "@repo/ui/components/skeleton";
 

@@ -1,3 +1,5 @@
+export type UserAccountStatus = "disabled" | "suspended" | "active";
+
 export type User = {
   email: string;
   role: "USER" | "ADMIN";

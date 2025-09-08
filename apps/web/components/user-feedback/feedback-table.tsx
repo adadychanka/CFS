@@ -54,7 +54,7 @@ const FeedbackTable = ({ currentPage, sentiment }: Props) => {
         />
       </div>
 
-      {data && <ClientPagination limit={data.pagination.pages | 0} />}
+      {data && <ClientPagination limit={data.pagination.pages ?? 1} />}
     </div>
   );
 };
