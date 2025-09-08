@@ -21,13 +21,13 @@ const SocketProvider = ({ children }: Props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    if (!data?.user?.token) {
+    if (!data?.user?.token || data.user.role === "USER") {
       socket?.disconnect();
       setSocket(null);
       return;
     }
 
-    const s = io("http://16.16.26.38:3000/", {
+    const s = io(process.env.NEXT_PUBLIC_BACKEND_API, {
       transports: ["websocket"],
       auth: { token: data.user.token },
     });
