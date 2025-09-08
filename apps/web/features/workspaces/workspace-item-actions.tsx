@@ -11,8 +11,9 @@ const WorkspaceItemActions = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuAction>
+        <SidebarMenuAction showOnHover>
           <MoreHorizontal />
+          <span className="sr-only">Open actions dropdown</span>
         </SidebarMenuAction>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" align="start">
