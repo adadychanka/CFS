@@ -17,6 +17,7 @@ import SidebarLogo from "@/components/logo/sidebar-logo";
 import { ADMIN_PAGE_LINKS, USER_PAGE_LINKS } from "@/constants/constants";
 import { usePathname } from "next/navigation";
 import LogoutButton from "@/components/auth/logout-button";
+import WorkspacesList from "@/features/workspaces/workspaces-list";
 
 type Props = {
   isAdmin: boolean;
@@ -65,6 +66,7 @@ const AppSidebar = ({ isAdmin }: Props) => {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
+          <WorkspacesList />
         </SidebarContent>
         <SidebarFooter>
           <SidebarMenu>
