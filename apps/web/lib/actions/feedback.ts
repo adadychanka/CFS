@@ -17,7 +17,7 @@ export async function uploadManualFeedback(feedback: PreviewFeedback[]) {
       headers: { "Content-Type": "application/json" },
       body: formattedFeedback,
     },
-    "Feedbacks uploaded successfully",
+    "Feedback uploaded successfully",
   );
 }
 
