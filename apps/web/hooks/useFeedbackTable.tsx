@@ -5,6 +5,10 @@ import { TableCell, TableHead, TableRow } from "@repo/ui/components/table";
 import { useDynamicTableHeadsAndRows } from "./useDynamicTableHeadsAndRows";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import { FeedbackTableFilterDropdown } from "@/components/user-feedback/feedback-table-filter-dropdown";
+import { Button } from "@repo/ui/components/button";
+import { Ellipsis } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FEEDBACK_PANEL_QUERY_KEY } from "@/constants";
 
 type Props = {
   data?: SentimentAnalysisResult[];
@@ -12,6 +16,18 @@ type Props = {
 };
 
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleViewDetails = useCallback(
+    (id: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(FEEDBACK_PANEL_QUERY_KEY, id);
+      router.push(`?${params.toString()}`, { scroll: false });
+    },
+    [router, searchParams],
+  );
+
   const heads = useMemo(() => {
     return [
       <TableHead key="summary" className="w-[300px]">
@@ -26,15 +42,21 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
       <TableHead key="content" className="min-w-[200px]">
         Content
       </TableHead>,
-      <TableHead key="createdAt" className="w-[120px]">
+      <TableHead key="createdAt" className="w-[100px]">
         Created At
+      </TableHead>,
+      <TableHead key="see details" className="w-[56px]">
+        <span className="sr-only">View details for feedback</span>
       </TableHead>,
     ];
   }, [isFilteringEnabled]);
 
   const renderRow = useCallback(
     (sentiment: SentimentAnalysisResult) => (
-      <TableRow key={sentiment.id} className="odd:bg-muted/50">
+      <TableRow
+        key={sentiment.id}
+        className="odd:bg-muted/50 hover:bg-muted transition-colors"
+      >
         <TableCell>{sentiment.summary}</TableCell>
         <TableCell className="text-center">
           <FeedbackBadge sentiment={sentiment.sentiment} />
@@ -44,9 +66,20 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
           {sentiment.content}
         </TableCell>
         <TableCell>{formatCreatedAtDate(sentiment.createdAt)}</TableCell>
+        <TableCell className="flex justify-center pr-2">
+          <Button
+            className="size-8"
+            size="icon"
+            variant="outline"
+            onClick={() => handleViewDetails(sentiment.id)}
+            aria-label="View details for feedback"
+          >
+            <Ellipsis aria-hidden="true" />
+          </Button>
+        </TableCell>
       </TableRow>
     ),
-    [],
+    [handleViewDetails],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({
@@ -55,10 +88,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
     renderRow,
   });
 
-  return {
-    tableHeads,
-    tableRows,
-  };
+  return { tableHeads, tableRows };
 }
 
 export default useFeedbackTable;
