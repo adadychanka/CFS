@@ -5,7 +5,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@repo/ui/components/sidebar";
-import { Folder } from "lucide-react";
+import WorkspaceItem from "@/features/workspaces/workspace-item";
+import { FolderPlus } from "lucide-react";
 
 const FAKE_WOKRSPACES = [
   "Blinksy",
@@ -21,13 +22,14 @@ const WorkspacesList = () => {
       <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
       <SidebarMenu>
         {FAKE_WOKRSPACES.map((name) => (
-          <SidebarMenuItem key={name}>
-            <SidebarMenuButton>
-              <Folder />
-              {name}
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <WorkspaceItem key={name} name={name} />
         ))}
+        <SidebarMenuItem>
+          <SidebarMenuButton>
+            <FolderPlus />
+            New workspace
+          </SidebarMenuButton>
+        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   );
