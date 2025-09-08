@@ -28,7 +28,7 @@ function useTableBody({
     if (!isLoading && error && error.status !== 429) {
       return (
         <TableErrorUnexpected
-          description="We couldn’t load the data. Please try again."
+          description="We couldn’t load the feedback. Please try again."
           colSpan={ERROR_ELEMENT_COL_SPAN}
         />
       );
@@ -37,7 +37,7 @@ function useTableBody({
     if (!isLoading && !error && (!feedbackList || feedbackList.length === 0)) {
       return (
         <TableErrorEmptyList
-          title="No data found"
+          title="No feedback found"
           description="Looks like there’s nothing here yet. Check back later or add some
                 feedback."
           colSpan={ERROR_ELEMENT_COL_SPAN}
