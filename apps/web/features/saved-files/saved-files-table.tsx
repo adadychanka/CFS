@@ -16,7 +16,6 @@ export type SavedFilesTable = {
   filesLimit: number;
   isFilteringEnabled?: boolean;
   error?: FetchError;
-  onRetry?: () => void;
   tableHeads: UseDynamicTableData["tableHeads"];
   tableRows: UseDynamicTableData["tableRows"];
   handleCancelDelete?: () => void;
@@ -29,7 +28,6 @@ function SavedFilesTable({
   error,
   tableHeads,
   tableRows,
-  onRetry,
   handleCancelDelete,
 }: SavedFilesTable) {
   const content = useFilesTableBody({
@@ -39,7 +37,6 @@ function SavedFilesTable({
     tableRows,
     tableHeads,
     error,
-    onRetry,
   });
 
   return (
