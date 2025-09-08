@@ -5,7 +5,7 @@ import ErrorUnexpected from "@/features/error-messages/error-unexpected";
 import FeedbackPanelSkeleton from "@/features/feedback-panel/feedback-panel-skeleton";
 
 type Props = {
-  feedback?: SentimentAnalysisResult;
+  feedback: SentimentAnalysisResult | undefined;
   isLoading: boolean;
   error: unknown;
 };

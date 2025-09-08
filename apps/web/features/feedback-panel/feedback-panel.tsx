@@ -59,7 +59,7 @@ const FeedbackPanel = () => {
     <PortalSheet
       title="Feedback Details"
       isOpen={!!feedbackId}
-      setIsOpen={handlePanelChange}
+      onOpenChange={handlePanelChange}
     >
       <FeedbackDetailsSheetContent
         feedback={feedback}

@@ -23,7 +23,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
     (id: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(FEEDBACK_PANEL_QUERY_KEY, id);
-      router.replace(`?${params.toString()}`, { scroll: false });
+      router.push(`?${params.toString()}`, { scroll: false });
     },
     [router, searchParams],
   );

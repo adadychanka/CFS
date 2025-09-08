@@ -14,29 +14,22 @@ type Props = {
   title: string;
   description?: string;
   isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  onOpenChange: (isOpen: boolean) => void;
   children: ReactNode;
 };
 
 /**
  * Reusable portal sheet component build on top of the shadcn sheet. Just collects common components into one.
- *
- * @param title
- * @param description
- * @param isOpen
- * @param setIsOpen
- * @param children
- * @constructor
  */
 const PortalSheet = ({
   title,
   description,
   isOpen,
-  setIsOpen,
+  onOpenChange,
   children,
 }: Props) => {
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
