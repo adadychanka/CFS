@@ -29,7 +29,7 @@ const SocketProvider = ({ children }: Props) => {
       return;
     }
 
-    const s = io(process.env.NEXT_PUBLIC_BACKEND_API, {
+    const s = io(socketURL, {
       transports: ["websocket"],
       auth: { token: data.user.token },
     });
