@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import "@repo/ui/styles/globals.css";
+import "@repo/ui/globals.css";
+import AppSidebar from "@/components/app-sidebar";
 import React from "react";
+
+import { SidebarProvider } from "@repo/ui/components/sidebar";
+import { withAdminAccess } from "@/components/withAdminAccess";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -25,10 +29,17 @@ export const metadata: Metadata = {
   },
 };
 
+const DynamicSidebar = withAdminAccess(AppSidebar);
+
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="w-full pb-16">{children}</main>;
+  return (
+    <SidebarProvider>
+      <DynamicSidebar />
+      <main className="w-full pb-16">{children}</main>
+    </SidebarProvider>
+  );
 }
