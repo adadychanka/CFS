@@ -11,9 +11,14 @@ import { toast } from "sonner";
 type Props = {
   feedback: PreviewFeedback[];
   onClearFeedback: () => void;
+  workspaceId: string;
 };
 
-const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
+const ManualFeedbackSubmitButton = ({
+  feedback,
+  onClearFeedback,
+  workspaceId,
+}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -21,7 +26,7 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setIsLoading(true);
     setErrorMessage(null);
 
-    const result = await uploadManualFeedback(feedback);
+    const result = await uploadManualFeedback(feedback, workspaceId);
     if (result.success) {
       toast.success(result.message);
       onClearFeedback();

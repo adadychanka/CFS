@@ -27,7 +27,7 @@ const fileUploadSchema = z.object({
 
 type FileUploadFormData = z.infer<typeof fileUploadSchema>;
 
-function useFileUpload() {
+function useFileUpload(workspaceId: string) {
   const [serverErrors, setServerErrors] = useState<
     FileUploadServerError[] | null
   >(null);
@@ -72,7 +72,7 @@ function useFileUpload() {
       files.slice(0, MAX_FILES_PER_UPLOAD).forEach((file) => {
         formData.append("files", file);
       });
-      const fileUploadResult = await uploadFiles(formData);
+      const fileUploadResult = await uploadFiles(formData, workspaceId);
       if (fileUploadResult instanceof Array) {
         fileUploadResult.forEach((result) => {
           if (result.errors) {
@@ -105,7 +105,13 @@ function useFileUpload() {
     }
     setServerErrors([...errors]);
     setIsLoading(false);
-  }, [files, handleClearErrors, handleDeleteSingleFile, currentPage]);
+  }, [
+    files,
+    handleClearErrors,
+    handleDeleteSingleFile,
+    currentPage,
+    workspaceId,
+  ]);
 
   return {
     files,

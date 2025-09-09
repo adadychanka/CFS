@@ -1,6 +1,7 @@
 import ManualFeedbackTab from "@/components/feedback-form/manual-feedback-tab";
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
+import { WorkspaceIdParams } from "@/types/pageParams";
 
 export const metadata: Metadata = {
   title: "Manual Feedback Upload",
@@ -22,8 +23,10 @@ export const metadata: Metadata = {
   },
 };
 
-const Page = () => {
-  return <ManualFeedbackTab />;
+const Page = async ({ params }: WorkspaceIdParams) => {
+  const { workspaceId } = await params;
+
+  return <ManualFeedbackTab workspaceId={workspaceId} />;
 };
 
 export default Page;

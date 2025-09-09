@@ -12,7 +12,11 @@ export type PreviewFeedback = {
   feedback: string;
 };
 
-const ManualFeedbackTab = () => {
+type Props = {
+  workspaceId: string;
+};
+
+const ManualFeedbackTab = ({ workspaceId }: Props) => {
   const [feedback, setFeedback] = useSessionStorage<PreviewFeedback[]>(
     "preview-feedback",
     [],
@@ -48,6 +52,7 @@ const ManualFeedbackTab = () => {
         onRemoveFeedback={handleRemoveFeedback}
       />
       <ManualFeedbackSubmitButton
+        workspaceId={workspaceId}
         feedback={feedback}
         onClearFeedback={handleClearFeedback}
       />
