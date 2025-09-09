@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GetWorkspacesResponse } from "@/types/http";
+import type { GetWorkspacesResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 import { getErrorMessage } from "@/lib/get-error-message";
 import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
