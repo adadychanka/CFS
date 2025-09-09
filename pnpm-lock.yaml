@@ -27,7 +27,7 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@repo/ui':
-        specifier: (workspace):*
+        specifier: workspace:*
         version: link:../../packages/ui
       date-fns:
         specifier: 4.1.0
@@ -73,10 +73,10 @@ importers:
         version: 3.25.76
     devDependencies:
       '@repo/eslint-config':
-        specifier: (workspace):*
+        specifier: workspace:*
         version: link:../../packages/eslint-config
       '@repo/typescript-config':
-        specifier: (workspace):*
+        specifier: workspace:*
         version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^22.15.3
@@ -199,10 +199,10 @@ importers:
         version: 3.25.76
     devDependencies:
       '@repo/eslint-config':
-        specifier: (workspace):*
+        specifier: workspace:*
         version: link:../eslint-config
       '@repo/typescript-config':
-        specifier: (workspace):*
+        specifier: workspace:*
         version: link:../typescript-config
       '@tailwindcss/postcss':
         specifier: ^4.0.8
