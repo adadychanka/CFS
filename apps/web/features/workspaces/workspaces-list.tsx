@@ -6,25 +6,18 @@ import {
 } from "@repo/ui/components/sidebar";
 import WorkspaceItem from "@/features/workspaces/workspace-item";
 import { Plus } from "lucide-react";
-
-const FAKE_WOKRSPACES = [
-  "Blinksy",
-  "FlowNest",
-  "LumaPlay",
-  "Zentro",
-  "Quickly",
-];
+import { fakeWorkspaces } from "@/features/workspaces/fake-workspaces";
 
 const WorkspacesList = () => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
       <SidebarGroupAction title="Add Project">
-        <Plus /> <span className="sr-only">Create new workspace</span>
+        <Plus /> <span className="sr-only">Create a new workspace</span>
       </SidebarGroupAction>
       <SidebarMenu>
-        {FAKE_WOKRSPACES.map((name) => (
-          <WorkspaceItem key={name} name={name} />
+        {fakeWorkspaces.map((workspace) => (
+          <WorkspaceItem key={workspace.id} name={workspace.name} />
         ))}
       </SidebarMenu>
     </SidebarGroup>

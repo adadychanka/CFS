@@ -17,11 +17,11 @@ const WorkspaceItemActions = () => {
         </SidebarMenuAction>
       </DropdownMenuTrigger>
       <DropdownMenuContent side="right" align="start">
-        <DropdownMenuItem>
+        <DropdownMenuItem aria-label="Rename workspace">
           <Pencil />
           <span>Rename</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem aria-label="Delete workspace">
           <Trash />
           <span>Delete</span>
         </DropdownMenuItem>
