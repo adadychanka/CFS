@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "@repo/ui/components/sonner";
+import WorkspaceProvider from "@/providers/workspace-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
       enableColorScheme
     >
-      {children}
+      <WorkspaceProvider>{children}</WorkspaceProvider>
       <Toaster />
     </NextThemesProvider>
   );
