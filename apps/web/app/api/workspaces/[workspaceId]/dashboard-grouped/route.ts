@@ -1,13 +1,22 @@
 import { auth } from "@/auth/auth";
-import { FetchError } from "@/lib/errors";
+import { NextRequest, NextResponse } from "next/server";
+import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { getServerApi } from "@/lib/server-api";
-import { SentimentSummaryResponse } from "@/types/sentiment-summary";
-import { NextResponse } from "next/server";
+import { FetchError } from "@/lib/errors";
+import type { WorkspaceIdParams } from "@/types/pageParams";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
-export async function GET() {
+export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
+
+  if (!workspaceId) {
+    return NextResponse.json(
+      { message: "workspaceId is missing." },
+      { status: 400 },
+    );
+  }
   const api = await getServerApi();
   const session = await auth();
-
   if (session?.user.token) {
     api.setToken(session.user.token);
   } else {
@@ -23,14 +32,14 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/feedback/sentiment-summary");
+    const url = createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+    const response = await api.get(url);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
     }
 
-    const result: SentimentSummaryResponse = await response.json();
-
+    const result: GroupedFeedbackResponse = await response.json();
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof FetchError)

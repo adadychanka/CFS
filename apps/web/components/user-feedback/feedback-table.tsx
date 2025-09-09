@@ -8,6 +8,7 @@ import { type GetFeedbackResponse } from "@/types/http";
 import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useFeedbackTable from "@/hooks/useFeedbackTable";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -23,11 +24,13 @@ export const fetcher = async (url: string) => {
 type Props = {
   currentPage: number;
   sentiment: string;
+  workspaceId: string;
 };
 
-const FeedbackTable = ({ currentPage, sentiment }: Props) => {
+const FeedbackTable = ({ currentPage, sentiment, workspaceId }: Props) => {
+  const url = createWorkspaceUrl(workspaceId, "/dashboard-table");
   const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
-    `/api/feedback?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
+    `${url}?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
     fetcher,
     {
       keepPreviousData: true,

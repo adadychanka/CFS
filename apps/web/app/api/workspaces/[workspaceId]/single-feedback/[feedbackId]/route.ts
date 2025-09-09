@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
-import { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
+import type { SentimentAnalysisResult } from "@/types/sentiment-analysis-result";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ feedbackId: string; workspaceId: string }> },
 ) {
-  const { id } = await params;
+  const { feedbackId, workspaceId } = await params;
+
+  if (!workspaceId || !feedbackId) {
+    return NextResponse.json(
+      { message: "workspaceId or feedbackId is missing." },
+      { status: 400 },
+    );
+  }
 
   try {
     const session = await auth();
@@ -18,7 +26,9 @@ export async function GET(
       );
     }
 
-    const res = await fetch(`${process.env.BACKEND_API}/api/feedback/${id}`, {
+    const url = createWorkspaceUrl(workspaceId, `/feedbacks/${feedbackId}`);
+
+    const res = await fetch(`${process.env.BACKEND_API}${url}`, {
       headers: {
         Authorization: `Bearer ${session.user.token}`,
       },
