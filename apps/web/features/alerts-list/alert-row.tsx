@@ -1,5 +1,3 @@
-"use client";
-
 import { TableCell, TableRow } from "@repo/ui/components/table";
 import { formatCreatedAtDate } from "@/utils/date-utils";
 import AlertBadge from "./alert-badge";

@@ -1,4 +1,3 @@
-import React from "react";
 import AlertsList from "@/features/alerts-list/alerts-list";
 
 const AlertsSection = () => {

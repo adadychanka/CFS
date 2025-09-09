@@ -10,13 +10,14 @@ import {
 import { FetchError } from "@/lib/errors";
 import useSWR from "swr";
 import { GetSuspiciousActivitiesResponse } from "@/types/http";
-import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { useSearchParams } from "next/navigation";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import AlertRow from "@/features/alerts-list/alert-row";
 import TableStateHandler from "@/features/error-messages/table-error-states/table-state-handler";
 import TableSkeleton from "@/features/error-messages/table-error-states/table-skeleton";
+import { SuspiciousActivity } from "@/types/suspicious-activity";
+import ClientPagination from "@/components/pagination/client-pagination";
 
 const COL_SPAN = 5;
 
@@ -43,6 +44,14 @@ const AlertsList = () => {
   useEffect(() => {
     if (error instanceof FetchError) clientAuthGuard(error.status);
   }, [error]);
+
+  const renderRows = useCallback(
+    (rows: SuspiciousActivity[]) =>
+      rows.map((alert) => (
+        <AlertRow key={alert.ip + alert.createdAt} alert={alert} />
+      )),
+    [],
+  );
 
   return (
     <div>
@@ -75,15 +84,13 @@ const AlertsList = () => {
                 description:
                   "No suspicious activities have been detected yet. When new alerts are generated, they’ll appear here.",
               }}
-              renderRows={(rows) =>
-                rows.map((alert, idx) => <AlertRow key={idx} alert={alert} />)
-              }
+              renderRows={renderRows}
             />
           </TableBody>
         </Table>
       </div>
 
-      <FeedbackTablePagination limit={data?.pagination.pages ?? 1} />
+      <ClientPagination limit={data?.pagination.pages ?? 1} />
     </div>
   );
 };
