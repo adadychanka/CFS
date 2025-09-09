@@ -9,8 +9,19 @@ import { formatCreatedAtDate } from "@/utils/date-utils";
 import { Button } from "@repo/ui/components/button";
 import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { clientApi } from "@/lib/api";
+import useSWRMutation from "swr/mutation";
 
 const MotionRow = motion.create(TableRow);
+
+async function deleteFile(url: string, { arg }: { arg: { id: string } }) {
+  const response = await await clientApi.delete(`${url}/${arg.id}`);
+  if (!response.ok) {
+    throw new Error("Delete failed");
+  }
+
+  const result: SavedFilesResponse = await response.json();
+  return result;
+}
 
 type Props = {
   data?: SavedFile[];
@@ -20,6 +31,10 @@ type Props = {
 function useSavedFilesTable({ data, reFetch }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { trigger: triggerDelete, isMutating } = useSWRMutation(
+    "/api/files",
+    deleteFile,
+  );
   const heads = useMemo(() => {
     return [
       <TableHead key={"file-name"} className="min-w-[200px]" title="File name">
@@ -47,10 +62,13 @@ function useSavedFilesTable({ data, reFetch }: Props) {
   }, []);
 
   const handleConfirmDelete = useCallback(async () => {
-    try {
-      const response = await clientApi.delete(`/api/files/${selectedId}`);
+    if (!selectedId) {
+      return toast.warning("File id is not found");
+    }
 
-      const result: SavedFilesResponse = await response.json();
+    try {
+      const result = await triggerDelete({ id: selectedId });
+
       if (result.success) {
         reFetch();
         toast.success("File has been deleted!");
@@ -61,7 +79,7 @@ function useSavedFilesTable({ data, reFetch }: Props) {
       toast.error("An error occurred");
     }
     setIsDialogOpen(false);
-  }, [reFetch, selectedId]);
+  }, [reFetch, selectedId, triggerDelete]);
 
   const handleCancelDelete = useCallback(() => {
     setIsDialogOpen(false);
@@ -95,13 +113,15 @@ function useSavedFilesTable({ data, reFetch }: Props) {
             aria-label="Delete singe file"
             variant={"ghost"}
             onClick={() => handleClickDeleteButton(file.id)}
+            disabled={isMutating}
+            aria-busy={isMutating}
           >
             <Trash2 />
           </Button>
         </TableCell>
       </MotionRow>
     ),
-    [selectedId, handleClickDeleteButton],
+    [selectedId, handleClickDeleteButton, isMutating],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({

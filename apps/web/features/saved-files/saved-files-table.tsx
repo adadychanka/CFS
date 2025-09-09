@@ -11,7 +11,7 @@ import useFilesTableBody from "@/hooks/useFilesTableBody";
 import { AnimatePresence } from "framer-motion";
 
 export type SavedFilesTable = {
-  files: SavedFile[];
+  files?: SavedFile[];
   isLoading: boolean;
   filesLimit: number;
   isFilteringEnabled?: boolean;

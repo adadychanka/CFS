@@ -16,7 +16,10 @@ import { uploadFiles } from "@/lib/actions/file-upload";
 import { useCustomDropzone } from "./useCustomDropzone";
 import { useSearchParams } from "next/navigation";
 import { mutate } from "swr";
-import { SAVED_FILES_PAGE_QUERY_KEY } from "@/constants";
+import {
+  SAVED_FILES_LIMIT_QUERY_KEY,
+  SAVED_FILES_PAGE_QUERY_KEY,
+} from "@/constants";
 
 const fileUploadSchema = z.object({
   files: z.array(z.instanceof(File)),
@@ -86,7 +89,7 @@ function useFileUpload() {
       if (!errors.length) {
         toast.success("All files has been processed!");
         mutate(
-          `/api/files?page=${currentPage}&limit=${SAVED_FILES_PAGE_LIMIT}`,
+          `/api/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
         );
       } else {
         if (
