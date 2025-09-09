@@ -3,9 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@repo/ui/globals.css";
 import { Providers } from "@/components/providers";
 import React from "react";
-import { SidebarProvider } from "@repo/ui/components/sidebar";
-import { withAdminAccess } from "@/components/withAdminAccess";
-import AppSidebar from "@/components/app-sidebar";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -23,8 +20,6 @@ export const metadata: Metadata = {
     "AI-powered Customer Feedback Analysis that classifies feedback as positive, negative, neutral, or unknown to help you quickly understand customer sentiment.",
 };
 
-const DynamicSidebar = withAdminAccess(AppSidebar);
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,12 +30,7 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>
-          <SidebarProvider>
-            <DynamicSidebar />
-            {children}
-          </SidebarProvider>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
