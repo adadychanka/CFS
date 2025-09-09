@@ -11,12 +11,12 @@ type Props = {
 
 const WorkspaceItem = ({ name }: Props) => {
   return (
-    <SidebarMenuItem key={name}>
-      <SidebarMenuButton>
+    <SidebarMenuItem>
+      <SidebarMenuButton aria-label={`Switch to ${name} workspace`}>
         <Folder />
         {name}
-        <WorkspaceItemActions />
       </SidebarMenuButton>
+      <WorkspaceItemActions />
     </SidebarMenuItem>
   );
 };
