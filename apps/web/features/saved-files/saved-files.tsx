@@ -5,7 +5,6 @@ import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
-import FeedbackTablePagination from "@/components/user-feedback/feedback-table-pagination";
 import { SAVED_FILES_PAGE_LIMIT } from "@/constants/constants";
 import useSavedFilesTable from "@/hooks/useSavedFilesTable";
 import { clientApi } from "@/lib/api";
@@ -13,6 +12,7 @@ import { FetchError } from "@/lib/errors";
 import type { SavedFilesResponse } from "@/types/saved-files";
 import SavedFilesTable from "./saved-files-table";
 import { SAVED_FILES_PAGE_QUERY_KEY } from "@/constants";
+import ClientPagination from "@/components/pagination/client-pagination";
 
 const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -68,7 +68,7 @@ function SavedFiles() {
         />
       </div>
       {result?.data && (
-        <FeedbackTablePagination limit={result.data.pagination.pages | 0} />
+        <ClientPagination limit={result.data.pagination.pages | 0} />
       )}
       <ConfirmationDialog
         isOpen={isDialogOpen}
