@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 
@@ -11,7 +11,10 @@ import { clientApi } from "@/lib/api";
 import { FetchError } from "@/lib/errors";
 import type { SavedFilesResponse } from "@/types/saved-files";
 import SavedFilesTable from "./saved-files-table";
-import { SAVED_FILES_PAGE_QUERY_KEY } from "@/constants";
+import {
+  SAVED_FILES_LIMIT_QUERY_KEY,
+  SAVED_FILES_PAGE_QUERY_KEY,
+} from "@/constants";
 import ClientPagination from "@/components/pagination/client-pagination";
 
 const fetcher = async (url: string) => {
@@ -39,13 +42,16 @@ function SavedFiles() {
     isLoading,
     mutate,
   } = useSWR(
-    `/api/files?page=${currentPage}&limit=${SAVED_FILES_PAGE_LIMIT}`,
+    `/api/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
     fetcher,
   );
 
-  function handleRefetch() {
-    mutate();
-  }
+  const handleRefetch = useCallback(
+    function handleRefetch() {
+      mutate();
+    },
+    [mutate],
+  );
 
   const {
     tableHeads,
@@ -54,12 +60,13 @@ function SavedFiles() {
     handleCancelDelete,
     handleConfirmDelete,
   } = useSavedFilesTable({ data: result?.data?.files, reFetch: handleRefetch });
+
   return (
     <section className="mt-4">
       <h2 className="text-lg">All processed files</h2>
       <div className="overflow-x-auto rounded-md border">
         <SavedFilesTable
-          files={result?.data?.files || []}
+          files={result?.data?.files}
           tableHeads={tableHeads}
           tableRows={tableRows}
           filesLimit={SAVED_FILES_PAGE_LIMIT}
@@ -68,7 +75,7 @@ function SavedFiles() {
         />
       </div>
       {result?.data && (
-        <ClientPagination limit={result.data.pagination.pages | 0} />
+        <ClientPagination limit={result.data.pagination.pages || 0} />
       )}
       <ConfirmationDialog
         isOpen={isDialogOpen}
