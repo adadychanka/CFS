@@ -9,11 +9,6 @@ export type GetFeedbackResponse = {
   pagination: PaginationMeta;
 };
 
-export type GetSuspiciousActivitiesResponse = {
-  suspiciousActivities: SuspiciousActivity[];
-  pagination: PaginationMeta;
-};
-
 export type GetUsersResponse = {
   users: User[];
   pagination?: PaginationMeta;

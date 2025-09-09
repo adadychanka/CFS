@@ -63,7 +63,7 @@ importers:
         specifier: 7.62.0
         version: 7.62.0(react@19.1.0)
       socket.io-client:
-        specifier: ^4.8.1
+        specifier: 4.8.1
         version: 4.8.1
       sonner:
         specifier: 2.0.7
