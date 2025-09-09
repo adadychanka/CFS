@@ -1,5 +1,6 @@
-import { AdminMetrics } from "@/types/metrics";
 import React from "react";
+
+import type { AdminMetrics } from "@/types/metrics";
 import { CardSkeletonGroup } from "./admin-metrics-skeleton";
 import ErrorUnexpected from "@/features/error-messages/error-unexpected";
 import { ErrorEmptyList } from "@/features/error-messages/error-empty-list";

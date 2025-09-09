@@ -38,7 +38,6 @@ const Page = () => {
         {/* TODO: Need a custom loader */}
         <Suspense fallback={null}>
           <AdminMetrics />
-
           <UsersSection />
         </Suspense>
       </div>

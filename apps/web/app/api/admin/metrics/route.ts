@@ -1,9 +1,10 @@
 import { auth } from "@/auth/auth";
 import { NextResponse } from "next/server";
 import { getServerApi } from "@/lib/server-api";
-import { FetchError } from "@/lib/errors";
 import type { AdminMetricsResponse } from "@/types/metrics";
 import { getAdminMetrics } from "@/lib/get-admin-metrics";
+import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
+import { getErrorMessage } from "@/lib/get-error-message";
 
 export async function GET() {
   const api = await getServerApi();
@@ -14,6 +15,7 @@ export async function GET() {
   } else {
     return NextResponse.json(
       {
+        success: false,
         message: "User session expired or not found, Please log in again!",
         status: 401,
       },
@@ -27,10 +29,11 @@ export async function GET() {
     const response = await api.get("/api/admin/metrics");
 
     if (!response.ok) {
-      const result: AdminMetricsResponse = await response.json();
+      let errorMessage = `Request failed with status ${response.status}`;
+      errorMessage = (await getErrorMessage(response)) || "Unexpected error.";
 
       return NextResponse.json(
-        { success: false, message: result.message },
+        { success: false, message: errorMessage },
         { status: response.status },
       );
     }
@@ -65,32 +68,13 @@ export async function GET() {
       );
     }
   } catch (error) {
-    if (error instanceof FetchError)
-      return NextResponse.json(
-        {
-          success: false,
-          message: error.message,
-        },
-        {
-          status: error.status,
-        },
-      );
-
-    if (error instanceof Error)
-      return NextResponse.json(
-        {
-          success: false,
-          message: error.message,
-        },
-        { status: 500 },
-      );
-
+    const errorResponse = await getUnknownErrorMessage(error);
     return NextResponse.json(
       {
         success: false,
-        message: "Something went wrong",
+        message: errorResponse.error,
       },
-      { status: 500 },
+      { status: errorResponse.status },
     );
   }
 }
