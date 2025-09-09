@@ -5,8 +5,19 @@ import { getServerApi } from "@/lib/server-api";
 import { FetchError } from "@/lib/errors";
 import type { SavedFilesResponse } from "@/types/saved-files";
 import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
+import type { WorkspaceIdParams } from "@/types/pageParams";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
+
+  if (!workspaceId) {
+    return NextResponse.json(
+      { success: false, status: 400, message: "workspaceId is missing." },
+      { status: 400 },
+    );
+  }
+
   const api = await getServerApi();
   const session = await auth();
   if (session?.user.token) {
@@ -25,8 +36,12 @@ export async function GET(req: NextRequest) {
 
   try {
     const { limit, page } = getPaginationParamsFromNextRequest(req);
+    const url = createWorkspaceUrl(
+      workspaceId,
+      `/files?limit=${limit}&page=${page}`,
+    );
 
-    const response = await api.get(`/api/files?limit=${limit}&page=${page}`);
+    const response = await api.get(url);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
