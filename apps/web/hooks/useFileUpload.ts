@@ -20,6 +20,7 @@ import {
   SAVED_FILES_LIMIT_QUERY_KEY,
   SAVED_FILES_PAGE_QUERY_KEY,
 } from "@/constants";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 const fileUploadSchema = z.object({
   files: z.array(z.instanceof(File)),
@@ -88,9 +89,11 @@ function useFileUpload(workspaceId: string) {
 
       if (!errors.length) {
         toast.success("All files has been processed!");
-        mutate(
-          `/api/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
+        const url = createWorkspaceUrl(
+          workspaceId,
+          `/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
         );
+        mutate(url);
       } else {
         if (
           (fileUploadResult as FileUploadResponse[]).some(

@@ -4,7 +4,7 @@ import { METADATA } from "@/constants/metadata";
 import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
 import SavedFiles from "@/features/saved-files/saved-files";
 import SpinnerLoader from "@repo/ui/custom-components/spinner-loader";
-import { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/pageParams";
 
 export const metadata: Metadata = {
   title: "CSV File Upload",
@@ -35,7 +35,7 @@ async function Page({ params }: WorkspaceIdParams) {
       {/*Bot FileUploadForm and SavedFiles includes useSearchParams*/}
       <Suspense fallback={<SpinnerLoader />}>
         <FileUploadForm workspaceId={workspaceId} />
-        <SavedFiles />
+        <SavedFiles workspaceId={workspaceId} />
       </Suspense>
     </div>
   );

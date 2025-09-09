@@ -5,16 +5,17 @@ import { getServerApi } from "@/lib/server-api";
 import type { SavedFilesResponse } from "@/types/saved-files";
 import { getErrorMessage } from "@/lib/get-error-message";
 import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ fileId: string }> },
+  { params }: { params: Promise<{ fileId: string; workspaceId: string }> },
 ) {
-  const { fileId } = await params;
-  if (!fileId) {
+  const { fileId, workspaceId } = await params;
+  if (!fileId || !workspaceId) {
     return NextResponse.json(
       {
-        message: "File ID must be provided in the request query.",
+        message: "fileId or workspaceId is missing.",
       },
       { status: 400 },
     );
@@ -37,7 +38,8 @@ export async function DELETE(
   }
 
   try {
-    const response = await api.delete(`/api/files/${fileId}`);
+    const url = createWorkspaceUrl(workspaceId, `/files/${fileId}`);
+    const response = await api.delete(url);
 
     if (!response.ok) {
       let errorMessage = `Request failed with status ${response.status}`;
