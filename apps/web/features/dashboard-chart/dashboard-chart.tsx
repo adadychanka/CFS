@@ -5,8 +5,9 @@ import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useDashboardChart from "@/hooks/useDashboardChart";
 
-function DashboardChart() {
-  const { chartRef, hasError, error, isLoading, isEmpty } = useDashboardChart();
+function DashboardChart({ workspaceId }: { workspaceId: string }) {
+  const { chartRef, hasError, error, isLoading, isEmpty } =
+    useDashboardChart(workspaceId);
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 

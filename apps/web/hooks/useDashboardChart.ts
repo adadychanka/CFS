@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 import { updateSearchParams } from "@/utils/url-helpers";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -26,15 +27,13 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-function useDashboardChart() {
+function useDashboardChart(workspaceId: string) {
+  const url = createWorkspaceUrl(workspaceId, "/dashboard-chart");
   const {
     data: result,
     error,
     isLoading,
-  } = useSWR<SentimentSummaryResponse, FetchError>(
-    "/api/feedback/sentiment-summary",
-    fetcher,
-  );
+  } = useSWR<SentimentSummaryResponse, FetchError>(url, fetcher);
 
   const { chartOptions, isEmpty } = useMemo(
     function deriveChartOptions() {
