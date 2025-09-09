@@ -2,11 +2,12 @@ import { OctagonAlert } from "lucide-react";
 import ErrorContainer from "@/features/error-messages/error-container";
 
 type Props = {
+  iconSize?: "sm" | "lg";
   description?: string;
   onRetry?: () => void;
 };
 
-export const ErrorUnexpected = ({ description, onRetry }: Props) => (
+export const ErrorUnexpected = ({ description, onRetry, iconSize }: Props) => (
   <ErrorContainer
     Icon={OctagonAlert}
     title="Something went wrong"
@@ -14,7 +15,8 @@ export const ErrorUnexpected = ({ description, onRetry }: Props) => (
       description || "An unexpected error occurred. Please try again later."
     }
     onRetry={onRetry}
-    retryLabel="Try again"
+    retryLabel="Retry"
+    iconSize={iconSize}
   />
 );
 
