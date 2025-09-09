@@ -17,7 +17,7 @@ const WorkspacesList = () => {
       </SidebarGroupAction>
       <SidebarMenu>
         {fakeWorkspaces.map((workspace) => (
-          <WorkspaceItem key={workspace.id} name={workspace.name} />
+          <WorkspaceItem key={workspace.id} workspace={workspace} />
         ))}
       </SidebarMenu>
     </SidebarGroup>

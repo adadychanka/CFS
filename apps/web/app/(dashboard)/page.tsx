@@ -1,21 +1,15 @@
-import Header from "@repo/ui/components/header";
-import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
-import { Suspense } from "react";
-import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
-import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
+import type { Metadata } from "next";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
+
+const Page = () => {
   return (
-    <>
-      <Header title="Dashboard" />
-      <div className="w-full max-w-[1280px] mx-auto p-4">
-        {/* TODO: need custom loading in the future*/}
-        <Suspense fallback={<p>Loading...</p>}>
-          <DashboardChartWrapper />
-          <FeedbackPanel />
-          <SwitchTableCollapsedTabs />
-        </Suspense>
-      </div>
-    </>
+    <div>
+      <h2>List of workspaces here</h2>
+    </div>
   );
-}
+};
+
+export default Page;
