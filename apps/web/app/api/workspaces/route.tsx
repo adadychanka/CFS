@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { GetWorkspacesResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
+import { getErrorMessage } from "@/lib/get-error-message";
+import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
 
 export async function GET() {
   try {
@@ -22,14 +24,8 @@ export async function GET() {
     });
 
     if (!res.ok) {
-      return NextResponse.json(
-        {
-          success: false,
-          status: res.status,
-          message: "Failed to fetch workspaces.",
-        },
-        { status: res.status },
-      );
+      const errorMessage = (await getErrorMessage(res)) || "Unexpected error.";
+      return NextResponse.json({ error: errorMessage }, { status: res.status });
     }
 
     const body = await res.json();
@@ -40,12 +36,11 @@ export async function GET() {
       status: 200,
       data,
     });
-  } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Internal Server Error";
-
+  } catch (error) {
+    const errorResponse = await getUnknownErrorMessage(error);
     return NextResponse.json(
-      { success: false, status: 500, message },
-      { status: 500 },
+      { error: errorResponse.error },
+      { status: errorResponse.status },
     );
   }
 }
