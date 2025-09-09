@@ -36,7 +36,7 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
     setIsLoading(false);
   };
 
-  const handleSwitchSampleMode = () => {
+  const handleTurnOnSampleMode = () => {
     setSampleMode(true);
     redirect("/");
   };
@@ -48,9 +48,10 @@ const ManualFeedbackSubmitButton = ({ feedback, onClearFeedback }: Props) => {
       <div className="flex justify-end flex-wrap gap-2 sm:gap-4">
         <Button
           variant="outline"
-          onClick={handleSwitchSampleMode}
+          onClick={handleTurnOnSampleMode}
           disabled={isLoading}
           className="whitespace-nowrap shrink-0"
+          aria-label="Enable sample mode and go to dashboard"
         >
           <FlaskConical className="mr-1" />
           Try with sample mode
