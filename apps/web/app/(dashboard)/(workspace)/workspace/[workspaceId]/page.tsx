@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Header title="Dashboard" />
