@@ -56,6 +56,22 @@ export class ApiClient {
     }
   }
 
+  async delete(endpoint: string) {
+    try {
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: "DELETE",
+        headers: this.getHeaders(),
+      });
+
+      return res;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Internal Server Error";
+
+      return NextResponse.json({ message }, { status: 500 });
+    }
+  }
+
   async upload(endpoint: string, formData: FormData): Promise<Response> {
     try {
       const response = await fetch(`${this.baseUrl}${endpoint}`, {

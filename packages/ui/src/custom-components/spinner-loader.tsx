@@ -1,0 +1,12 @@
+function SpinnerLoader() {
+  return (
+    <div className="flex items-center justify-center h-full w-full bg-background m-0 ">
+      <div className="flex flex-col items-center space-y-4">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-primary"></div>
+        <p className="text-lg font-medium text-muted-foreground">Loading...</p>
+      </div>
+    </div>
+  );
+}
+
+export default SpinnerLoader;
