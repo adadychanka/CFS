@@ -57,7 +57,10 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
 
   const renderRow = useCallback(
     (sentiment: SentimentAnalysisResult) => (
-      <TableRow key={sentiment.id} className="odd:bg-muted/50  hover:bg-muted transition-colors">
+      <TableRow
+        key={sentiment.id}
+        className="odd:bg-muted/50  hover:bg-muted transition-colors"
+      >
         <TableCell className="flex items-center gap-2">
           <span>{sentiment.summary}</span>
           {isSampleMode && (

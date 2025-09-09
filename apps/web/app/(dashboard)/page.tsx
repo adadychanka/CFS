@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@repo/ui/components/header";
 import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-collapsed-tabs";
 import { Suspense } from "react";
@@ -15,7 +13,7 @@ export default function Home() {
         <SampleModeToggle />
 
         {/* TODO: need custom loading in the future*/}
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={null}>
           <DashboardChartWrapper />
           <FeedbackPanel />
           <SwitchTableCollapsedTabs />
