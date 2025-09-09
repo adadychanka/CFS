@@ -4,14 +4,19 @@ import type { PreviewFeedback } from "@/components/feedback-form/manual-feedback
 import { auth } from "@/auth/auth";
 import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
 import callBackend from "@/lib/call-backend";
+import { createWorkspaceUrl } from "../create-workspace-url";
 
-export async function uploadManualFeedback(feedback: PreviewFeedback[]) {
+export async function uploadManualFeedback(
+  feedback: PreviewFeedback[],
+  workspaceId: string,
+) {
   const formattedFeedback = {
     feedbacks: feedback.map((f) => f.feedback).slice(0, FEEDBACK_MAX_ITEMS),
   };
 
+  const url = createWorkspaceUrl(workspaceId, "/feedbacks/manual");
   return callBackend(
-    "/api/feedback/manual",
+    url,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
