@@ -73,7 +73,8 @@ const WorkspacesList = () => {
       <SidebarGroupLabel>Workspaces</SidebarGroupLabel>
       <NewWorkspaceModal
         isOpen={isCreateModalOpen}
-        onOpenChange={setIsCreateModalOpen}
+        onModalToggle={setIsCreateModalOpen}
+        onRefetchWorkspaces={mutate}
       />
       <SidebarMenu>{content}</SidebarMenu>
     </SidebarGroup>
