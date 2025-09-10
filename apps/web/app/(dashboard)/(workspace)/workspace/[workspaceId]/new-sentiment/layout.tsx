@@ -1,22 +1,37 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { use, type ReactNode } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
 import { usePathname, useRouter } from "next/navigation";
 import Header from "@repo/ui/components/header";
+import { WorkspaceIdParams } from "@/types/page-params";
 
-const tabs = [
-  { tab: "manual", url: "/new-sentiment/manual", label: "Manual Entry" },
-  {
-    tab: "file-upload",
-    url: "/new-sentiment/file-upload",
-    label: "File Upload",
-  },
-];
+function getTabs(workspaceId: string) {
+  return [
+    {
+      tab: "manual",
+      url: `/workspace/${workspaceId}/new-sentiment/manual`,
+      label: "Manual Entry",
+    },
+    {
+      tab: "file-upload",
+      url: `/workspace/${workspaceId}/new-sentiment/file-upload`,
+      label: "File Upload",
+    },
+  ] as const;
+}
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: WorkspaceIdParams["params"];
+}) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { workspaceId } = use(params);
+  const tabs = getTabs(workspaceId);
 
   const activeTab =
     tabs.find((tab) => pathname.startsWith(tab.url))?.tab ?? "manual";

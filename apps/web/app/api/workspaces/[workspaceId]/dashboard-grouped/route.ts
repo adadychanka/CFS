@@ -1,12 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-
 import { auth } from "@/auth/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { getServerApi } from "@/lib/server-api";
 import { FetchError } from "@/lib/errors";
-import type { SavedFilesResponse } from "@/types/saved-files";
-import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
+import type { WorkspaceIdParams } from "@/types/page-params";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
+
+  if (!workspaceId) {
+    return NextResponse.json(
+      { message: "workspaceId is missing." },
+      { status: 400 },
+    );
+  }
   const api = await getServerApi();
   const session = await auth();
   if (session?.user.token) {
@@ -24,16 +32,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const { limit, page } = getPaginationParamsFromNextRequest(req);
-
-    const response = await api.get(`/api/files?limit=${limit}&page=${page}`);
+    const url = createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+    const response = await api.get(url);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });
     }
 
-    const result: SavedFilesResponse = await response.json();
-
+    const result: GroupedFeedbackResponse = await response.json();
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof FetchError)

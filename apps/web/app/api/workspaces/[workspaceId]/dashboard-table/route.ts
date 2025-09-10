@@ -1,13 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GetFeedbackResponse } from "@/types/http";
+import type { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 import {
   getPaginationParamsFromNextRequest,
   parseSentimentsQueryParam,
   transformSentimentsIntoSearchParams,
 } from "@/utils/url-helpers";
+import type { WorkspaceIdParams } from "@/types/page-params";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
+
+  if (!workspaceId) {
+    return NextResponse.json(
+      { success: false, status: 400, message: "workspaceId is missing." },
+      { status: 400 },
+    );
+  }
+
   try {
     const session = await auth();
 
@@ -24,7 +35,8 @@ export async function GET(req: NextRequest) {
     const parsedSentiments = transformSentimentsIntoSearchParams(sentiments);
 
     // Building URL
-    const requestUrl = new URL("/api/feedback", process.env.BACKEND_API);
+    const url = createWorkspaceUrl(workspaceId, "/feedbacks");
+    const requestUrl = new URL(url, process.env.BACKEND_API);
 
     requestUrl.searchParams.set("page", page.toString());
     requestUrl.searchParams.set("limit", limit.toString());

@@ -33,10 +33,15 @@ async function callBackend<TBody = unknown>(
       body: options.body ? JSON.stringify(options.body) : undefined,
     });
 
-    const data = await res.json();
+    let data = null;
+    if (res.status !== 204) data = await res.json();
 
     if (!res.ok) {
-      return { success: false, status: res.status, message: data.message };
+      return {
+        success: false,
+        status: res.status,
+        message: data?.message ?? "Request failed",
+      };
     }
 
     return {

@@ -19,9 +19,10 @@ import { browserFileDownloader } from "@/utils/browser-file-downloader";
 const handleDownload = async (
   type: "summary" | "detailed",
   format: "csv" | "pdf",
+  workspaceId: string,
 ) => {
   try {
-    const res = await downloadReport(type, format);
+    const res = await downloadReport(type, format, workspaceId);
 
     if (!res.success) {
       if (res.status === 401 || res.status === 403) {
@@ -48,7 +49,7 @@ const handleDownload = async (
   }
 };
 
-const ExportDropdown = () => {
+const ExportDropdown = ({ workspaceId }: { workspaceId: string }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -61,28 +62,28 @@ const ExportDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem
             aria-label="Download detailed CSV file"
-            onClick={() => handleDownload("detailed", "csv")}
+            onClick={() => handleDownload("detailed", "csv", workspaceId)}
           >
             <FileSpreadsheet className="text-neutral-800" />
             Detailed (CSV)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized CSV file"
-            onClick={() => handleDownload("summary", "csv")}
+            onClick={() => handleDownload("summary", "csv", workspaceId)}
           >
             <FileSpreadsheet className="text-neutral-800" />
             Summarized (CSV)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download detailed PDF file"
-            onClick={() => handleDownload("detailed", "pdf")}
+            onClick={() => handleDownload("detailed", "pdf", workspaceId)}
           >
             <FileText className="text-neutral-800" />
             Detailed (PDF)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized PDF file"
-            onClick={() => handleDownload("summary", "pdf")}
+            onClick={() => handleDownload("summary", "pdf", workspaceId)}
           >
             <FileText className="text-neutral-800" />
             Summarized (PDF)

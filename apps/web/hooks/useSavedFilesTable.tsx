@@ -10,11 +10,12 @@ import { Button } from "@repo/ui/components/button";
 import { FileSpreadsheet, Trash2 } from "lucide-react";
 import { clientApi } from "@/lib/api";
 import useSWRMutation from "swr/mutation";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 const MotionRow = motion.create(TableRow);
 
 async function deleteFile(url: string, { arg }: { arg: { id: string } }) {
-  const response = await await clientApi.delete(`${url}/${arg.id}`);
+  const response = await clientApi.delete(`${url}/${arg.id}`);
   if (!response.ok) {
     throw new Error("Delete failed");
   }
@@ -26,15 +27,19 @@ async function deleteFile(url: string, { arg }: { arg: { id: string } }) {
 type Props = {
   data?: SavedFile[];
   reFetch: () => void;
+  workspaceId: string;
 };
 
-function useSavedFilesTable({ data, reFetch }: Props) {
+function useSavedFilesTable({ data, reFetch, workspaceId }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const url = createWorkspaceUrl(workspaceId, "/files");
   const { trigger: triggerDelete, isMutating } = useSWRMutation(
-    "/api/files",
+    url,
     deleteFile,
   );
+
   const heads = useMemo(() => {
     return [
       <TableHead key={"file-name"} className="min-w-[200px]" title="File name">

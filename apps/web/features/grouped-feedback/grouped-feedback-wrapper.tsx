@@ -5,6 +5,7 @@ import { FetchError } from "@/lib/errors";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -21,12 +22,13 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-function GroupedFeedback() {
+function GroupedFeedback({ workspaceId }: { workspaceId: string }) {
+  const url = createWorkspaceUrl(workspaceId, "/dashboard-grouped");
   const {
     data: result,
     error,
     isLoading,
-  } = useSWR<GroupedFeedbackResponse>("/api/feedback/grouped", fetcher);
+  } = useSWR<GroupedFeedbackResponse>(url, fetcher);
 
   if (error instanceof FetchError) clientAuthGuard(error.status);
 

@@ -17,7 +17,7 @@ import PreviewFileSection from "./preview/preview-file-section";
 import useFileUpload from "@/hooks/useFileUpload";
 import PreviewFileErrors from "./preview/preview-file-errors";
 
-function FileUploadDropzone() {
+function FileUploadDropzone({ workspaceId }: { workspaceId: string }) {
   const {
     form,
     serverErrors,
@@ -30,7 +30,7 @@ function FileUploadDropzone() {
     isLoading,
     files,
     handleDeleteSingleFile,
-  } = useFileUpload();
+  } = useFileUpload(workspaceId);
 
   const className = cn(
     "p-16 flex items-center justify-center flex-col gap-2  mt-1 border border-neutral-200",

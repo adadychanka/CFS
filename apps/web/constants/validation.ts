@@ -1,0 +1,2 @@
+export const NEW_WORKSPACE_MIN_LENGTH = 1;
+export const NEW_WORKSPACE_MAX_LENGTH = 255;

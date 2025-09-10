@@ -20,9 +20,10 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   workspace: Workspace;
+  onRefetchWorkspaces: () => void;
 };
 
-const WorkspaceItem = ({ workspace }: Props) => {
+const WorkspaceItem = ({ workspace, onRefetchWorkspaces }: Props) => {
   const pathname = usePathname();
   const isActiveDashboard = `/workspace/${workspace.id}` === pathname;
   const isActiveUpload = pathname.startsWith(
@@ -40,10 +41,14 @@ const WorkspaceItem = ({ workspace }: Props) => {
             <Folder className="h-4 w-4 group-data-[state=closed]/collapsible:block hidden" />
             {/* Open */}
             <FolderOpen className="h-4 w-4 group-data-[state=open]/collapsible:block hidden" />
-            {workspace.name}
+            <span className="truncate max-w-[180px]">{workspace.name}</span>
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        <WorkspaceItemActions />
+
+        <WorkspaceItemActions
+          workspaceId={workspace.id}
+          onRefetchWorkspaces={onRefetchWorkspaces}
+        />
 
         <CollapsibleContent>
           <SidebarMenuSub>

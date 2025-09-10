@@ -1,10 +1,21 @@
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
-import { SentimentSummaryResponse } from "@/types/sentiment-summary";
-import { NextResponse } from "next/server";
+import type { WorkspaceIdParams } from "@/types/page-params";
+import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 
-export async function GET() {
+export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
+
+  if (!workspaceId) {
+    return NextResponse.json(
+      { message: "workspaceId is missing." },
+      { status: 400 },
+    );
+  }
+
   const api = await getServerApi();
   const session = await auth();
 
@@ -23,7 +34,8 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/feedback/sentiment-summary");
+    const url = createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
+    const response = await api.get(url);
 
     if (!response.ok) {
       return NextResponse.json({}, { status: response.status });

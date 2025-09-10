@@ -3,17 +3,19 @@ import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-co
 import { Suspense } from "react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
+import type { WorkspaceIdParams } from "@/types/page-params";
 
-export default function Page() {
+export default async function Page({ params }: WorkspaceIdParams) {
+  const { workspaceId } = await params;
   return (
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
-          <DashboardChartWrapper />
-          <FeedbackPanel />
-          <SwitchTableCollapsedTabs />
+          <DashboardChartWrapper workspaceId={workspaceId} />
+          <FeedbackPanel workspaceId={workspaceId} />
+          <SwitchTableCollapsedTabs workspaceId={workspaceId} />
         </Suspense>
       </div>
     </>

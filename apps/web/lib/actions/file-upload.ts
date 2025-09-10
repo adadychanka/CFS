@@ -6,8 +6,9 @@ import type {
   FileUploadResponse,
 } from "@/types/feedback-file-upload";
 import { getServerApi } from "../server-api";
+import { createWorkspaceUrl } from "../create-workspace-url";
 
-async function uploadFile(file: File) {
+async function uploadFile(file: File, workspaceId: string) {
   const api = await getServerApi();
   const session = await auth();
 
@@ -20,12 +21,14 @@ async function uploadFile(file: File) {
 
   const formData = new FormData();
   formData.append("file", file);
-  const response = await api.upload("/api/feedback/upload", formData);
+
+  const url = createWorkspaceUrl(workspaceId, "/feedbacks/upload");
+  const response = await api.upload(url, formData);
 
   return await response.json();
 }
 
-export async function uploadFiles(formData: FormData) {
+export async function uploadFiles(formData: FormData, workspaceId: string) {
   let fileStatuses: FileUploadResponse[] = [];
   try {
     const files = formData.getAll("files") as File[] | null;
@@ -44,7 +47,10 @@ export async function uploadFiles(formData: FormData) {
     if (files) {
       const results = await Promise.allSettled(
         files.map(async (file) => {
-          const response: FeedbackFileUploadResponse = await uploadFile(file);
+          const response: FeedbackFileUploadResponse = await uploadFile(
+            file,
+            workspaceId,
+          );
 
           return {
             fileName: file.name,

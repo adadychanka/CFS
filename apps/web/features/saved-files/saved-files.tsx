@@ -16,6 +16,7 @@ import {
   SAVED_FILES_PAGE_QUERY_KEY,
 } from "@/constants";
 import ClientPagination from "@/components/pagination/client-pagination";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -32,19 +33,27 @@ const fetcher = async (url: string) => {
   return data;
 };
 
-function SavedFiles() {
+type Props = {
+  workspaceId: string;
+};
+
+function SavedFiles({ workspaceId }: Props) {
   const params = useSearchParams();
   const currentPage = params.get(SAVED_FILES_PAGE_QUERY_KEY) || 1;
 
-  const {
-    data: result,
-    error,
-    isLoading,
-    mutate,
-  } = useSWR(
-    `/api/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
-    fetcher,
+  const searchParams = new URLSearchParams();
+  searchParams.set(SAVED_FILES_PAGE_QUERY_KEY, currentPage.toString());
+  searchParams.set(
+    SAVED_FILES_LIMIT_QUERY_KEY,
+    SAVED_FILES_PAGE_LIMIT.toString(),
   );
+
+  const url = createWorkspaceUrl(
+    workspaceId,
+    `/files?${searchParams.toString()}`,
+  );
+
+  const { data: result, error, isLoading, mutate } = useSWR(url, fetcher);
 
   const handleRefetch = useCallback(
     function handleRefetch() {
@@ -59,7 +68,11 @@ function SavedFiles() {
     isDialogOpen,
     handleCancelDelete,
     handleConfirmDelete,
-  } = useSavedFilesTable({ data: result?.data?.files, reFetch: handleRefetch });
+  } = useSavedFilesTable({
+    data: result?.data?.files,
+    reFetch: handleRefetch,
+    workspaceId,
+  });
 
   return (
     <section className="mt-4">

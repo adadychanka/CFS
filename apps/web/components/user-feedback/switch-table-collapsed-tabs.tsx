@@ -15,7 +15,7 @@ import ExportDropdown from "@/components/export/export-dropdown";
 import GroupedFeedbackWrapper from "@/features/grouped-feedback/grouped-feedback-wrapper";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 
-const SwitchTableCollapsedTabs = () => {
+const SwitchTableCollapsedTabs = ({ workspaceId }: { workspaceId: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -54,13 +54,17 @@ const SwitchTableCollapsedTabs = () => {
             <GalleryVertical /> Grouped
           </TabsTrigger>
         </TabsList>
-        <ExportDropdown />
+        <ExportDropdown workspaceId={workspaceId} />
       </div>
       <TabsContent value="table">
-        <FeedbackTable currentPage={currentPage} sentiment={filterOnURLQuery} />
+        <FeedbackTable
+          currentPage={currentPage}
+          sentiment={filterOnURLQuery}
+          workspaceId={workspaceId}
+        />
       </TabsContent>
       <TabsContent value="grouped">
-        <GroupedFeedbackWrapper />
+        <GroupedFeedbackWrapper workspaceId={workspaceId} />
       </TabsContent>
     </Tabs>
   );

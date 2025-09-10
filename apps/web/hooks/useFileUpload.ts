@@ -20,6 +20,7 @@ import {
   SAVED_FILES_LIMIT_QUERY_KEY,
   SAVED_FILES_PAGE_QUERY_KEY,
 } from "@/constants";
+import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 const fileUploadSchema = z.object({
   files: z.array(z.instanceof(File)),
@@ -27,7 +28,7 @@ const fileUploadSchema = z.object({
 
 type FileUploadFormData = z.infer<typeof fileUploadSchema>;
 
-function useFileUpload() {
+function useFileUpload(workspaceId: string) {
   const [serverErrors, setServerErrors] = useState<
     FileUploadServerError[] | null
   >(null);
@@ -72,7 +73,7 @@ function useFileUpload() {
       files.slice(0, MAX_FILES_PER_UPLOAD).forEach((file) => {
         formData.append("files", file);
       });
-      const fileUploadResult = await uploadFiles(formData);
+      const fileUploadResult = await uploadFiles(formData, workspaceId);
       if (fileUploadResult instanceof Array) {
         fileUploadResult.forEach((result) => {
           if (result.errors) {
@@ -88,9 +89,19 @@ function useFileUpload() {
 
       if (!errors.length) {
         toast.success("All files has been processed!");
-        mutate(
-          `/api/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
+        const searchParams = new URLSearchParams();
+        searchParams.set(SAVED_FILES_PAGE_QUERY_KEY, currentPage.toString());
+        searchParams.set(
+          SAVED_FILES_LIMIT_QUERY_KEY,
+          SAVED_FILES_PAGE_LIMIT.toString(),
         );
+
+        const url = createWorkspaceUrl(
+          workspaceId,
+          `/files?${searchParams.toString()}`,
+        );
+
+        mutate(url);
       } else {
         if (
           (fileUploadResult as FileUploadResponse[]).some(
@@ -105,7 +116,13 @@ function useFileUpload() {
     }
     setServerErrors([...errors]);
     setIsLoading(false);
-  }, [files, handleClearErrors, handleDeleteSingleFile, currentPage]);
+  }, [
+    files,
+    handleClearErrors,
+    handleDeleteSingleFile,
+    currentPage,
+    workspaceId,
+  ]);
 
   return {
     files,
