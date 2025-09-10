@@ -32,9 +32,8 @@ const DeleteWorkspaceConfirmDialog = ({
       onRefetchWorkspaces();
       toast.success(result.message);
     } else {
-      console.log(result);
       clientAuthGuard(result.status);
-      toast.success("Could not delete the workspace.");
+      toast.error("Could not delete the workspace.");
     }
   };
 
