@@ -13,3 +13,13 @@ export async function createNewWorkspace(workspaceName: string) {
     "Workspace created successfully",
   );
 }
+
+export async function deleteWorkspace(workspaceId: string) {
+  return callBackend(
+    `/api/workspaces/${workspaceId}`,
+    {
+      method: "DELETE",
+    },
+    "Workspace deleted successfully.",
+  );
+}
