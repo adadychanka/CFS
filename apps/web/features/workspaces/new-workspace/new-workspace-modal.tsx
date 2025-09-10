@@ -48,10 +48,15 @@ const formSchema = z.object({
 
 type Props = {
   isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
+  onModalToggle: (isOpen: boolean) => void;
+  onRefetchWorkspaces: () => void;
 };
 
-const NewWorkspaceModal = ({ isOpen, onOpenChange }: Props) => {
+const NewWorkspaceModal = ({
+  isOpen,
+  onModalToggle,
+  onRefetchWorkspaces,
+}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +67,8 @@ const NewWorkspaceModal = ({ isOpen, onOpenChange }: Props) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const result = await createNewWorkspace(values.name);
     if (result.success) {
-      onOpenChange(false);
+      onModalToggle(false);
+      onRefetchWorkspaces();
       form.reset();
       toast.success(result.message);
     } else {
@@ -72,7 +78,7 @@ const NewWorkspaceModal = ({ isOpen, onOpenChange }: Props) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onModalToggle}>
       <DialogTrigger asChild>
         <SidebarGroupAction title="Add Project">
           <Plus /> <span className="sr-only">Create a new workspace</span>
