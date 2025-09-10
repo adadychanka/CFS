@@ -29,12 +29,22 @@ import { toast } from "sonner";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { createNewWorkspace } from "@/lib/actions/workspaces";
 import { useState } from "react";
+import {
+  NEW_WORKSPACE_MAX_LENGTH,
+  NEW_WORKSPACE_MIN_LENGTH,
+} from "@/constants";
 
 const formSchema = z.object({
   name: z
     .string()
-    .min(1, "Name must contain at least 1 character(s)")
-    .max(255, "name must contain at most 255 character(s)"),
+    .min(
+      NEW_WORKSPACE_MIN_LENGTH,
+      `Name must contain at least ${NEW_WORKSPACE_MIN_LENGTH} character(s)`,
+    )
+    .max(
+      NEW_WORKSPACE_MAX_LENGTH,
+      `name must contain at most ${NEW_WORKSPACE_MAX_LENGTH} character(s)`,
+    ),
 });
 
 const NewWorkspaceModal = () => {
