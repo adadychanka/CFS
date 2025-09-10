@@ -25,6 +25,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@repo/ui/components/form";
+import { toast } from "sonner";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { createNewWorkspace } from "@/lib/actions/workspaces";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z
@@ -34,6 +38,8 @@ const formSchema = z.object({
 });
 
 const NewWorkspaceModal = () => {
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,12 +47,20 @@ const NewWorkspaceModal = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const result = await createNewWorkspace(values.name);
+    if (result.success) {
+      setOpen(false);
+      form.reset();
+      toast.success(result.message);
+    } else {
+      clientAuthGuard(result.status);
+      toast.success("Could not create the workspace");
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <SidebarGroupAction title="Add Project">
           <Plus /> <span className="sr-only">Create a new workspace</span>
@@ -77,17 +91,15 @@ const NewWorkspaceModal = () => {
                 </FormItem>
               )}
             />
-            {/*<div className="grid gap-4">*/}
-            {/*  <div className="grid gap-3">*/}
-            {/*    <Label htmlFor="name">Name</Label>*/}
-            {/*    <Input id="name" name="name" placeholder="Personal Project" />*/}
-            {/*  </div>*/}
-            {/*</div>*/}
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit">Create workspace</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting
+                  ? "Creating workspace..."
+                  : "Create workspace"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>
