@@ -30,7 +30,7 @@ function FileUploadDropzone({ workspaceId }: { workspaceId: string }) {
     isLoading,
     files,
     handleDeleteSingleFile,
-  } = useFileUpload(workspaceId as string);
+  } = useFileUpload(workspaceId);
 
   const className = cn(
     "p-16 flex items-center justify-center flex-col gap-2  mt-1 border border-neutral-200",

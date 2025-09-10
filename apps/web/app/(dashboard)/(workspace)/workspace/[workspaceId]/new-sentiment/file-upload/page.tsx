@@ -4,7 +4,7 @@ import { METADATA } from "@/constants/metadata";
 import FileUploadForm from "@/features/feedback-file-upload/file-upload-form";
 import SavedFiles from "@/features/saved-files/saved-files";
 import SpinnerLoader from "@repo/ui/custom-components/spinner-loader";
-import type { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/page-params";
 
 export const metadata: Metadata = {
   title: "CSV File Upload",

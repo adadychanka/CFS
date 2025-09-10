@@ -3,7 +3,7 @@ import SwitchTableCollapsedTabs from "@/components/user-feedback/switch-table-co
 import { Suspense } from "react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
-import type { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/page-params";
 
 export default async function Page({ params }: WorkspaceIdParams) {
   const { workspaceId } = await params;

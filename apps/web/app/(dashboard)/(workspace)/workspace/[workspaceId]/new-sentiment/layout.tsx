@@ -4,7 +4,7 @@ import { use, type ReactNode } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/tabs";
 import { usePathname, useRouter } from "next/navigation";
 import Header from "@repo/ui/components/header";
-import { WorkspaceIdParams } from "@/types/pageParams";
+import { WorkspaceIdParams } from "@/types/page-params";
 
 function getTabs(workspaceId: string) {
   return [
@@ -18,7 +18,7 @@ function getTabs(workspaceId: string) {
       url: `/workspace/${workspaceId}/new-sentiment/file-upload`,
       label: "File Upload",
     },
-  ];
+  ] as const;
 }
 
 const Layout = ({
