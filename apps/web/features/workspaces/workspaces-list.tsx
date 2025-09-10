@@ -2,6 +2,7 @@
 
 import {
   SidebarGroup,
+  SidebarGroupAction,
   SidebarGroupLabel,
   SidebarMenu,
 } from "@repo/ui/components/sidebar";
@@ -15,6 +16,7 @@ import { useEffect, useState } from "react";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import WorkspacesEmpty from "@/features/workspaces/workspaces-empty";
 import NewWorkspaceModal from "@/features/workspaces/new-workspace/new-workspace-modal";
+import { Plus } from "lucide-react";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -75,7 +77,11 @@ const WorkspacesList = () => {
         isOpen={isCreateModalOpen}
         onModalToggle={setIsCreateModalOpen}
         onRefetchWorkspaces={mutate}
-      />
+      >
+        <SidebarGroupAction title="Add Project">
+          <Plus /> <span className="sr-only">Create a new workspace</span>
+        </SidebarGroupAction>
+      </NewWorkspaceModal>
       <SidebarMenu>{content}</SidebarMenu>
     </SidebarGroup>
   );
