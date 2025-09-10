@@ -26,7 +26,7 @@ export async function GET() {
   }
 
   try {
-    const response = await api.get("/api/admin/metrics");
+    const response = await api.get("/api/admins/metrics");
 
     if (!response.ok) {
       let errorMessage = `Request failed with status ${response.status}`;
