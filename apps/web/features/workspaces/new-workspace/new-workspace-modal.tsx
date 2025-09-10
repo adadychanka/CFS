@@ -32,6 +32,7 @@ import {
   NEW_WORKSPACE_MAX_LENGTH,
   NEW_WORKSPACE_MIN_LENGTH,
 } from "@/constants";
+import { ReactNode } from "react";
 
 const formSchema = z.object({
   name: z
@@ -50,12 +51,14 @@ type Props = {
   isOpen: boolean;
   onModalToggle: (isOpen: boolean) => void;
   onRefetchWorkspaces: () => void;
+  children?: ReactNode;
 };
 
 const NewWorkspaceModal = ({
   isOpen,
   onModalToggle,
   onRefetchWorkspaces,
+  children,
 }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,11 +82,15 @@ const NewWorkspaceModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onModalToggle}>
-      <DialogTrigger asChild>
-        <SidebarGroupAction title="Add Project">
-          <Plus /> <span className="sr-only">Create a new workspace</span>
-        </SidebarGroupAction>
-      </DialogTrigger>
+      {children ? (
+        <DialogTrigger asChild>{children}</DialogTrigger>
+      ) : (
+        <DialogTrigger asChild>
+          <SidebarGroupAction title="Add Project">
+            <Plus /> <span className="sr-only">Create a new workspace</span>
+          </SidebarGroupAction>
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form
