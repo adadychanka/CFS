@@ -5,11 +5,15 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/dropdown-menu";
 import { SidebarMenuAction } from "@repo/ui/components/sidebar";
-import { MoreHorizontal, Pencil, Trash } from "lucide-react";
+import { MoreHorizontal, Pencil } from "lucide-react";
+import DeleteWorkspaceConfirmDialog from "@/features/workspaces/delete-workspace/delete-workspace-confirm-dialog";
+import { useState } from "react";
 
 const WorkspaceItemActions = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <SidebarMenuAction showOnHover>
           <MoreHorizontal />
@@ -21,10 +25,9 @@ const WorkspaceItemActions = () => {
           <Pencil />
           <span>Rename</span>
         </DropdownMenuItem>
-        <DropdownMenuItem aria-label="Delete workspace">
-          <Trash />
-          <span>Delete</span>
-        </DropdownMenuItem>
+        <DeleteWorkspaceConfirmDialog
+          onCloseDropdown={() => setIsOpen(false)}
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );
