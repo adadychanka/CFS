@@ -54,7 +54,7 @@ const SwitchTableCollapsedTabs = ({ workspaceId }: { workspaceId: string }) => {
             <GalleryVertical /> Grouped
           </TabsTrigger>
         </TabsList>
-        <ExportDropdown />
+        <ExportDropdown workspaceId={workspaceId} />
       </div>
       <TabsContent value="table">
         <FeedbackTable
