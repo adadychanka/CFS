@@ -3,7 +3,7 @@ import { auth } from "@/auth/auth";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
-import type { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/page-params";
 import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {

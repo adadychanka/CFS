@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { type GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import { getServerApi } from "@/lib/server-api";
 import { FetchError } from "@/lib/errors";
-import type { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/page-params";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {

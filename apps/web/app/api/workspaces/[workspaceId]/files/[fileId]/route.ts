@@ -12,10 +12,20 @@ export async function DELETE(
   { params }: { params: Promise<{ fileId: string; workspaceId: string }> },
 ) {
   const { fileId, workspaceId } = await params;
-  if (!fileId || !workspaceId) {
+
+  if (!workspaceId) {
     return NextResponse.json(
       {
-        message: "fileId or workspaceId is missing.",
+        message: "workspaceId is missing.",
+      },
+      { status: 400 },
+    );
+  }
+
+  if (!fileId) {
+    return NextResponse.json(
+      {
+        message: "fileId is missing.",
       },
       { status: 400 },
     );

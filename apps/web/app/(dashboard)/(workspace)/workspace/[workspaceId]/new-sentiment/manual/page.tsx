@@ -1,7 +1,7 @@
 import ManualFeedbackTab from "@/components/feedback-form/manual-feedback-tab";
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
-import { WorkspaceIdParams } from "@/types/pageParams";
+import { WorkspaceIdParams } from "@/types/page-params";
 
 export const metadata: Metadata = {
   title: "Manual Feedback Upload",

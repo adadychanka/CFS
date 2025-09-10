@@ -89,10 +89,18 @@ function useFileUpload(workspaceId: string) {
 
       if (!errors.length) {
         toast.success("All files has been processed!");
+        const searchParams = new URLSearchParams();
+        searchParams.set(SAVED_FILES_PAGE_QUERY_KEY, currentPage.toString());
+        searchParams.set(
+          SAVED_FILES_LIMIT_QUERY_KEY,
+          SAVED_FILES_PAGE_LIMIT.toString(),
+        );
+
         const url = createWorkspaceUrl(
           workspaceId,
-          `/files?${SAVED_FILES_PAGE_QUERY_KEY}=${currentPage}&${SAVED_FILES_LIMIT_QUERY_KEY}=${SAVED_FILES_PAGE_LIMIT}`,
+          `/files?${searchParams.toString()}`,
         );
+
         mutate(url);
       } else {
         if (

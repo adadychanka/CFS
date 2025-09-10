@@ -6,7 +6,7 @@ import {
   parseSentimentsQueryParam,
   transformSentimentsIntoSearchParams,
 } from "@/utils/url-helpers";
-import type { WorkspaceIdParams } from "@/types/pageParams";
+import type { WorkspaceIdParams } from "@/types/page-params";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {

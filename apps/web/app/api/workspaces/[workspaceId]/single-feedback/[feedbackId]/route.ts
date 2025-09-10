@@ -9,9 +9,20 @@ export async function GET(
 ) {
   const { feedbackId, workspaceId } = await params;
 
-  if (!workspaceId || !feedbackId) {
+  if (!workspaceId) {
     return NextResponse.json(
-      { message: "workspaceId or feedbackId is missing." },
+      {
+        message: "workspaceId is missing.",
+      },
+      { status: 400 },
+    );
+  }
+
+  if (!feedbackId) {
+    return NextResponse.json(
+      {
+        message: "feedbackId is missing.",
+      },
       { status: 400 },
     );
   }
