@@ -50,7 +50,11 @@ const WorkspacesList = () => {
     content = <WorkspacesEmpty />;
   } else {
     content = data.workspaces.map((workspace) => (
-      <WorkspaceItem key={workspace.id} workspace={workspace} />
+      <WorkspaceItem
+        key={workspace.id}
+        workspace={workspace}
+        onRefetchWorkspaces={mutate}
+      />
     ));
   }
 

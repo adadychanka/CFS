@@ -9,7 +9,12 @@ import { MoreHorizontal, Pencil } from "lucide-react";
 import DeleteWorkspaceConfirmDialog from "@/features/workspaces/delete-workspace/delete-workspace-confirm-dialog";
 import { useState } from "react";
 
-const WorkspaceItemActions = () => {
+type Props = {
+  workspaceId: string;
+  onRefetchWorkspaces: () => void;
+};
+
+const WorkspaceItemActions = ({ workspaceId, onRefetchWorkspaces }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -26,7 +31,9 @@ const WorkspaceItemActions = () => {
           <span>Rename</span>
         </DropdownMenuItem>
         <DeleteWorkspaceConfirmDialog
+          workspaceId={workspaceId}
           onCloseDropdown={() => setIsOpen(false)}
+          onRefetchWorkspaces={onRefetchWorkspaces}
         />
       </DropdownMenuContent>
     </DropdownMenu>

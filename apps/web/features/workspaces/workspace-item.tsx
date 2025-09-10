@@ -20,9 +20,10 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   workspace: Workspace;
+  onRefetchWorkspaces: () => void;
 };
 
-const WorkspaceItem = ({ workspace }: Props) => {
+const WorkspaceItem = ({ workspace, onRefetchWorkspaces }: Props) => {
   const pathname = usePathname();
   const isActiveDashboard = `/workspace/${workspace.id}` === pathname;
   const isActiveUpload = pathname.startsWith(
@@ -43,7 +44,11 @@ const WorkspaceItem = ({ workspace }: Props) => {
             {workspace.name}
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        <WorkspaceItemActions />
+
+        <WorkspaceItemActions
+          workspaceId={workspace.id}
+          onRefetchWorkspaces={onRefetchWorkspaces}
+        />
 
         <CollapsibleContent>
           <SidebarMenuSub>
