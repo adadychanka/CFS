@@ -28,7 +28,6 @@ import {
 import { toast } from "sonner";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { createNewWorkspace } from "@/lib/actions/workspaces";
-import { useState } from "react";
 import {
   NEW_WORKSPACE_MAX_LENGTH,
   NEW_WORKSPACE_MIN_LENGTH,
@@ -47,9 +46,12 @@ const formSchema = z.object({
     ),
 });
 
-const NewWorkspaceModal = () => {
-  const [open, setOpen] = useState(false);
+type Props = {
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
+};
 
+const NewWorkspaceModal = ({ isOpen, onOpenChange }: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,7 +62,7 @@ const NewWorkspaceModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const result = await createNewWorkspace(values.name);
     if (result.success) {
-      setOpen(false);
+      onOpenChange(false);
       form.reset();
       toast.success(result.message);
     } else {
@@ -70,7 +72,7 @@ const NewWorkspaceModal = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <SidebarGroupAction title="Add Project">
           <Plus /> <span className="sr-only">Create a new workspace</span>
