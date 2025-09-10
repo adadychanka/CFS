@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import WorkspacesHeader from "@/features/workspaces/workspaces-header";
 import WorkspacesEmpty from "@/features/workspaces/workspaces-empty";
+import NewWorkspaceModal from "@/features/workspaces/new-workspace/new-workspace-modal";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -57,6 +58,7 @@ const WorkspacesList = () => {
   return (
     <SidebarGroup>
       <WorkspacesHeader />
+      <NewWorkspaceModal />
       <SidebarMenu>{content}</SidebarMenu>
     </SidebarGroup>
   );
