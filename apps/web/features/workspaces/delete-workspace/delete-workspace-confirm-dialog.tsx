@@ -16,16 +16,23 @@ import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { toast } from "sonner";
 
 type Props = {
+  workspaceId: string;
   onCloseDropdown: () => void;
+  onRefetchWorkspaces: () => void;
 };
 
-const DeleteWorkspaceConfirmDialog = ({ onCloseDropdown }: Props) => {
+const DeleteWorkspaceConfirmDialog = ({
+  workspaceId,
+  onCloseDropdown,
+  onRefetchWorkspaces,
+}: Props) => {
   const handleDeleteWorkspace = async () => {
-    const result = await deleteWorkspace("id");
+    const result = await deleteWorkspace(workspaceId);
     if (result.success) {
-      // onRefetchWorkspaces();
+      onRefetchWorkspaces();
       toast.success(result.message);
     } else {
+      console.log(result);
       clientAuthGuard(result.status);
       toast.success("Could not delete the workspace.");
     }
