@@ -11,12 +11,26 @@ import {
   AlertDialogTrigger,
 } from "@repo/ui/components/alert-dialog";
 import { Trash } from "lucide-react";
+import { deleteWorkspace } from "@/lib/actions/workspaces";
+import { clientAuthGuard } from "@/utils/client-auth-guard";
+import { toast } from "sonner";
 
 type Props = {
   onCloseDropdown: () => void;
 };
 
 const DeleteWorkspaceConfirmDialog = ({ onCloseDropdown }: Props) => {
+  const handleDeleteWorkspace = async () => {
+    const result = await deleteWorkspace("id");
+    if (result.success) {
+      // onRefetchWorkspaces();
+      toast.success(result.message);
+    } else {
+      clientAuthGuard(result.status);
+      toast.success("Could not delete the workspace.");
+    }
+  };
+
   return (
     <>
       <AlertDialog
@@ -46,7 +60,9 @@ const DeleteWorkspaceConfirmDialog = ({ onCloseDropdown }: Props) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Delete workspace</AlertDialogAction>
+            <AlertDialogAction onClick={handleDeleteWorkspace}>
+              Delete workspace
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
