@@ -1,7 +1,11 @@
 import { Box } from "lucide-react";
 import { Button } from "@repo/ui/components/button";
 
-const WorkspacesEmpty = () => {
+type Props = {
+  onClickCreate: () => void;
+};
+
+const WorkspacesEmpty = ({ onClickCreate }: Props) => {
   // TODO: connect once create is ready
   return (
     <div className="py-8 px-4 flex flex-col items-center justify-center gap-4 text-center">
@@ -15,6 +19,7 @@ const WorkspacesEmpty = () => {
         variant="outline"
         className="flex items-center gap-2"
         aria-label="Create a new workspace"
+        onClick={onClickCreate}
       >
         Create a new workspace
       </Button>
