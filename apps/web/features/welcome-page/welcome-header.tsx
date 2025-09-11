@@ -23,10 +23,6 @@ const WelcomeHeader = ({ onRefetchWorkspaces }: Props) => {
       </div>
 
       <div className="flex flex-wrap gap-2 items-center">
-        <Button variant="outline" aria-label="Try sample data">
-          Try sample data
-        </Button>
-
         <NewWorkspaceModal
           isOpen={isOpen}
           onModalToggle={setIsOpen}
