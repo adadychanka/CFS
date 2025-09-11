@@ -1,9 +1,9 @@
 import { type Metadata } from "next";
 import { METADATA } from "@/constants/metadata";
-import ChartsSection from "@/components/admin/charts-section";
 import Header from "@repo/ui/components/header";
 import UsersSection from "@/features/users-management/users-section";
 import { Suspense } from "react";
+import { AdminMetrics } from "@/features/admin/metrics/admin-metrics";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -37,7 +37,7 @@ const Page = () => {
       <div className="w-full max-w-[1280px] mx-auto p-4 @container">
         {/* TODO: Need a custom loader */}
         <Suspense fallback={null}>
-          <ChartsSection />
+          <AdminMetrics />
           <UsersSection />
         </Suspense>
       </div>

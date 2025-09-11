@@ -14,6 +14,7 @@ import { Trash } from "lucide-react";
 import { deleteWorkspace } from "@/lib/actions/workspaces";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type Props = {
   workspaceId: string;
@@ -26,11 +27,14 @@ const DeleteWorkspaceConfirmDialog = ({
   onCloseDropdown,
   onRefetchWorkspaces,
 }: Props) => {
+  const router = useRouter();
+
   const handleDeleteWorkspace = async () => {
     const result = await deleteWorkspace(workspaceId);
     if (result.success) {
       onRefetchWorkspaces();
       toast.success(result.message);
+      router.push("/");
     } else {
       clientAuthGuard(result.status);
       toast.error("Could not delete the workspace.");

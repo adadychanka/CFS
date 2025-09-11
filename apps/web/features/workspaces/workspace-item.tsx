@@ -17,6 +17,7 @@ import { Folder, FolderOpen } from "lucide-react";
 import Link from "next/link";
 import { Workspace } from "@/types/workspace";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 type Props = {
   workspace: Workspace;
@@ -30,8 +31,20 @@ const WorkspaceItem = ({ workspace, onRefetchWorkspaces }: Props) => {
     `/workspace/${workspace.id}/new-sentiment`,
   );
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isActiveDashboard || isActiveUpload) {
+      setIsOpen(true);
+    }
+  }, [isActiveDashboard, isActiveUpload]);
+
   return (
-    <Collapsible className="group/collapsible">
+    <Collapsible
+      className="group/collapsible"
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton

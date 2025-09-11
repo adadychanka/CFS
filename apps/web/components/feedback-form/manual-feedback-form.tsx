@@ -13,11 +13,10 @@ import {
 import { Textarea } from "@repo/ui/components/textarea";
 import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/components/button";
-import { Plus, SquareTerminal } from "lucide-react";
+import { Plus } from "lucide-react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { manualFeedbackSchema } from "@/schemas/manual-feedback.schema";
 import { memo } from "react";
-import { TEST_TEXTAREA_TEXT } from "@/constants/constants";
 import { normalizeFeedbackEntriesFromInput } from "@/utils/normalize-feedback-entries-from-input";
 
 type Props = {
@@ -40,12 +39,12 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
   };
 
   // NOTE: ONLY FOR DEV TESTING
-  const handleQuickFill = () => {
-    const randomTwo = TEST_TEXTAREA_TEXT.sort(() => 0.5 - Math.random())
-      .slice(0, 2)
-      .join("\n");
-    form.setValue("feedback", randomTwo);
-  };
+  // const handleQuickFill = () => {
+  //   const randomTwo = TEST_TEXTAREA_TEXT.sort(() => 0.5 - Math.random())
+  //     .slice(0, 2)
+  //     .join("\n");
+  //   form.setValue("feedback", randomTwo);
+  // };
 
   return (
     <Form {...form}>
@@ -68,10 +67,10 @@ const ManualFeedbackForm = ({ onAddFeedback }: Props) => {
           )}
         />
         <div className="flex justify-end gap-2">
-          <Button type="button" variant="outline" onClick={handleQuickFill}>
-            <SquareTerminal />
-            Quick fill
-          </Button>
+          {/*<Button type="button" variant="outline" onClick={handleQuickFill}>*/}
+          {/*  <SquareTerminal />*/}
+          {/*  Quick fill*/}
+          {/*</Button>*/}
           <Button type="submit">
             <Plus /> Add feedback
           </Button>
