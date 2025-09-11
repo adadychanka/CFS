@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
 import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
 import { GetSuspiciousActivitiesResponse } from "@/types/http";
+import { getUnknownErrorMessage } from "@/lib/get-unknown-error-message";
+import { getErrorMessage } from "@/lib/get-error-message";
 
 export async function GET(req: NextRequest) {
   try {
@@ -30,12 +32,10 @@ export async function GET(req: NextRequest) {
     });
 
     if (!res.ok) {
+      const errorMessage = (await getErrorMessage(res)) || "Unexpected error.";
+
       return NextResponse.json(
-        {
-          success: false,
-          status: res.status,
-          message: "Failed to fetch suspicious activities.",
-        },
+        { success: false, message: errorMessage },
         { status: res.status },
       );
     }
@@ -48,12 +48,14 @@ export async function GET(req: NextRequest) {
       status: 200,
       data,
     });
-  } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Internal Server Error";
-
+  } catch (error) {
+    const errorResponse = await getUnknownErrorMessage(error);
     return NextResponse.json(
-      { success: false, status: 500, message },
-      { status: 500 },
+      {
+        success: false,
+        message: errorResponse.error,
+      },
+      { status: errorResponse.status },
     );
   }
 }
