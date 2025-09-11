@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
-import { paginate } from "@/utils/pagination";
 import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
+import { GetSuspiciousActivitiesResponse } from "@/types/http";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,10 +14,14 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const { page, limit } = getPaginationParamsFromNextRequest(req);
+
     const requestUrl = new URL(
-      "/api/admin/suspicious-activities",
+      "/api/admins/suspicious-activities",
       process.env.BACKEND_API,
     );
+    requestUrl.searchParams.set("page", page.toString());
+    requestUrl.searchParams.set("limit", limit.toString());
 
     const res = await fetch(requestUrl.toString(), {
       headers: {
@@ -37,16 +41,12 @@ export async function GET(req: NextRequest) {
     }
 
     const body = await res.json();
-    const { page, limit } = getPaginationParamsFromNextRequest(req);
-    const { items, pagination } = paginate(body.data, page, limit);
+    const data: GetSuspiciousActivitiesResponse = body.data;
 
     return NextResponse.json({
       success: true,
       status: 200,
-      data: {
-        suspiciousActivities: items,
-        pagination,
-      },
+      data,
     });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Internal Server Error";

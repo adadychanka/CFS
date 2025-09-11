@@ -70,7 +70,7 @@ const AlertsList = () => {
             <TableStateHandler
               isLoading={isLoading}
               error={error}
-              data={data?.suspiciousActivities}
+              data={data?.activities}
               colSpan={COL_SPAN}
               skeleton={
                 <TableSkeleton
