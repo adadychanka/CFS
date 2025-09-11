@@ -20,6 +20,6 @@ export type GetWorkspacesResponse = {
 };
 
 export type GetSuspiciousActivitiesResponse = {
-  suspiciousActivities: SuspiciousActivity[];
+  activities: SuspiciousActivity[];
   pagination: PaginationMeta;
 };
