@@ -6,19 +6,6 @@ export type AdminMetrics = {
   footerText: string;
 };
 
-const AdminMetricsApiUsageSchema = z.object({
-  method: z.string(),
-  endpoint: z.string(),
-  count: z.number(),
-});
-
-const AdminMetricsErrorRates = z.object({
-  method: z.string(),
-  endpoint: z.string(),
-  errorMessage: z.string(),
-  count: z.number(),
-});
-
 export const AdminMetricsSchema = z.object({
   success: z.boolean(),
   statusCode: z.number(),
@@ -26,8 +13,8 @@ export const AdminMetricsSchema = z.object({
   data: z
     .object({
       uploads: z.number(),
-      apiUsage: z.array(AdminMetricsApiUsageSchema),
-      errorRates: z.array(AdminMetricsErrorRates),
+      apiUsage: z.number(),
+      errorRates: z.number(),
     })
     .optional(),
   timestamp: z.string(),

@@ -38,7 +38,7 @@ async function Page() {
     api.setToken(session.user.token);
   }
 
-  const response = await api.get("/api/admin/rate-limit");
+  const response = await api.get("/api/admins/rate-limit");
   const result: RateLimitResponse = await response.json();
 
   if (result?.data?.length) {

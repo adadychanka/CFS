@@ -1,5 +1,4 @@
 import type { AdminMetricsResponseData, AdminMetrics } from "@/types/metrics";
-import { aggregateSum } from "./aggregate-sum";
 
 const createStat = (title: string, count: number, footerText: string) => ({
   footerText,
@@ -9,8 +8,8 @@ const createStat = (title: string, count: number, footerText: string) => ({
 
 export function getAdminMetrics(adminMetricsData: AdminMetricsResponseData) {
   const uploadsCount = adminMetricsData.uploads;
-  const apiUsageCount = aggregateSum(adminMetricsData.apiUsage, "count");
-  const errorRatesCount = aggregateSum(adminMetricsData.errorRates, "count");
+  const apiUsageCount = adminMetricsData.apiUsage;
+  const errorRatesCount = adminMetricsData.errorRates;
 
   const metrics: AdminMetrics[] = [
     createStat("Total Uploads", uploadsCount, "Total manual and file uploads"),
