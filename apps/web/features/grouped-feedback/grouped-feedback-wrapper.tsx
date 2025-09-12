@@ -6,6 +6,7 @@ import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import GroupedFeedbackContent from "./grouped-feedback-content";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -23,7 +24,12 @@ export const fetcher = async (url: string) => {
 };
 
 function GroupedFeedback({ workspaceId }: { workspaceId: string }) {
-  const url = createWorkspaceUrl(workspaceId, "/dashboard-grouped");
+  const { isSampleMode } = useSampleMode();
+
+  const url = createWorkspaceUrl(
+    workspaceId,
+    "/dashboard-grouped?isSampleMode=" + isSampleMode,
+  );
   const {
     data: result,
     error,

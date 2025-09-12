@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import DashboardChartWrapper from "@/features/dashboard-chart/dashboard-chart-wrapper";
 import FeedbackPanel from "@/features/feedback-panel/feedback-panel";
 import type { WorkspaceIdParams } from "@/types/page-params";
+import SampleModeToggle from "@/features/sample-mode/sample-mode-toggle";
 
 export default async function Page({ params }: WorkspaceIdParams) {
   const { workspaceId } = await params;
@@ -11,6 +12,8 @@ export default async function Page({ params }: WorkspaceIdParams) {
     <>
       <Header title="Dashboard" />
       <div className="w-full max-w-[1280px] mx-auto p-4">
+        <SampleModeToggle />
+
         {/* TODO: need custom loading in the future*/}
         <Suspense fallback={<p>Loading...</p>}>
           <DashboardChartWrapper workspaceId={workspaceId} />
