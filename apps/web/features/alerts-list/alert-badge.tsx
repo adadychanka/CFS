@@ -1,5 +1,5 @@
 import { Badge } from "@repo/ui/components/badge";
-import { SuspiciousActivityAction } from "@/types/suspicious-activity";
+import type { SuspiciousActivityAction } from "@/types/suspicious-activity";
 
 const actionColors: Record<SuspiciousActivityAction, string> = {
   API: "bg-blue-100 text-blue-800",
