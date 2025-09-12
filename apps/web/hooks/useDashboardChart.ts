@@ -11,6 +11,7 @@ import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 import { updateSearchParams } from "@/utils/url-helpers";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -28,7 +29,11 @@ export const fetcher = async (url: string) => {
 };
 
 function useDashboardChart(workspaceId: string) {
-  const url = createWorkspaceUrl(workspaceId, "/dashboard-chart");
+  const { isSampleMode } = useSampleMode();
+  const url = createWorkspaceUrl(
+    workspaceId,
+    "/dashboard-chart?isSampleMode=" + isSampleMode,
+  );
   const {
     data: result,
     error,

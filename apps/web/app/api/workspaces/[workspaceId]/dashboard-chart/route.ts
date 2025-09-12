@@ -5,6 +5,7 @@ import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
 import type { WorkspaceIdParams } from "@/types/page-params";
 import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
+import { getIsSampeMode } from "@/utils/url-helpers";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   const { workspaceId } = await params;
@@ -34,7 +35,10 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   }
 
   try {
-    const url = createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
+    const isSampleMode = getIsSampeMode(req);
+    const url = isSampleMode
+      ? "/api/samples/feedbacks/sentiment-summary"
+      : createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
     const response = await api.get(url);
 
     if (!response.ok) {

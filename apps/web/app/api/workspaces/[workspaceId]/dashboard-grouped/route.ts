@@ -5,6 +5,7 @@ import { getServerApi } from "@/lib/server-api";
 import { FetchError } from "@/lib/errors";
 import type { WorkspaceIdParams } from "@/types/page-params";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
+import { getIsSampeMode } from "@/utils/url-helpers";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   const { workspaceId } = await params;
@@ -32,7 +33,11 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   }
 
   try {
-    const url = createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+    const isSampleMode = getIsSampeMode(req);
+    const url = isSampleMode
+      ? "/api/samples/feedbacks/grouped"
+      : createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+
     const response = await api.get(url);
 
     if (!response.ok) {
