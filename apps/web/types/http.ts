@@ -2,6 +2,7 @@ import { type SentimentAnalysisResult } from "@/types/sentiment-analysis-result"
 import { type User } from "@/types/user";
 import { type PaginationMeta } from "@/types/pagination-meta";
 import { type Workspace } from "@/types/workspace";
+import { type SuspiciousActivity } from "@/types/suspicious-activity";
 
 export type GetFeedbackResponse = {
   feedbacks: SentimentAnalysisResult[];
@@ -15,5 +16,10 @@ export type GetUsersResponse = {
 
 export type GetWorkspacesResponse = {
   workspaces: Workspace[];
+  pagination: PaginationMeta;
+};
+
+export type GetSuspiciousActivitiesResponse = {
+  activities: SuspiciousActivity[];
   pagination: PaginationMeta;
 };
