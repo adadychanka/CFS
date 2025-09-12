@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth/auth";
 import { getPaginationParamsFromNextRequest } from "@/utils/url-helpers";
 import { GetSuspiciousActivitiesResponse } from "@/types/http";
