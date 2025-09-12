@@ -1,9 +1,5 @@
 /**
- * Generated pagination meta based on given items array
- *
- * @param items
- * @param page
- * @param limit
+ * Generates pagination meta based on given items array
  */
 export const paginate = <T>(items: T[], page: number, limit: number) => {
   const total = items.length;
