@@ -1,5 +1,3 @@
-"use client";
-
 import AlertsList from "@/features/alerts-list/alerts-list";
 
 const AlertsSection = () => {
