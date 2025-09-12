@@ -42,8 +42,6 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
       : createWorkspaceUrl(workspaceId, "/feedbacks");
     const requestUrl = new URL(url, process.env.BACKEND_API);
 
-    console.log("isSampleMode", isSampleMode);
-
     requestUrl.searchParams.set("page", page.toString());
     requestUrl.searchParams.set("limit", limit.toString());
     parsedSentiments.forEach((value, key) => {
