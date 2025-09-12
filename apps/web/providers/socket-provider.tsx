@@ -1,6 +1,6 @@
 "use client";
 
-import { io, Socket } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 import {
   createContext,
   ReactNode,
@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useSession } from "next-auth/react";
+import { handleSuspiciousActivity } from "@/utils/alerts-helpers";
 
 const SocketContext = createContext<Socket | null>(null);
 
@@ -40,6 +41,15 @@ const SocketProvider = ({ children }: Props) => {
       s.disconnect();
     };
   }, [data?.user?.token]);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on("suspiciousActivity", handleSuspiciousActivity);
+
+    return () => {
+      socket.off("suspiciousActivity", handleSuspiciousActivity);
+    };
+  }, [socket]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
