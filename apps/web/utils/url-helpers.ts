@@ -80,3 +80,7 @@ export function updateSearchParams(
 
   return params;
 }
+
+export function getIsSampeMode(req: NextRequest): boolean {
+  return req.nextUrl.searchParams.get("isSampleMode") === "true";
+}

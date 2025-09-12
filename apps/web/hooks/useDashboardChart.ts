@@ -11,6 +11,7 @@ import { updateSearchParams } from "@/utils/url-helpers";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 import { DashboardChartResponse } from "@/types/dashboard-charts";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -28,10 +29,11 @@ export const fetcher = async (url: string) => {
 };
 
 function useDashboardChart(workspaceId: string, isGroupedView: boolean) {
+  const { isSampleMode } = useSampleMode();
   const view = isGroupedView ? "grouped" : "table";
   const params = new URLSearchParams();
   params.set("view", view);
-  console.log(params.toString());
+  params.set("isSampleMode", String(isSampleMode));
 
   const url = createWorkspaceUrl(
     workspaceId,
