@@ -10,6 +10,7 @@ import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
 import type { DashboardChartResponse } from "@/types/dashboard-charts";
 import type { WorkspaceIdParams } from "@/types/page-params";
+import { getIsSampeMode } from "@/utils/url-helpers";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   const { workspaceId } = await params;
@@ -39,9 +40,13 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
     );
   }
 
+  const isSampleMode = getIsSampeMode(req);
+
   try {
     if (view === "grouped") {
-      const url = createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+      const url = isSampleMode
+        ? "/api/samples/feedbacks/grouped"
+        : createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
       const response = await api.get(url);
 
       if (!response.ok) {
@@ -54,7 +59,9 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
       return NextResponse.json(dashboardChart, { status: 200 });
     }
 
-    const url = createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
+    const url = isSampleMode
+      ? "/api/samples/feedbacks/sentiment-summary"
+      : createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
     const response = await api.get(url);
 
     if (!response.ok) {

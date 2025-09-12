@@ -7,6 +7,7 @@ import { SidebarProvider } from "@repo/ui/components/sidebar";
 import { withAdminAccess } from "@/components/withAdminAccess";
 import { SessionProvider } from "next-auth/react";
 import SocketProvider from "@/providers/socket-provider";
+import { SampleModeProvider } from "@/providers/sample-mode-provider";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -43,7 +44,9 @@ export default function DashboardLayout({
       <DynamicSidebar />
       <SessionProvider>
         <SocketProvider>
-          <main className="w-full pb-16">{children}</main>
+          <SampleModeProvider>
+            <main className="w-full pb-16">{children}</main>
+          </SampleModeProvider>
         </SocketProvider>
       </SessionProvider>
     </SidebarProvider>

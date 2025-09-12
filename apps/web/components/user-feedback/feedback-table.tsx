@@ -9,6 +9,7 @@ import { FetchError } from "@/lib/errors";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import useFeedbackTable from "@/hooks/useFeedbackTable";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 export const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -28,9 +29,11 @@ type Props = {
 };
 
 const FeedbackTable = ({ currentPage, sentiment, workspaceId }: Props) => {
+  const { isSampleMode } = useSampleMode();
+
   const url = createWorkspaceUrl(workspaceId, "/dashboard-table");
   const { data, error, isLoading } = useSWR<GetFeedbackResponse>(
-    `${url}?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}`,
+    `${url}?page=${currentPage}&limit=${FEEDBACK_PAGE_LIMIT}&sentiment=${sentiment}&isSampleMode=${isSampleMode}`,
     fetcher,
     {
       keepPreviousData: true,
