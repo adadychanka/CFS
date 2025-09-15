@@ -1,12 +1,10 @@
-"use client";
-
 import { Dialog, DialogTrigger } from "@repo/ui/components/dialog";
 import { toast } from "sonner";
 import { clientAuthGuard } from "@/utils/client-auth-guard";
 import { createNewWorkspace } from "@/lib/actions/workspaces";
 import { ReactNode } from "react";
 import WorkspaceModalContent, {
-  WorkspaceFormValues,
+  type WorkspaceFormValues,
 } from "@/features/workspaces/workspace-modal-content";
 
 type Props = {
