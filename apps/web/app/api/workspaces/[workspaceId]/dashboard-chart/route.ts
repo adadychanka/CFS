@@ -3,11 +3,17 @@ import { auth } from "@/auth/auth";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
 import { FetchError } from "@/lib/errors";
 import { getServerApi } from "@/lib/server-api";
-import type { WorkspaceIdParams } from "@/types/page-params";
+import { getDashboardChartViewParamFromNextRequest } from "@/utils/url-helpers";
+import { getPieChartOptions } from "@/lib/get-pie-chart-options";
+import { getBarChartOptions } from "@/lib/get-bar-chart-options";
 import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
+import type { GroupedFeedbackResponse } from "@/types/grouped-feedback";
+import type { DashboardChartResponse } from "@/types/dashboard-charts";
+import type { WorkspaceIdParams } from "@/types/page-params";
 
 export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   const { workspaceId } = await params;
+  const view = getDashboardChartViewParamFromNextRequest(req);
 
   if (!workspaceId) {
     return NextResponse.json(
@@ -34,6 +40,20 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
   }
 
   try {
+    if (view === "grouped") {
+      const url = createWorkspaceUrl(workspaceId, "/feedbacks/grouped");
+      const response = await api.get(url);
+
+      if (!response.ok) {
+        return NextResponse.json({}, { status: response.status });
+      }
+
+      const result: GroupedFeedbackResponse = await response.json();
+
+      const dashboardChart: DashboardChartResponse = getPieChartOptions(result);
+      return NextResponse.json(dashboardChart, { status: 200 });
+    }
+
     const url = createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
     const response = await api.get(url);
 
@@ -43,7 +63,9 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
 
     const result: SentimentSummaryResponse = await response.json();
 
-    return NextResponse.json(result);
+    const dashboardChart: DashboardChartResponse = getBarChartOptions(result);
+
+    return NextResponse.json(dashboardChart, { status: 201 });
   } catch (error) {
     if (error instanceof FetchError)
       return NextResponse.json(
