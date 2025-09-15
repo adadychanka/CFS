@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useSession } from "next-auth/react";
 import { handleSuspiciousActivity } from "@/utils/alerts-helpers";
+import { SocketEvents } from "@/constants";
 
 const SocketContext = createContext<Socket | null>(null);
 
@@ -44,10 +45,10 @@ const SocketProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (!socket) return;
-    socket.on("suspiciousActivity", handleSuspiciousActivity);
+    socket.on(SocketEvents.suspiciousActivity, handleSuspiciousActivity);
 
     return () => {
-      socket.off("suspiciousActivity", handleSuspiciousActivity);
+      socket.off(SocketEvents.suspiciousActivity, handleSuspiciousActivity);
     };
   }, [socket]);
 
