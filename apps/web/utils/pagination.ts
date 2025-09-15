@@ -1,3 +1,6 @@
+/**
+ * Generates pagination meta based on given items array
+ */
 export const paginate = <T>(items: T[], page: number, limit: number) => {
   const total = items.length;
   const pages = Math.ceil(total / limit);

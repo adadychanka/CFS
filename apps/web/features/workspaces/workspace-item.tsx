@@ -17,7 +17,7 @@ import { Folder, FolderOpen } from "lucide-react";
 import Link from "next/link";
 import { Workspace } from "@/types/workspace";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   workspace: Workspace;
@@ -59,7 +59,7 @@ const WorkspaceItem = ({ workspace, onRefetchWorkspaces }: Props) => {
         </CollapsibleTrigger>
 
         <WorkspaceItemActions
-          workspaceId={workspace.id}
+          workspace={workspace}
           onRefetchWorkspaces={onRefetchWorkspaces}
         />
 
