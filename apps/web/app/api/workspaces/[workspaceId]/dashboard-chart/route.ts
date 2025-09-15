@@ -51,7 +51,7 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
       const result: GroupedFeedbackResponse = await response.json();
 
       const dashboardChart: DashboardChartResponse = getPieChartOptions(result);
-      return NextResponse.json(dashboardChart, { status: 201 });
+      return NextResponse.json(dashboardChart, { status: 200 });
     }
 
     const url = createWorkspaceUrl(workspaceId, "/feedbacks/sentiment-summary");
