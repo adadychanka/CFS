@@ -1,16 +1,16 @@
+"use client";
+
 import { clientApi } from "@/lib/api";
 import { FetchError } from "@/lib/errors";
-import type { EChartOption } from "@/types/charts";
-import type { SentimentSummaryResponse } from "@/types/sentiment-summary";
 import useSWR from "swr";
 import { useDrawChart } from "./useDrawChart";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import * as echarts from "echarts";
 import { useRouter, useSearchParams } from "next/navigation";
-import { transformSentimentSummaryResult } from "@/utils/charts-helper";
 import { updateSearchParams } from "@/utils/url-helpers";
 import { SENTIMENT_FILTER_QUERY_KEY } from "@/constants";
 import { createWorkspaceUrl } from "@/lib/create-workspace-url";
+import { DashboardChartResponse } from "@/types/dashboard-charts";
 
 export const fetcher = async (url: string) => {
   const res = await clientApi.get(url);
@@ -27,41 +27,31 @@ export const fetcher = async (url: string) => {
   return data;
 };
 
-function useDashboardChart(workspaceId: string) {
-  const url = createWorkspaceUrl(workspaceId, "/dashboard-chart");
+function useDashboardChart(workspaceId: string, isGroupedView: boolean) {
+  const view = isGroupedView ? "grouped" : "table";
+  const params = new URLSearchParams();
+  params.set("view", view);
+  console.log(params.toString());
+
+  const url = createWorkspaceUrl(
+    workspaceId,
+    `/dashboard-chart?${params.toString()}`,
+  );
   const {
     data: result,
     error,
     isLoading,
-  } = useSWR<SentimentSummaryResponse, FetchError>(url, fetcher);
+  } = useSWR<DashboardChartResponse, FetchError>(url, fetcher);
 
-  const { chartOptions, isEmpty } = useMemo(
-    function deriveChartOptions() {
-      const { categories, data } = transformSentimentSummaryResult(result);
-      const isEmpty = categories.length === 0 || data.length === 0;
+  const dashboardChart = {
+    isEmpty: true,
+    chartOptions: {},
+  };
 
-      const chartOptions: EChartOption = {
-        title: {
-          text: "Proportions of Sentiment Types",
-        },
-        tooltip: {},
-        color: "#393E46",
-        xAxis: {
-          data: categories,
-        },
-        yAxis: {},
-        series: [
-          {
-            type: "bar",
-            data: data,
-          },
-        ],
-      };
-
-      return { chartOptions, isEmpty };
-    },
-    [result],
-  );
+  if (result) {
+    dashboardChart.chartOptions = result.chartOptions;
+    dashboardChart.isEmpty = result.isEmpty;
+  }
 
   const hasError = Boolean(error);
 
@@ -80,19 +70,18 @@ function useDashboardChart(workspaceId: string) {
     [router, searchParams],
   );
 
-  const { chartRef } = useDrawChart(chartOptions, {
+  const { chartRef } = useDrawChart(dashboardChart.chartOptions, {
     isLoading,
-    isEmpty,
+    isEmpty: dashboardChart.isEmpty,
     onClick: handleFilterChange,
   });
 
   return {
     chartRef,
     hasError,
-    chartOptions,
     error,
     isLoading,
-    isEmpty,
+    ...dashboardChart,
   };
 }
 

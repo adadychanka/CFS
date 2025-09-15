@@ -1,4 +1,8 @@
-import type { BarSeriesOption, LineSeriesOption } from "echarts/charts";
+import type {
+  BarSeriesOption,
+  LineSeriesOption,
+  PieSeriesOption,
+} from "echarts/charts";
 import type {
   TitleComponentOption,
   TooltipComponentOption,
@@ -9,6 +13,7 @@ import type { ComposeOption } from "echarts/core";
 
 export type EChartOption = ComposeOption<
   | BarSeriesOption
+  | PieSeriesOption
   | LineSeriesOption
   | TitleComponentOption
   | TooltipComponentOption

@@ -28,6 +28,12 @@ export const transformSentimentsIntoSearchParams = (
   return params;
 };
 
+export const getDashboardChartViewParamFromNextRequest = (req: NextRequest) => {
+  const search = req.nextUrl.searchParams;
+  const view = search.get("view") || "table";
+  return view;
+};
+
 /**
  * Updates a query parameter in a URLSearchParams object.
  * - If `value` is a string, sets the param if non-empty, otherwise deletes it.
