@@ -79,6 +79,7 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
             variant="outline"
             onClick={() => handleViewDetails(sentiment.id)}
             aria-label="View details for feedback"
+            disabled={isSampleMode}
           >
             <Ellipsis aria-hidden="true" />
           </Button>
