@@ -9,6 +9,8 @@ import { Button } from "@repo/ui/components/button";
 import { Ellipsis } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FEEDBACK_PANEL_QUERY_KEY } from "@/constants";
+import SampleDataBadge from "@/features/sample-mode/sample-data-badge";
+import { useSampleMode } from "@/providers/sample-mode-provider";
 
 type Props = {
   data?: SentimentAnalysisResult[];
@@ -18,6 +20,7 @@ type Props = {
 function useFeedbackTable({ data, isFilteringEnabled }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { isSampleMode } = useSampleMode();
 
   const handleViewDetails = useCallback(
     (id: string) => {
@@ -57,7 +60,10 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
         key={sentiment.id}
         className="odd:bg-muted/50 hover:bg-muted transition-colors"
       >
-        <TableCell>{sentiment.summary}</TableCell>
+        <TableCell className="flex items-center gap-2">
+          <span>{sentiment.summary}</span>
+          {isSampleMode && <SampleDataBadge />}
+        </TableCell>
         <TableCell className="text-center">
           <FeedbackBadge sentiment={sentiment.sentiment} />
         </TableCell>
@@ -73,13 +79,14 @@ function useFeedbackTable({ data, isFilteringEnabled }: Props) {
             variant="outline"
             onClick={() => handleViewDetails(sentiment.id)}
             aria-label="View details for feedback"
+            disabled={isSampleMode}
           >
             <Ellipsis aria-hidden="true" />
           </Button>
         </TableCell>
       </TableRow>
     ),
-    [handleViewDetails],
+    [handleViewDetails, isSampleMode],
   );
 
   const { tableHeads, tableRows } = useDynamicTableHeadsAndRows({

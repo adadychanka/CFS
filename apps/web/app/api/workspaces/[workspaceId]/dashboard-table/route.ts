@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import type { GetFeedbackResponse } from "@/types/http";
 import { auth } from "@/auth/auth";
 import {
+  getIsSampeMode,
   getPaginationParamsFromNextRequest,
   parseSentimentsQueryParam,
   transformSentimentsIntoSearchParams,
@@ -33,9 +34,12 @@ export async function GET(req: NextRequest, { params }: WorkspaceIdParams) {
     const { page, limit } = getPaginationParamsFromNextRequest(req);
     const sentiments = parseSentimentsQueryParam(req.nextUrl.searchParams);
     const parsedSentiments = transformSentimentsIntoSearchParams(sentiments);
+    const isSampleMode = getIsSampeMode(req);
 
     // Building URL
-    const url = createWorkspaceUrl(workspaceId, "/feedbacks");
+    const url = isSampleMode
+      ? "/api/samples/feedbacks/filtered"
+      : createWorkspaceUrl(workspaceId, "/feedbacks");
     const requestUrl = new URL(url, process.env.BACKEND_API);
 
     requestUrl.searchParams.set("page", page.toString());
