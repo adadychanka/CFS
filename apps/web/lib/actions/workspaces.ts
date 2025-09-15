@@ -14,6 +14,21 @@ export async function createNewWorkspace(workspaceName: string) {
   );
 }
 
+export async function renameNewWorkspace(
+  workspaceId: string,
+  workspaceName: string,
+) {
+  return callBackend(
+    `/api/workspaces/${workspaceId}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: { name: workspaceName },
+    },
+    "Workspace created successfully",
+  );
+}
+
 export async function deleteWorkspace(workspaceId: string) {
   return callBackend(
     `/api/workspaces/${workspaceId}`,
