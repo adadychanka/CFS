@@ -46,7 +46,7 @@ const useDrawChart = (
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [options?.isLoading, options?.isEmpty]);
+  }, [options?.isLoading, options?.isEmpty, chartOption]);
 
   useEffect(() => {
     if (chart) {
