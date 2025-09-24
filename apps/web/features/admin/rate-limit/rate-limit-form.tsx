@@ -21,6 +21,7 @@ import type { RateLimitResponseData } from "@/types/rate-limit";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
 import { getRateLimits } from "@/lib/get-rate-limits";
+import { mutate } from "swr";
 
 const FormSchema = z.object({
   upload: z.coerce
@@ -86,13 +87,17 @@ export function RateLimitForm({ defaultLimits }: Props) {
     };
 
     Object.entries(fieldToTarget).forEach(([field, target]) => {
-      const currentValue = watchValues[field as keyof FormData];
-      const originalValue = defaultRateLimits[field as keyof FormData];
+      const currentValue = Number(watchValues[field as keyof FormData]);
+      const originalValue = Number(defaultRateLimits[field as keyof FormData]);
 
       if (currentValue !== originalValue) {
         changes.push({
           limit: currentValue,
           target: target,
+        });
+      } else {
+        setChangedRateLimits((previousLimits) => {
+          return previousLimits.filter((filter) => filter.target != target);
         });
       }
     });
@@ -118,6 +123,9 @@ export function RateLimitForm({ defaultLimits }: Props) {
     } else {
       toast.error(response.message);
     }
+
+    mutate("/api/admins/rate-limit");
+    setChangedRateLimits([]);
   }
 
   async function onSubmit(data: FormData) {
