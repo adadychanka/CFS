@@ -20,9 +20,11 @@ const ErrorWholePage = ({ Icon, title, description }: Props) => {
       <h1 className="text-2xl font-bold">{title}</h1>
       <p className="text-neutral-600">{description}</p>
       <div className="flex gap-4 flex-wrap justify-center">
-        <Link href="/">
-          <Button>Go back home</Button>
-        </Link>
+        <Button asChild>
+          <Link href="/" aria-label="Go back to the homepage">
+            Go back home
+          </Link>
+        </Button>
       </div>
     </div>
   );
