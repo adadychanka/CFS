@@ -1,9 +1,9 @@
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardDescription,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@repo/ui/components/card";
 import { memo } from "react";
 
@@ -12,15 +12,15 @@ const CardSkeleton = () => {
     <Card className="@container/card transition-all duration-300 hover:shadow-md hover:border-primary/20">
       <CardHeader>
         <CardDescription>
-          <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 w-24 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
         </CardDescription>
         <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-          <div className="h-8 w-16 bg-gray-200 rounded animate-pulse @[250px]/card:h-9"></div>
+          <div className="h-8 w-16 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse @[250px]/card:h-9"></div>
         </CardTitle>
       </CardHeader>
       <CardFooter className="flex-col items-start gap-1.5 text-sm">
         <div className="text-muted-foreground w-full">
-          <div className="h-4 w-32 bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 w-32 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse"></div>
         </div>
       </CardFooter>
     </Card>

@@ -10,7 +10,7 @@ const PreviewFileSection = ({ files, onDeleteSingleFile }: Props) => {
   return (
     <div>
       <p className="font-medium">{files.length} files in total</p>
-      <p className="pb-4 text-neutral-800 text-sm">
+      <p className="pb-4 text-muted-foreground text-sm">
         We’ll upload the first {MAX_FILES_PER_UPLOAD} files now. The rest will
         be saved for later. Files marked as <em>ready</em> will be included in
         this upload.

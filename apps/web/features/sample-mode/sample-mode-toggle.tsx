@@ -3,6 +3,7 @@
 import { Button } from "@repo/ui/components/button";
 import { FlaskConical, LogOut } from "lucide-react";
 import { useSampleMode } from "@/providers/sample-mode-provider";
+import { cn } from "@repo/ui/lib/utils";
 
 export default function SampleModeToggle() {
   const { isSampleMode, toggleSampleMode } = useSampleMode();
@@ -10,11 +11,12 @@ export default function SampleModeToggle() {
   return (
     <div className="pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
       <span
-        className={`text-sm px-3 py-1 rounded-md ${
+        className={cn(
+          "text-sm px-3 py-1 rounded-md font-medium",
           isSampleMode
-            ? "bg-amber-100 text-amber-800 font-medium"
-            : "text-neutral-600"
-        }`}
+            ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
+            : "text-muted-foreground",
+        )}
       >
         {isSampleMode
           ? "⚠️ You’re viewing demo feedback. Switch back anytime to see your own data."
