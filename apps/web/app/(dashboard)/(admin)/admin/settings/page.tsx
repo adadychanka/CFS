@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 async function Page() {
   const api = await getServerApi();
   const session = await auth();
-  let defaultLimit: RateLimitResponseData | null = null;
+  let defaultLimits: RateLimitResponseData[] = [];
 
   if (session?.user.token) {
     api.setToken(session.user.token);
@@ -42,15 +42,15 @@ async function Page() {
   const result: RateLimitResponse = await response.json();
 
   if (result?.data?.length) {
-    const apiRate = result.data.find((rate) => rate.target === "API");
-    defaultLimit = apiRate || null;
+    const rateLimit: RateLimitResponseData[] = result.data || [];
+    defaultLimits = rateLimit;
   }
 
   return (
     <>
       <Header title="Settings" />
       <section className="pl-4 pt-4">
-        <RateLimitForm defaultValue={defaultLimit} />
+        <RateLimitForm defaultLimits={defaultLimits} />
       </section>
     </>
   );
