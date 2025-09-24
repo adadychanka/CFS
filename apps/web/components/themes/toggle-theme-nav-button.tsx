@@ -10,7 +10,10 @@ const ToggleThemeNavButton = () => {
   };
 
   return (
-    <SidebarMenuButton onClick={handleToggleThemeNav}>
+    <SidebarMenuButton
+      onClick={handleToggleThemeNav}
+      aria-label="Toggle UI theme between light and dark"
+    >
       <SunMoon />
       <span>Toggle theme</span>
     </SidebarMenuButton>
