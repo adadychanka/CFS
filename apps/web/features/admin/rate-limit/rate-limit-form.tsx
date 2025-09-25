@@ -21,7 +21,7 @@ import type { RateLimitResponseData } from "@/types/rate-limit";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
 import { getRateLimits } from "@/lib/get-rate-limits";
-import { mutate } from "swr";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   upload: z.coerce
@@ -55,6 +55,7 @@ export function RateLimitForm({ defaultLimits }: Props) {
   const [changedRateLimits, setChangedRateLimits] = useState<
     RateLimitResponseData[]
   >([]);
+  const router = useRouter();
 
   const rateLimits = getRateLimits(defaultLimits);
   const defaultRateLimits = useMemo(
@@ -124,7 +125,7 @@ export function RateLimitForm({ defaultLimits }: Props) {
       toast.error(response.message);
     }
 
-    mutate("/api/admins/rate-limit");
+    router.refresh();
     setChangedRateLimits([]);
   }
 
@@ -169,6 +170,38 @@ export function RateLimitForm({ defaultLimits }: Props) {
     handleDialogCancel();
   }
 
+  const rateLimitFields: {
+    name: "api" | "login" | "download" | "upload";
+    label: string;
+    tooltipText: string;
+  }[] = useMemo(
+    () => [
+      {
+        name: "api",
+        label: "api calls",
+        tooltipText: "Controls how often site users can call the API per hour.",
+      },
+      {
+        name: "login",
+        label: "login attempts",
+        tooltipText:
+          "Controls how often site users can attempt to login per hour.",
+      },
+      {
+        name: "download",
+        label: "downloads",
+        tooltipText:
+          "Controls how often site users can download files per hour.",
+      },
+      {
+        name: "upload",
+        label: "uploads",
+        tooltipText: "Controls how often site users can upload files per hour.",
+      },
+    ],
+    [],
+  );
+
   return (
     <>
       <ConfirmationDialog
@@ -183,110 +216,35 @@ export function RateLimitForm({ defaultLimits }: Props) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-2/3 space-y-6"
         >
-          <FormField
-            control={form.control}
-            name="api"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <div className="flex gap-1">
-                    <TooltipWrapper text="Controls how often site users can call the API per hour.">
-                      <FormLabel className="words-wrap">
-                        Rate limit for <strong>api calls</strong>:
-                      </FormLabel>
-                    </TooltipWrapper>
-                    <FormControl>
-                      <Input
-                        className="w-[150px]"
-                        placeholder="rate limit"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="login"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <div className="flex gap-1">
-                    <TooltipWrapper text="Controls how often site users can attempt to login per hour.">
-                      <FormLabel className="words-wrap">
-                        Rate limit for <strong>login attempts</strong>:
-                      </FormLabel>
-                    </TooltipWrapper>
-                    <FormControl>
-                      <Input
-                        className="w-[150px]"
-                        placeholder="rate limit"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="download"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <div className="flex gap-1">
-                    <TooltipWrapper text="Controls how often site users can download files per hour.">
-                      <FormLabel className="words-wrap">
-                        Rate limit for <strong>downloads</strong>:
-                      </FormLabel>
-                    </TooltipWrapper>
-                    <FormControl>
-                      <Input
-                        className="w-[150px]"
-                        placeholder="rate limit"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="upload"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <div className="flex gap-1">
-                    <TooltipWrapper text="Controls how often site users can upload files per hour.">
-                      <FormLabel className="words-wrap">
-                        Rate limit for <strong>uploads</strong>:
-                      </FormLabel>
-                    </TooltipWrapper>
-                    <FormControl>
-                      <Input
-                        className="w-[150px]"
-                        placeholder="rate limit"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
+          {rateLimitFields.map((fieldConfig) => (
+            <FormField
+              key={fieldConfig.name}
+              control={form.control}
+              name={fieldConfig.name}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <div className="flex gap-1">
+                      <TooltipWrapper text={fieldConfig.tooltipText}>
+                        <FormLabel className="words-wrap">
+                          Rate limit for <strong>{fieldConfig.label}</strong>:
+                        </FormLabel>
+                      </TooltipWrapper>
+                      <FormControl>
+                        <Input
+                          className="w-[150px]"
+                          placeholder="rate limit"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+          ))}
           <Button
             type="submit"
             disabled={isLoading || changedRateLimits.length === 0}
