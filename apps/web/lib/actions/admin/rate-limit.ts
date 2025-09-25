@@ -7,6 +7,7 @@ import type {
   RateLimitResponseData,
   RateLimitTarget,
 } from "@/types/rate-limit";
+import { revalidatePath } from "next/cache";
 
 export async function submitRateLimit(rateLimits: RateLimitResponseData[]) {
   const updateResult: {
@@ -50,6 +51,8 @@ export async function submitRateLimit(rateLimits: RateLimitResponseData[]) {
     });
 
     const isAllSuccessful = updateResult.every((response) => response.success);
+    revalidatePath("/api/admins/rate-limit");
+
     if (isAllSuccessful) {
       return {
         success: isAllSuccessful,

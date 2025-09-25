@@ -1,0 +1,1 @@
+export const RATE_LIMIT_WARNING_THRESHOLD = 100;
