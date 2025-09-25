@@ -17,11 +17,14 @@ import { toast } from "sonner";
 import { Button } from "@repo/ui/components/button";
 import { submitRateLimit } from "@/lib/actions/admin/rate-limit";
 import { useEffect, useMemo, useState } from "react";
-import type { RateLimitResponseData } from "@/types/rate-limit";
+import type {
+  RateLimitResponseData,
+  RateLimitTarget,
+} from "@/types/rate-limit";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
 import { getRateLimits } from "@/lib/get-rate-limits";
-import { useRouter } from "next/navigation";
+import { RATE_LIMIT_WARNING_THRESHOLD } from "@/constants/rate-limits";
 
 const FormSchema = z.object({
   upload: z.coerce
@@ -51,11 +54,12 @@ type Props = {
 export function RateLimitForm({ defaultLimits }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [ratesLessThan100, setRatesLessThan100] = useState<string[]>([]);
+  const [ratesLessThanThreshold, setRatesLessThanThreshold] = useState<
+    string[]
+  >([]);
   const [changedRateLimits, setChangedRateLimits] = useState<
     RateLimitResponseData[]
   >([]);
-  const router = useRouter();
 
   const rateLimits = getRateLimits(defaultLimits);
   const defaultRateLimits = useMemo(
@@ -85,7 +89,7 @@ export function RateLimitForm({ defaultLimits }: Props) {
       download: "DOWNLOAD" as const,
       api: "API" as const,
       login: "LOGIN" as const,
-    };
+    } satisfies Record<keyof FormData, RateLimitTarget>;
 
     Object.entries(fieldToTarget).forEach(([field, target]) => {
       const currentValue = Number(watchValues[field as keyof FormData]);
@@ -125,7 +129,6 @@ export function RateLimitForm({ defaultLimits }: Props) {
       toast.error(response.message);
     }
 
-    router.refresh();
     setChangedRateLimits([]);
   }
 
@@ -138,7 +141,7 @@ export function RateLimitForm({ defaultLimits }: Props) {
     setIsLoading(true);
 
     const ratesToCheck = ["upload", "download", "api", "login"] as const;
-    const under100 = ratesToCheck.filter((key) => {
+    const underThreshold = ratesToCheck.filter((key) => {
       const hasChanged = changedRateLimits.some((change) => {
         const fieldToTarget = {
           upload: "UPLOAD",
@@ -148,11 +151,11 @@ export function RateLimitForm({ defaultLimits }: Props) {
         };
         return fieldToTarget[key] === change.target;
       });
-      return hasChanged && data[key] < 100;
+      return hasChanged && data[key] < RATE_LIMIT_WARNING_THRESHOLD;
     });
 
-    if (under100.length > 0) {
-      setRatesLessThan100([...under100]);
+    if (underThreshold.length > 0) {
+      setRatesLessThanThreshold([...underThreshold]);
       setIsDialogOpen(true);
     } else {
       await submitChanges(changedRateLimits);
@@ -170,11 +173,13 @@ export function RateLimitForm({ defaultLimits }: Props) {
     handleDialogCancel();
   }
 
-  const rateLimitFields: {
-    name: "api" | "login" | "download" | "upload";
-    label: string;
-    tooltipText: string;
-  }[] = useMemo(
+  const rateLimitFields = useMemo<
+    {
+      name: keyof FormData;
+      label: string;
+      tooltipText: string;
+    }[]
+  >(
     () => [
       {
         name: "api",
@@ -202,11 +207,15 @@ export function RateLimitForm({ defaultLimits }: Props) {
     [],
   );
 
+  const confirmationQuestion = `Are you sure you want to update the ${ratesLessThanThreshold.map((rateLimit) => " " + rateLimit.toUpperCase())} rate limit${ratesLessThanThreshold.length > 1 ? "s" : ""} to below ${RATE_LIMIT_WARNING_THRESHOLD}?`;
+
+  const confirmationDescription = `This will take effect immediately and may reject existing ${ratesLessThanThreshold.map((rateLimit) => " " + rateLimit.toUpperCase())} call${ratesLessThanThreshold.length > 1 ? "s" : ""}.`;
+
   return (
     <>
       <ConfirmationDialog
-        question={`Are you sure you want to update the ${ratesLessThan100.map((rateLimit) => " " + rateLimit.toUpperCase())} rate limit${ratesLessThan100.length > 1 ? "s" : ""} to below 100?`}
-        description={`This will take effect immediately and may reject existing ${ratesLessThan100.map((rateLimit) => " " + rateLimit.toUpperCase())} call${ratesLessThan100.length > 1 ? "s" : ""}.`}
+        question={confirmationQuestion}
+        description={confirmationDescription}
         isOpen={isDialogOpen}
         onCancel={handleDialogCancel}
         onConfirm={handleDialogConfirm}
