@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, test, expect } from "vitest";
+import "@testing-library/jest-dom";
 import Button from "./Button";
 
 describe("<Button />", () => {
@@ -7,7 +8,6 @@ describe("<Button />", () => {
     render(<Button />);
 
     const button = screen.getByRole("button", { name: "Click me" });
-
-    expect(button).toBeDefined();
+    expect(button).toBeInTheDocument();
   });
 });
