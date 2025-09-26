@@ -16,52 +16,151 @@ import { Input } from "@repo/ui/components/input";
 import { toast } from "sonner";
 import { Button } from "@repo/ui/components/button";
 import { submitRateLimit } from "@/lib/actions/admin/rate-limit";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
-  RateLimitResponse,
   RateLimitResponseData,
+  RateLimitTarget,
 } from "@/types/rate-limit";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { ConfirmationDialog } from "@/components/dialogs/confirmation-dialog";
+import { getRateLimits } from "@/lib/get-rate-limits";
+import { RATE_LIMIT_WARNING_THRESHOLD } from "@/constants/rate-limits";
 
 const FormSchema = z.object({
-  rate: z.coerce
+  upload: z.coerce
+    .number()
+    .min(1, "Rate limit must not be less than 1")
+    .max(1000, "Rate limit must not be more than 1000"),
+  download: z.coerce
+    .number()
+    .min(1, "Rate limit must not be less than 1")
+    .max(1000, "Rate limit must not be more than 1000"),
+  api: z.coerce
+    .number()
+    .min(1, "Rate limit must not be less than 1")
+    .max(1000, "Rate limit must not be more than 1000"),
+  login: z.coerce
     .number()
     .min(1, "Rate limit must not be less than 1")
     .max(1000, "Rate limit must not be more than 1000"),
 });
 
+type FormData = z.infer<typeof FormSchema>;
+
 type Props = {
-  defaultValue: RateLimitResponseData | null;
+  defaultLimits: RateLimitResponseData[];
 };
 
-export function RateLimitForm({ defaultValue }: Props) {
+export function RateLimitForm({ defaultLimits }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const [ratesLessThanThreshold, setRatesLessThanThreshold] = useState<
+    string[]
+  >([]);
+  const [changedRateLimits, setChangedRateLimits] = useState<
+    RateLimitResponseData[]
+  >([]);
+
+  const rateLimits = getRateLimits(defaultLimits);
+  const defaultRateLimits = useMemo(
+    () => ({
+      upload: rateLimits.uploadRate,
+      download: rateLimits.downloadRate,
+      api: rateLimits.apiRate,
+      login: rateLimits.loginRate,
+    }),
+    [rateLimits],
+  );
+
+  const { watch, ...form } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      rate: defaultValue?.limit || 1000,
+      ...defaultRateLimits,
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsLoading(true);
-    const rateLimit = data.rate;
+  const watchValues = watch();
 
-    if (data.rate < 100) {
+  useEffect(() => {
+    const changes: RateLimitResponseData[] = [];
+
+    const fieldToTarget = {
+      upload: "UPLOAD" as const,
+      download: "DOWNLOAD" as const,
+      api: "API" as const,
+      login: "LOGIN" as const,
+    } satisfies Record<keyof FormData, RateLimitTarget>;
+
+    Object.entries(fieldToTarget).forEach(([field, target]) => {
+      const currentValue = Number(watchValues[field as keyof FormData]);
+      const originalValue = Number(defaultRateLimits[field as keyof FormData]);
+
+      if (currentValue !== originalValue) {
+        changes.push({
+          limit: currentValue,
+          target: target,
+        });
+      } else {
+        setChangedRateLimits((previousLimits) => {
+          return previousLimits.filter((filter) => filter.target != target);
+        });
+      }
+    });
+
+    setChangedRateLimits(changes);
+    // eslint-disable-next-line
+  }, [
+    watchValues.upload,
+    watchValues.download,
+    watchValues.api,
+    watchValues.login,
+    defaultRateLimits.upload,
+    defaultRateLimits.download,
+    defaultRateLimits.api,
+    defaultRateLimits.login,
+  ]);
+
+  async function submitChanges(rateLimitsToSubmit: RateLimitResponseData[]) {
+    const response = await submitRateLimit(rateLimitsToSubmit);
+
+    if (response.success) {
+      toast.success("Successfully updated!");
+    } else {
+      toast.error(response.message);
+    }
+
+    setChangedRateLimits([]);
+  }
+
+  async function onSubmit(data: FormData) {
+    if (changedRateLimits.length === 0) {
+      toast.info("No changes to submit");
+      return;
+    }
+
+    setIsLoading(true);
+
+    const ratesToCheck = ["upload", "download", "api", "login"] as const;
+    const underThreshold = ratesToCheck.filter((key) => {
+      const hasChanged = changedRateLimits.some((change) => {
+        const fieldToTarget = {
+          upload: "UPLOAD",
+          download: "DOWNLOAD",
+          api: "API",
+          login: "LOGIN",
+        };
+        return fieldToTarget[key] === change.target;
+      });
+      return hasChanged && data[key] < RATE_LIMIT_WARNING_THRESHOLD;
+    });
+
+    if (underThreshold.length > 0) {
+      setRatesLessThanThreshold([...underThreshold]);
       setIsDialogOpen(true);
     } else {
-      const response: RateLimitResponse = await submitRateLimit({
-        limit: rateLimit,
-        target: "API",
-      });
-      if (response.success) {
-        toast.success("Successfully updated!");
-      } else {
-        toast.error(response.message);
-      }
+      await submitChanges(changedRateLimits);
     }
+
     setIsLoading(false);
   }
 
@@ -70,65 +169,98 @@ export function RateLimitForm({ defaultValue }: Props) {
   }
 
   async function handleDialogConfirm() {
-    const rateLimit = Number(form.getValues("rate"));
-    {
-      const response: RateLimitResponse = await submitRateLimit({
-        limit: rateLimit,
-        target: "API",
-      });
-      if (response.success) {
-        toast.success("Successfully updated!");
-      } else {
-        toast.error(response.message);
-      }
-    }
-
+    await submitChanges(changedRateLimits);
     handleDialogCancel();
   }
+
+  const rateLimitFields = useMemo<
+    {
+      name: keyof FormData;
+      label: string;
+      tooltipText: string;
+    }[]
+  >(
+    () => [
+      {
+        name: "api",
+        label: "api calls",
+        tooltipText: "Controls how often site users can call the API per hour.",
+      },
+      {
+        name: "login",
+        label: "login attempts",
+        tooltipText:
+          "Controls how often site users can attempt to login per hour.",
+      },
+      {
+        name: "download",
+        label: "downloads",
+        tooltipText:
+          "Controls how often site users can download files per hour.",
+      },
+      {
+        name: "upload",
+        label: "uploads",
+        tooltipText: "Controls how often site users can upload files per hour.",
+      },
+    ],
+    [],
+  );
+
+  const confirmationQuestion = `Are you sure you want to update the ${ratesLessThanThreshold.map((rateLimit) => " " + rateLimit.toUpperCase())} rate limit${ratesLessThanThreshold.length > 1 ? "s" : ""} to below ${RATE_LIMIT_WARNING_THRESHOLD}?`;
+
+  const confirmationDescription = `This will take effect immediately and may reject existing ${ratesLessThanThreshold.map((rateLimit) => " " + rateLimit.toUpperCase())} call${ratesLessThanThreshold.length > 1 ? "s" : ""}.`;
 
   return (
     <>
       <ConfirmationDialog
-        question="Are you sure you want to update the API rate limit to below 100?"
-        description="This will take effect immediately and may reject existing API calls."
+        question={confirmationQuestion}
+        description={confirmationDescription}
         isOpen={isDialogOpen}
         onCancel={handleDialogCancel}
         onConfirm={handleDialogConfirm}
       />
-      <Form {...form}>
+      <Form {...form} watch={watch}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-2/3 space-y-6"
         >
-          <FormField
-            control={form.control}
-            name="rate"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <div className="flex gap-1">
-                    <TooltipWrapper text="Controls how often site users can call the API per hour.">
-                      <FormLabel className="words-wrap">
-                        Rate limit per hour:
-                      </FormLabel>
-                    </TooltipWrapper>
-                    <FormControl>
-                      <Input
-                        className="w-[150px]"
-                        placeholder="rate limit"
-                        type="number"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <Button type="submit" aria-busy={isLoading} disabled={isLoading}>
-            {" "}
-            {isLoading ? "Updating..." : "Update"}
+          {rateLimitFields.map((fieldConfig) => (
+            <FormField
+              key={fieldConfig.name}
+              control={form.control}
+              name={fieldConfig.name}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <div className="flex gap-1">
+                      <TooltipWrapper text={fieldConfig.tooltipText}>
+                        <FormLabel className="words-wrap">
+                          Rate limit for <strong>{fieldConfig.label}</strong>:
+                        </FormLabel>
+                      </TooltipWrapper>
+                      <FormControl>
+                        <Input
+                          className="w-[150px]"
+                          placeholder="rate limit"
+                          type="number"
+                          {...field}
+                        />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+          ))}
+          <Button
+            type="submit"
+            disabled={isLoading || changedRateLimits.length === 0}
+          >
+            {isLoading
+              ? "Updating..."
+              : `Update ${changedRateLimits.length > 0 ? `(${changedRateLimits.length} changed)` : ""}`}
           </Button>
         </form>
       </Form>
