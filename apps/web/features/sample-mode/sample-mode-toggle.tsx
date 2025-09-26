@@ -11,12 +11,11 @@ export default function SampleModeToggle() {
   return (
     <div className="pb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
       <span
-        className={cn(
-          "text-sm px-3 py-1 rounded-md font-medium",
-          isSampleMode
-            ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200"
-            : "text-muted-foreground",
-        )}
+        className={cn("text-sm px-3 py-1 rounded-md font-medium", {
+          "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200":
+            isSampleMode,
+          "text-muted-foreground": !isSampleMode,
+        })}
       >
         {isSampleMode
           ? "⚠️ You’re viewing demo feedback. Switch back anytime to see your own data."
