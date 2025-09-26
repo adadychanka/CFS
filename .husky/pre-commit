@@ -1,1 +1,1 @@
-pnpm run format:check && pnpm run lint && pnpm run check-types && pnpm run test && pnpm run build
+pnpm run format:check && pnpm run lint && pnpm run check-types && pnpm run build && pnpm run test
