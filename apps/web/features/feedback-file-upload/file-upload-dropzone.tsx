@@ -5,11 +5,11 @@ import { FileUpIcon } from "lucide-react";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "@repo/ui/components/form";
 import FileUploadActions from "./file-upload-actions";
 import { cn } from "@repo/ui/lib/utils";
@@ -33,8 +33,8 @@ function FileUploadDropzone({ workspaceId }: { workspaceId: string }) {
   } = useFileUpload(workspaceId);
 
   const className = cn(
-    "p-16 flex items-center justify-center flex-col gap-2  mt-1 border border-neutral-200",
-    { "bg-gray-100": isDragActive },
+    "p-16 flex items-center justify-center flex-col gap-2 mt-1 border border-border rounded-md",
+    { "bg-muted": isDragActive },
   );
 
   return (

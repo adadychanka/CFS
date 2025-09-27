@@ -5,6 +5,7 @@ import { Trash2 } from "lucide-react";
 import React from "react";
 import { PreviewFeedback } from "@/components/feedback-form/manual-feedback-tab";
 import { FEEDBACK_MAX_ITEMS } from "@/constants/constants";
+import { cn } from "@repo/ui/lib/utils";
 
 type Props = {
   index: number;
@@ -26,7 +27,10 @@ const PreviewListItem = ({ index, feedback, onRemoveFeedback }: Props) => {
       </TableCell>
       <TableCell className="whitespace-normal break-words">
         <Badge
-          className={`w-[80px] text-center ${isReadyToAnalyze ? "bg-gray-200" : "bg-green-200"}`}
+          className={cn("w-[80px] text-center", {
+            "bg-neutral-200 dark:bg-neutral-700": isReadyToAnalyze,
+            "bg-green-200 dark:bg-green-700": !isReadyToAnalyze,
+          })}
           variant="secondary"
         >
           {isReadyToAnalyze ? "in queue" : "ready"}

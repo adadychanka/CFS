@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import type { EChartOption } from "@/types/charts";
+import { useTheme } from "next-themes";
 
 /**
  * Custom hook to render an ECharts chart inside a div with automatic resizing and loading state.
@@ -24,11 +25,19 @@ const useDrawChart = (
 
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
+  const { theme } = useTheme();
+
   //Creating a chart once at initial render
   useEffect(() => {
     if (!chartRef.current) return;
 
-    const chartInstance = echarts.init(chartRef.current);
+    const chartInstance = echarts.init(
+      chartRef.current,
+      theme === "dark" ? "dark" : undefined,
+    );
+    chartInstance.setOption({
+      backgroundColor: "transparent",
+    });
     setChart(chartInstance);
 
     resizeObserverRef.current = new window.ResizeObserver((entries) => {
@@ -46,7 +55,7 @@ const useDrawChart = (
       resizeObserverRef.current?.disconnect();
       chartInstance.dispose();
     };
-  }, [options?.isLoading, options?.isEmpty, chartOption]);
+  }, [options?.isLoading, options?.isEmpty, chartOption, theme]);
 
   useEffect(() => {
     if (chart) {

@@ -5,7 +5,7 @@ import TableErrorEmptyList from "@/features/error-messages/table-error-states/ta
 import TableErrorTooManyRequests from "@/features/error-messages/table-error-states/table-error-too-many-requests";
 import TableErrorUnexpected from "@/features/error-messages/table-error-states/table-error-unexpected";
 
-const ERROR_ELEMENT_COL_SPAN = 5;
+const ERROR_ELEMENT_COL_SPAN = 6;
 
 function useTableBody({
   isLoading,

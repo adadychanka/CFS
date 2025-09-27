@@ -23,7 +23,11 @@ const PreviewFileListItem = ({ index, file, onDeleteSingleFile }: Props) => {
       <TableCell className="whitespace-normal truncate">{file.name}</TableCell>
       <TableCell className="whitespace-normal break-words">
         <Badge
-          className={`w-[80px] text-center ${isReadyToAnalyze ? "bg-gray-200" : "bg-green-200"}`}
+          className={`w-[80px] text-center ${
+            isReadyToAnalyze
+              ? "bg-neutral-200 dark:bg-neutral-700"
+              : "bg-green-200 dark:bg-green-700"
+          }`}
           variant="secondary"
         >
           {isReadyToAnalyze ? "in queue" : "ready"}
