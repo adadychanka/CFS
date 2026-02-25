@@ -14,7 +14,7 @@ export function getBarChartOptions(
       text: "Proportions of Sentiment Types",
     },
     tooltip: {},
-    color: "#393E46",
+    color: "#525252",
     xAxis: {
       data: categories,
     },

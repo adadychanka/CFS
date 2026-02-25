@@ -19,6 +19,7 @@ import { ADMIN_PAGE_LINKS, USER_PAGE_LINKS } from "@/constants/constants";
 import { usePathname } from "next/navigation";
 import LogoutButton from "@/components/auth/logout-button";
 import WorkspacesList from "@/features/workspaces/workspaces-list";
+import SwitchThemeButton from "@/components/themes/switch-theme-button";
 
 type Props = {
   isAdmin: boolean;
@@ -71,6 +72,9 @@ const AppSidebar = ({ isAdmin }: Props) => {
         </SidebarContent>
         <SidebarFooter>
           <SidebarMenu>
+            <SidebarMenuItem>
+              <SwitchThemeButton />
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <LogoutButton />
             </SidebarMenuItem>

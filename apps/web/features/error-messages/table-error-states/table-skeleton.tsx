@@ -16,7 +16,7 @@ const TableSkeleton = ({
     <TableRow key={rowIndex}>
       {Array.from({ length: columns }).map((_, colIndex) => (
         <TableCell key={colIndex} className={cellClassName}>
-          <Skeleton className="h-full w-full rounded-md bg-gray-200" />
+          <Skeleton className="h-full w-full rounded-md bg-neutral-200 dark:bg-neutral-700" />
         </TableCell>
       ))}
     </TableRow>

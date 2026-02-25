@@ -11,7 +11,7 @@ const PreviewListSection = ({ feedback, onRemoveFeedback }: Props) => {
   return (
     <div>
       <p className="font-medium">{feedback.length} feedback in total</p>
-      <p className="pb-4 text-neutral-800 text-sm">
+      <p className="pb-4 text-muted-foreground text-sm">
         We’ll process the first {FEEDBACK_MAX_ITEMS} now, and save the rest for
         when you’re ready. Items marked as <em>ready</em> label will be included
         in this submission.

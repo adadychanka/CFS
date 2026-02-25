@@ -28,7 +28,7 @@ const ErrorContainer = ({
         )}
       />
       <p className="text-lg font-medium">{title}</p>
-      <p className="text-sm text-neutral-600">{description}</p>
+      <p className="text-sm text-muted-foreground">{description}</p>
 
       {onRetry && (
         <Button

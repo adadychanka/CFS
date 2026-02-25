@@ -72,28 +72,28 @@ const ExportDropdown = ({ workspaceId }: { workspaceId: string }) => {
             aria-label="Download detailed CSV file"
             onClick={() => handleDownload("detailed", "csv", workspaceId)}
           >
-            <FileSpreadsheet className="text-neutral-800" />
+            <FileSpreadsheet className="text-muted-foreground" />
             Detailed (CSV)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized CSV file"
             onClick={() => handleDownload("summary", "csv", workspaceId)}
           >
-            <FileSpreadsheet className="text-neutral-800" />
+            <FileSpreadsheet className="text-muted-foreground" />
             Summarized (CSV)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download detailed PDF file"
             onClick={() => handleDownload("detailed", "pdf", workspaceId)}
           >
-            <FileText className="text-neutral-800" />
+            <FileText className="text-muted-foreground" />
             Detailed (PDF)
           </DropdownMenuItem>
           <DropdownMenuItem
             aria-label="Download summarized PDF file"
             onClick={() => handleDownload("summary", "pdf", workspaceId)}
           >
-            <FileText className="text-neutral-800" />
+            <FileText className="text-muted-foreground" />
             Summarized (PDF)
           </DropdownMenuItem>
         </DropdownMenuGroup>
